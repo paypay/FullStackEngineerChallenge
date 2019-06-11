@@ -6,4 +6,4 @@ const userSchema = new Schema({
   password: { type: String, default: 'admin' }
 });
 
-mongoose.model('users', userSchema);
+mongoose.model('Users', userSchema);
