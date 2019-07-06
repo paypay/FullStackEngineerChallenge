@@ -1,0 +1,33 @@
+{
+  "name": "revyou",
+  "version": "0.1.0",
+  "description": "Revyou - a review system",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lerna run precommit"
+    }
+  },
+  "scripts": {
+    "bootstrap": "npm i && lerna bootstrap --hoist",
+    "dev": "concurrently \"cd client && npm run dev\" \"cd server && npm run dev\"",
+    "test": "lerna run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmilu/FullStackEngineerChallenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmilu/FullStackEngineerChallenge/issues"
+  },
+  "homepage": "https://github.com/cmilu/FullStackEngineerChallenge#readme",
+  "devDependencies": {
+    "husky": "^3.0.0",
+    "lerna": "^3.15.0"
+  }
+}

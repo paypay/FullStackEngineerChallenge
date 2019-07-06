@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "0.1.0",
+  "description": "Revyou - a review system",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev:tsc": "tsc -p tsconfig.json -w",
+    "dev": "concurrently \"npm run dev:tsc\" \"nodemon dist/index.js\"",
+    "precommit": "lint-staged"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmilu/FullStackEngineerChallenge.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^24.0.15",
+    "@types/koa": "^2.0.49",
+    "@types/koa-json": "^2.0.18",
+    "@types/koa-route": "^3.2.4",
+    "concurrently": "^4.1.1",
+    "jest": "^24.8.0",
+    "koa-json": "^2.0.2",
+    "koa-route": "^3.2.0",
+    "lint-staged": "^9.0.2",
+    "nodemon": "^1.19.1",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  },
+  "dependencies": {
+    "koa": "2.7.0"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "extends": "../tsconfig.json",
+  "files": "src",
+  "compilerOptions": {
+    "outDir": "dist",
+    "target": "es2016",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "removeComments": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "noImplicitReturns": true,
+    "rootDir": "src",
+    "baseUrl": "src",
+    "paths": {
+      "~/*": ["./*"]
+    },
+    "esModuleInterop": true
+  },
+  "include": ["src"]
+}
