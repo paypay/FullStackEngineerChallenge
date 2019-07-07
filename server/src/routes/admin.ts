@@ -1,6 +1,6 @@
 import express from 'express'
 import db from '../../db'
-import { check, validationResult } from 'express-validator'
+import { ApiError } from '../var'
 const router = express.Router()
 
 // list up all the employees
@@ -17,78 +17,53 @@ router.get('/employees', async (req, res, next) => {
 })
 
 // add new employee
-router.post(
-  '/employees',
-  [
-    check('name').isLength({ min: 1, max: 50 }),
-    check('employee_id').isLength({ min: 1, max: 10 })
-  ],
-  async (req, res, next) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      next({
-        code: 'request.malformed'
-      })
-      return
-    }
-
-    const newEmployee = {
-      name: req.body.name,
-      employee_id: req.body.employee_id
-    }
-
-    try {
-      const result = await db('employee').insert({
-        ...newEmployee,
-        created_at: Date.now(),
-        updated_at: Date.now()
-      })
-
-      res.json({
-        ...newEmployee,
-        id: result[0]
-      })
-    } catch (e) {
-      e.code = 'request.malformed'
-      next(e)
-    }
+router.post('/employees', async (req, res, next) => {
+  const newEmployee = {
+    name: req.body.name,
+    employee_id: req.body.employee_id,
+    admin: req.body.admin ? 1 : 0
   }
-)
+
+  try {
+    const result = await db('employee').insert({
+      ...newEmployee,
+      created_at: Date.now(),
+      updated_at: Date.now()
+    })
+
+    res.json({
+      ...newEmployee,
+      id: result[0]
+    })
+  } catch (e) {
+    next({
+      code: ApiError.RequestMalformed
+    })
+  }
+})
 
 // update employee
-router.put(
-  '/employee/:id',
-  [
-    check('name').isLength({ min: 1, max: 50 }),
-    check('employee_id').isLength({ min: 1, max: 10 })
-  ],
-  async (req, res, next) => {
-    const errors = validationResult(req)
-    if (!errors.isEmpty()) {
-      next({
-        type: 'request.malformat'
-      })
-    }
-
-    const newEmployee = {
-      name: req.body.name,
-      employee_id: req.body.employee_id
-    }
-
-    try {
-      await db('employee')
-        .where('id', req.body.id)
-        .update({
-          ...newEmployee,
-          updated_at: Date.now()
-        })
-      res.send()
-    } catch (e) {
-      e.code = 'request.malformed'
-      next(e)
-    }
+router.put('/employee/:id', async (req, res, next) => {
+  const newEmployee = {
+    name: req.body.name,
+    employee_id: req.body.employee_id,
+    admin: req.body.admin ? 1 : 0
   }
-)
+
+  try {
+    await db('employee')
+      .where('id', req.body.id)
+      .update({
+        ...newEmployee,
+        updated_at: Date.now()
+      })
+    res.send()
+  } catch (e) {
+    next({
+      code: ApiError.RequestMalformed
+    })
+  }
+})
 
 // get an employee
 router.get('/employee/:id', async (req, res, next) => {
@@ -99,11 +74,13 @@ router.get('/employee/:id', async (req, res, next) => {
     res.json({
       id: employee.id,
       name: employee.name,
-      employee_id: employee.employee_id
+      employee_id: employee.employee_id,
+      admin: !!employee.admin
     })
   } catch (e) {
-    e.code = 'request.malformed'
-    next(e)
+    next({
+      code: ApiError.RequestMalformed
+    })
   }
 })
 
@@ -115,8 +92,9 @@ router.delete('/employee/:id', async (req, res, next) => {
       .delete()
     res.send()
   } catch (e) {
-    e.code = 'request.malformed'
-    next(e)
+    next({
+      code: ApiError.RequestMalformed
+    })
   }
 })
 
@@ -146,8 +124,9 @@ router.get('/employee/:id/reviews', async (req, res, next) => {
       }))
     )
   } catch (e) {
-    e.code = 'request.malformed'
-    next(e)
+    next({
+      code: ApiError.RequestMalformed
+    })
   }
 })
 
@@ -168,8 +147,9 @@ router.post('/employee/:id/reviews', async (req, res, next) => {
       id: result[0]
     })
   } catch (e) {
-    e.code = 'request.malformed'
-    next(e)
+    next({
+      code: ApiError.RequestMalformed
+    })
   }
 })
 
@@ -181,8 +161,9 @@ router.delete('/review/:id', async (req, res, next) => {
       .delete()
     res.send()
   } catch (e) {
-    e.code = 'request.malformed'
-    next(e)
+    next({
+      code: ApiError.RequestMalformed
+    })
   }
 })
 

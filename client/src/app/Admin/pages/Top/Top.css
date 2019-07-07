@@ -33,3 +33,7 @@
 .employeeCard:nth-child(3n + 3) {
   margin-right: 0;
 }
+
+.badge {
+  margin-left: 5px;
+}

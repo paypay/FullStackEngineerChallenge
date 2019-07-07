@@ -1,24 +1,27 @@
-import React from "react";
-import aixos from "axios";
-import Header from "~/components/Header";
-import { ButtonGroup, Button } from "@blueprintjs/core";
-import Main from "~/components/Main";
+import React from 'react'
+import aixos from 'axios'
+import Header from '~/components/Header'
+import { ButtonGroup, Button } from '@blueprintjs/core'
+import Main from '~/components/Main'
+import api from '~/utils/api'
 
 interface State {
-  employeeCount: number;
+  isLoading: boolean
+  me?: Employee
 }
 export default class Top extends React.PureComponent<{}, State> {
   state: State = {
-    employeeCount: 0
-  };
+    isLoading: true
+  }
 
   async componentDidMount() {
-    const {
-      data: { total }
-    } = await aixos.get("/api/v1/employees");
-    this.setState({
-      employeeCount: total
-    });
+    const [err, me] = await api.get('/session')
+    if (!err) {
+      this.setState({
+        me,
+        isLoading: false
+      })
+    }
   }
 
   render() {
@@ -29,6 +32,6 @@ export default class Top extends React.PureComponent<{}, State> {
           <Button icon="annotation">Reviews from me</Button>
         </ButtonGroup>
       </Main>
-    );
+    )
   }
 }

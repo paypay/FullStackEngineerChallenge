@@ -1,6 +1,5 @@
 import React from 'react'
-import aixos from 'axios'
-import { Button, Dialog, Card, Icon } from '@blueprintjs/core'
+import { Button, Dialog, Card, Icon, Tag } from '@blueprintjs/core'
 import Main from '~/components/Main'
 import styles from './Top.css'
 import AddEmployee from './AddEmployee'
@@ -30,7 +29,7 @@ export default class Top extends React.PureComponent<
   }
 
   async componentDidMount() {
-    const [error, employees] = await api.get('admin', '/employees')
+    const [error, employees] = await api.get('/admin/employees')
     if (!error) {
       this.setState({
         employees,
@@ -88,6 +87,9 @@ export default class Top extends React.PureComponent<
                     <Icon icon="user" iconSize={50} color={'#eee'} />
                     <div className={styles.employeeInfo}>
                       {employee.name}
+                      {!!employee.admin && (
+                        <Tag className={styles.badge}>admin</Tag>
+                      )}
                       <br />
                       <small>{employee.employee_id}</small>
                     </div>

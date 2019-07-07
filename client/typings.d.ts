@@ -10,6 +10,7 @@ interface Employee {
   id: number
   employee_id: string
   name: string
+  admin?: boolean
 }
 
 interface Review {

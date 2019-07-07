@@ -17,9 +17,8 @@ import api from '~/utils/api'
 import { RouteComponentProps } from 'react-router'
 import styles from './Employee.css'
 import EditEmployee from './EditEmployee'
-import { showConfirm, showModal, dismiss } from '~/components/Modals'
+import { showConfirm, showModal, dismiss, showAlert } from '~/components/Modals'
 import Assign from './Assign'
-import AddReview from './AddReview'
 
 interface State {
   isLoading: boolean
@@ -42,8 +41,8 @@ export default class EmployeePage extends React.PureComponent<
 
   async componentDidMount() {
     const { id } = this.props.match.params
-    const [err1, info] = await api.get('admin', `/employee/${id}`)
-    const [err2, reviews] = await api.get('admin', `/employee/${id}/reviews`)
+    const [err1, info] = await api.get(`/admin/employee/${id}`)
+    const [err2, reviews] = await api.get(`/admin/employee/${id}/reviews`)
     if (!err1 && !err2) {
       this.setState({
         info,
@@ -66,7 +65,11 @@ export default class EmployeePage extends React.PureComponent<
   showAssignDialog = (e: React.MouseEvent) => {
     const { reviews, info } = this.state
     showModal(
-      <Dialog title="Add Review Assign" isOpen onClose={dismiss}>
+      <Dialog
+        title={`Add an employee to review ${info!.name}`}
+        isOpen
+        onClose={dismiss}
+      >
         <Assign
           onSaved={this.onReviewAdded}
           reviewers={new Set(reviews.map(review => review.reviewer.id))}
@@ -83,12 +86,17 @@ export default class EmployeePage extends React.PureComponent<
   }
 
   deleteEmployee = (e: React.MouseEvent) => {
+    if (this.state.info!.admin) {
+      showAlert({
+        message: 'Admin cannot be delted'
+      })
+      return
+    }
     showConfirm({
       message: 'Are you sure to delete this employee?',
       onConfirm: async () => {
         const [err] = await api.delete(
-          'admin',
-          `/employee/${this.props.match.params.id}`
+          `/admin/employee/${this.props.match.params.id}`
         )
         if (!err) {
           this.props.history.replace('/')
@@ -107,7 +115,7 @@ export default class EmployeePage extends React.PureComponent<
     showConfirm({
       message: 'Are you sure to unassign this?',
       onConfirm: async () => {
-        const [err] = await api.delete('admin', `/review/${review.id}`)
+        const [err] = await api.delete(`/admin/review/${review.id}`)
         if (!err) {
           const reviews = this.state.reviews.filter(item => item !== review)
           this.setState({
@@ -116,14 +124,6 @@ export default class EmployeePage extends React.PureComponent<
         }
       }
     })
-  }
-
-  addReview = () => {
-    showModal(
-      <Dialog title="Add Your Review" isOpen onClose={dismiss}>
-        <AddReview reviewee={this.state.info!} onCreated={this.onReviewAdded} />
-      </Dialog>
-    )
   }
 
   render() {
@@ -150,6 +150,7 @@ export default class EmployeePage extends React.PureComponent<
                   <Button icon="edit" onClick={this.editInfo}>
                     Edit
                   </Button>
+
                   <Button intent="danger" onClick={this.deleteEmployee}>
                     Delete
                   </Button>
@@ -161,9 +162,6 @@ export default class EmployeePage extends React.PureComponent<
                 <ButtonGroup>
                   <Button icon="share" onClick={this.showAssignDialog}>
                     Add Assign
-                  </Button>
-                  <Button icon="annotation" onClick={this.addReview}>
-                    Your Review
                   </Button>
                 </ButtonGroup>
 

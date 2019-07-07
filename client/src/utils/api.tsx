@@ -1,12 +1,9 @@
+import React from 'react'
 import Axios, { AxiosRequestConfig } from 'axios'
-import { showAlert } from '~/components/Modals'
+import { showAlert, showModal } from '~/components/Modals'
+import DemoLogin from '~/components/DemoLogin'
 
-type Service = 'employee' | 'admin'
-
-const apiBase = {
-  employee: '/api/v1',
-  admin: '/api/admin/v1'
-}
+const apiBase = '/api/v1'
 
 interface APIError {
   message: string
@@ -14,11 +11,10 @@ interface APIError {
 }
 
 const request = async (
-  service: Service,
   config: AxiosRequestConfig
 ): Promise<[null | APIError, any]> => {
   let res: [null | APIError, object] = [null, {}]
-  config.url = apiBase[service] + config.url
+  config.url = apiBase + config.url
 
   try {
     const { data } = await Axios(config)
@@ -70,23 +66,28 @@ const request = async (
 
   // if there is error
   if (res[0] !== null) {
-    showAlert({ message: res[0].message })
+    // if auth error
+    if (res[0].code.startsWith('auth.')) {
+      showModal(<DemoLogin />)
+    } else {
+      showAlert({ message: res[0].message })
+    }
   }
 
   return res
 }
 
 export default {
-  get(service: Service, pathname: string, params?: object) {
-    return request(service, { method: 'get', url: pathname, params })
+  get(pathname: string, params?: object) {
+    return request({ method: 'get', url: pathname, params })
   },
-  delete(service: Service, pathname: string, params?: object) {
-    return request(service, { method: 'delete', url: pathname, params })
+  delete(pathname: string, params?: object) {
+    return request({ method: 'delete', url: pathname, params })
   },
-  put(service: Service, pathname: string, data?: object) {
-    return request(service, { method: 'put', url: pathname, data })
+  put(pathname: string, data?: object) {
+    return request({ method: 'put', url: pathname, data })
   },
-  post(service: Service, pathname: string, data?: object) {
-    return request(service, { method: 'post', url: pathname, data })
+  post(pathname: string, data?: object) {
+    return request({ method: 'post', url: pathname, data })
   }
 }

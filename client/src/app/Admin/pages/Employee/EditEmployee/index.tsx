@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@blueprintjs/core'
+import { Button, Label, Checkbox } from '@blueprintjs/core'
 import styles from './EditEmployee.css'
 import api from '~/utils/api'
 import { dismiss } from '~/components/Modals'
@@ -13,16 +13,16 @@ type State = Omit<Employee, 'id'>
 
 export default class EditEmployee extends React.PureComponent<Props, State> {
   state: State = {
-    employee_id: this.props.employee.employee_id,
-    name: this.props.employee.name
+    ...this.props.employee
   }
 
-  updateField = ({
-    currentTarget: { name, value }
-  }: React.ChangeEvent<HTMLInputElement>) => {
+  updateField = ({ currentTarget }: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({
       ...this.state,
-      [name as keyof State]: value
+      [currentTarget.name as keyof State]:
+        currentTarget.name === 'admin'
+          ? currentTarget.checked
+          : currentTarget.value
     })
   }
 
@@ -31,14 +31,10 @@ export default class EditEmployee extends React.PureComponent<Props, State> {
       ...this.state,
       id: this.props.employee.id
     }
-    const [err] = await api.put(
-      'admin',
-      '/employee/' + this.props.employee.id,
-      {
-        ...this.state,
-        id: this.props.employee.id
-      }
-    )
+    const [err] = await api.put('/admin/employee/' + this.props.employee.id, {
+      ...this.state,
+      id: this.props.employee.id
+    })
 
     if (!err) {
       dismiss()
@@ -52,28 +48,35 @@ export default class EditEmployee extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { employee_id, name } = this.state
+    const { employee_id, name, admin } = this.state
     return (
       <div className={styles.outer}>
-        <input
-          className="bp3-input"
-          type="text"
-          placeholder="name"
-          name="name"
-          onChange={this.updateField}
-          value={name}
-          required
-        />
-        <br />
-        <br />
-        <input
-          className="bp3-input"
-          type="text"
-          placeholder="employ id"
-          name="employee_id"
-          onChange={this.updateField}
-          value={employee_id}
-        />
+        <Label>
+          Name:
+          <input
+            className={`bp3-input ${styles.input}`}
+            type="text"
+            placeholder="name"
+            name="name"
+            onChange={this.updateField}
+            value={name}
+            required
+          />
+        </Label>
+        <Label>
+          employ id:
+          <input
+            className={`bp3-input ${styles.input}`}
+            type="text"
+            placeholder="employ id"
+            name="employee_id"
+            onChange={this.updateField}
+            value={employee_id}
+          />
+        </Label>
+        <Checkbox checked={admin} onChange={this.updateField} name="admin">
+          Admin
+        </Checkbox>
         <Button
           onClick={this.save}
           intent="success"

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, MenuItem } from '@blueprintjs/core'
+import { Button, MenuItem, Label } from '@blueprintjs/core'
 import { Select, ItemPredicate, ItemRenderer } from '@blueprintjs/select'
 import styles from './Assign.css'
 import api from '~/utils/api'
@@ -25,7 +25,7 @@ export default class Assign extends React.PureComponent<Props, State> {
   }
 
   async componentDidMount() {
-    const [err, data] = await api.get('admin', '/employees')
+    const [err, data] = await api.get('/admin/employees')
     if (!err) {
       this.setState({
         allEmployees: data.list.filter(
@@ -40,8 +40,7 @@ export default class Assign extends React.PureComponent<Props, State> {
     const { reviewee } = this.props
 
     const [err, { id }] = await api.post(
-      'admin',
-      `/employee/${reviewee.id}/reviews`,
+      `/admin/employee/${reviewee.id}/reviews`,
       {
         reviewer: selectedEmployee!.id,
         text: ''

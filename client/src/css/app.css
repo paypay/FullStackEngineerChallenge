@@ -1,10 +1,11 @@
-@import "~normalize.css";
+@import '~normalize.css';
 
 :root {
   background-color: rgba(0, 0, 0, 0.015);
 }
 
 :global #root {
+  position: relative;
   max-width: 960px;
   margin: 0 auto;
   padding: 0 12px;

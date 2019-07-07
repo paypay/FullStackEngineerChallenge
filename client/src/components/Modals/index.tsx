@@ -3,9 +3,11 @@ import { Alert } from '@blueprintjs/core'
 
 interface ShowAlertParams {
   message: string
+  onConfirm?: () => void
 }
 
-interface ShowConfirmParams extends ShowAlertParams {
+interface ShowConfirmParams {
+  message: string
   onConfirm: () => void
   onCancel?: () => void
 }
@@ -46,7 +48,12 @@ export default class Modals extends React.PureComponent<{}, State> {
     const { modals } = this.state
     this.setState({
       modals: modals.concat(
-        <Alert isOpen key={modals.length} onClose={this.dismiss}>
+        <Alert
+          isOpen
+          key={modals.length}
+          onClose={this.dismiss}
+          onConfirm={params.onConfirm}
+        >
           {params.message}
         </Alert>
       )

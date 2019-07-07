@@ -30,8 +30,7 @@ export default class AddReview extends React.PureComponent<Props, State> {
 
   add = async () => {
     const [err, data] = await api.post(
-      'admin',
-      `/employee/${this.props.reviewee.id}/reviews`,
+      `/admin/employee/${this.props.reviewee.id}/reviews`,
       {
         ...this.state
       }

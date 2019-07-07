@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@blueprintjs/core'
+import { Button, Label, Checkbox } from '@blueprintjs/core'
 import Axios from 'axios'
 import styles from './AddEmployee.css'
 import api from '~/utils/api'
@@ -14,7 +14,8 @@ type State = Omit<Employee, 'id'>
 export default class AddEmployee extends React.PureComponent<Props, State> {
   state: State = {
     employee_id: '',
-    name: ''
+    name: '',
+    admin: false
   }
 
   updateField = ({
@@ -27,7 +28,7 @@ export default class AddEmployee extends React.PureComponent<Props, State> {
   }
 
   add = async () => {
-    const [err, data] = await api.post('admin', '/employees', this.state)
+    const [err, data] = await api.post('/admin/employees', this.state)
     if (!err) {
       dismiss()
       this.props.onCreated(data as Employee)
@@ -40,31 +41,36 @@ export default class AddEmployee extends React.PureComponent<Props, State> {
   }
 
   render() {
-    const { employee_id, name } = this.state
+    const { employee_id, name, admin } = this.state
 
     return (
       <div className={styles.outer}>
-        <input
-          className="bp3-input"
-          type="text"
-          placeholder="name"
-          name="name"
-          onChange={this.updateField}
-          required
-          value={name}
-        />
-        <br />
-        <br />
-        <input
-          className="bp3-input"
-          type="text"
-          placeholder="employ id"
-          name="employee_id"
-          onChange={this.updateField}
-          value={employee_id}
-        />
-        <br />
-        <br />
+        <Label>
+          Name:
+          <input
+            className={`bp3-input ${styles.input}`}
+            type="text"
+            placeholder="name"
+            name="name"
+            onChange={this.updateField}
+            value={name}
+            required
+          />
+        </Label>
+        <Label>
+          employ id:
+          <input
+            className={`bp3-input ${styles.input}`}
+            type="text"
+            placeholder="employ id"
+            name="employee_id"
+            onChange={this.updateField}
+            value={employee_id}
+          />
+        </Label>
+        <Checkbox checked={admin} onChange={this.updateField} name="admin">
+          Admin
+        </Checkbox>
         <Button
           onClick={this.add}
           intent="success"
