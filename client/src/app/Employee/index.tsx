@@ -10,7 +10,7 @@ interface State {
   isLoading: boolean
   me?: Employee
 }
-export default class Employee extends React.PureComponent<{}, State> {
+export default class EmployeeApp extends React.PureComponent<{}, State> {
   state: State = {
     isLoading: true
   }
@@ -30,7 +30,7 @@ export default class Employee extends React.PureComponent<{}, State> {
         <Loading isLoading={isLoading}>
           {() => (
             <Fragment>
-              <Header me={me} />
+              <Header me={me!} />
               <HashRouter>
                 <Switch>
                   <Route path="/" component={Top} />

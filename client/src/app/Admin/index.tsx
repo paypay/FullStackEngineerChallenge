@@ -1,6 +1,6 @@
 import { HashRouter, Switch, Route } from 'react-router-dom'
 import Top from './pages/Top'
-import Employee from './pages/Employee'
+import EmployeePage from './pages/Employee'
 import React, { Fragment } from 'react'
 import Header from '~/components/Header'
 import Modals, { showAlert } from '~/components/Modals'
@@ -11,7 +11,7 @@ interface State {
   isLoading: boolean
   me?: Employee
 }
-export default class Admin extends React.PureComponent<{}, State> {
+export default class AdminApp extends React.PureComponent<{}, State> {
   state: State = {
     isLoading: true
   }
@@ -40,10 +40,10 @@ export default class Admin extends React.PureComponent<{}, State> {
         <Loading isLoading={isLoading}>
           {() => (
             <Fragment>
-              <Header admin me={me} />
+              <Header admin me={me!} />
               <HashRouter>
                 <Switch>
-                  <Route path="/employee/:id" component={Employee} />
+                  <Route path="/employee/:id" component={EmployeePage} />
                   <Route path="/" component={Top} />
                 </Switch>
               </HashRouter>

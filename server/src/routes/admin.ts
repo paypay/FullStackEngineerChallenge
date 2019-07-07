@@ -1,6 +1,7 @@
 import express from 'express'
 import db from '../../db'
 import { ApiError } from '../var'
+import { getReviewsToEmployee } from '../utils/review'
 const router = express.Router()
 
 // list up all the employees
@@ -101,28 +102,8 @@ router.delete('/employee/:id', async (req, res, next) => {
 // get all reviews of a employee
 router.get('/employee/:id/reviews', async (req, res, next) => {
   try {
-    const list = await db('review')
-      .select([
-        'review.*',
-        'employee.name as reviewer__name',
-        'employee.id as reviewer__id',
-        'employee.employee_id as reviewer__employee_id'
-      ])
-      .leftJoin('employee', 'review.reviewer', 'employee.id')
-      .where('reviewee', req.params.id)
-
-    // nest reviewer
-    res.send(
-      list.map(review => ({
-        id: review.id,
-        reviewer: {
-          id: review.reviewer__id,
-          employee_id: review.reviewer__employee_id,
-          name: review.reviewer__name
-        },
-        text: review.text
-      }))
-    )
+    const list = await getReviewsToEmployee(req.params.id)
+    res.send(list)
   } catch (e) {
     next({
       code: ApiError.RequestMalformed
