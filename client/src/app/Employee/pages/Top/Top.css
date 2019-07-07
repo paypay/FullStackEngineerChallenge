@@ -20,12 +20,29 @@
   white-space: pre;
 }
 
-.reviewerName {
+.reviewUsername {
   margin-left: 5px;
 }
 
 .reviewCard:nth-child(2n + 2) {
   margin-right: 0;
+}
+
+.badge {
+  display: block;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #999;
+}
+
+.badge .label {
+  margin-left: 5px;
+}
+
+.action {
+  position: absolute;
+  right: 0;
 }
 
 .reviewText {

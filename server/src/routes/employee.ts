@@ -1,6 +1,6 @@
 import express from 'express'
 import db from '../../db'
-import { getReviewsToEmployee } from '../utils/review'
+import { getReviewsToEmployee, getReviewsFromEmployee } from '../utils/review'
 import { ApiError } from '../var'
 
 const router = express.Router()
@@ -27,6 +27,35 @@ router.get('/me/reviews/received', async (req, res, next) => {
       true /* hasText */
     )
     res.send(list)
+  } catch (e) {
+    next({
+      code: ApiError.RequestMalformed
+    })
+  }
+})
+
+// get my reviews
+router.get('/me/reviews/tosend', async (req, res, next) => {
+  try {
+    const list = await getReviewsFromEmployee(req.session!.userId)
+    res.send(list)
+  } catch (e) {
+    next({
+      code: ApiError.RequestMalformed
+    })
+  }
+})
+
+// update a review
+router.put('/review/:id', async (req, res, next) => {
+  try {
+    await db('review')
+      .where('id', req.params.id)
+      .where('reviewer', req.session!.userId)
+      .update({
+        text: req.body.text
+      })
+    res.send()
   } catch (e) {
     next({
       code: ApiError.RequestMalformed

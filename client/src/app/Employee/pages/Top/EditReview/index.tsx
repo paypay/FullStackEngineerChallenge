@@ -1,22 +1,21 @@
 import React from 'react'
 import { Button, TextArea } from '@blueprintjs/core'
-import styles from './AddReview.css'
+import styles from './EditReview.css'
 import api from '~/utils/api'
 import { dismiss } from '~/components/Modals'
-import { INTENT_DANGER } from '@blueprintjs/core/lib/esm/common/classes'
 
 interface Props {
-  reviewee: Employee
-  onCreated: (review: Review) => void
+  review: Review
+  onSaved: (review: Review) => void
 }
 
 interface State {
   text: string
 }
 
-export default class AddReview extends React.PureComponent<Props, State> {
+export default class EditReview extends React.PureComponent<Props, State> {
   state: State = {
-    text: ''
+    text: this.props.review.text
   }
 
   updateField = ({
@@ -29,15 +28,16 @@ export default class AddReview extends React.PureComponent<Props, State> {
   }
 
   add = async () => {
-    const [err, data] = await api.post(
-      `/admin/employee/${this.props.reviewee.id}/reviews`,
-      {
-        ...this.state
-      }
-    )
+    const { review, onSaved } = this.props
+    const [err] = await api.put(`/review/${review.id}`, {
+      ...this.state
+    })
     if (!err) {
       dismiss()
-      this.props.onCreated(data as Review)
+      onSaved({
+        ...review,
+        ...this.state
+      })
     }
   }
 
@@ -56,7 +56,7 @@ export default class AddReview extends React.PureComponent<Props, State> {
           name="text"
           onChange={this.updateField}
           value={text}
-          placeholder={`how do you think about ${this.props.reviewee.name}`}
+          placeholder={`how do you think about ${this.props.review.reviewee.name}`}
           className={styles.textArea}
         />
         <Button

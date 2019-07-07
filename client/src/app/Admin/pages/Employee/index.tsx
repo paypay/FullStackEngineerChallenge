@@ -160,8 +160,8 @@ export default class EmployeePage extends React.PureComponent<
               <div className={styles.reviews}>
                 <p>Reviews</p>
                 <ButtonGroup>
-                  <Button icon="share" onClick={this.showAssignDialog}>
-                    Add Assign
+                  <Button icon="plus" onClick={this.showAssignDialog}>
+                    Add Reviewer
                   </Button>
                 </ButtonGroup>
 
