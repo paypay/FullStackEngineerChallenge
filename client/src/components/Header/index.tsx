@@ -11,7 +11,7 @@ import {
 import api from '~/utils/api'
 
 interface Props {
-  title: string
+  admin?: boolean
   me: Employee
 }
 
@@ -30,19 +30,28 @@ const goToAdmin = () => {
   location.href = '/admin.html'
 }
 
-export default function Header({ title, me }: Props) {
+export default function Header({ admin, me }: Props) {
   return (
     <div className={styles.header}>
       <a className={styles.logo} href="#/">
-        {title}
+        {admin ? 'RevYou Admin' : 'RevYou'}
       </a>
-      {!!me.admin && (
+      {!admin && !!me.admin && (
         <Button
           icon="take-action"
           text="admin"
           onClick={goToAdmin}
           minimal
           intent="danger"
+        />
+      )}
+      {admin && (
+        <Button
+          icon="home"
+          text="home"
+          onClick={goToTop}
+          minimal
+          intent="none"
         />
       )}
       <Popover

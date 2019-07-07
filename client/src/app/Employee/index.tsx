@@ -30,7 +30,7 @@ export default class Employee extends React.PureComponent<{}, State> {
         <Loading isLoading={isLoading}>
           {() => (
             <Fragment>
-              <Header title={'RevYou'} me={me} />
+              <Header me={me} />
               <HashRouter>
                 <Switch>
                   <Route path="/" component={Top} />

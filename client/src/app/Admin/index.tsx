@@ -40,7 +40,7 @@ export default class Admin extends React.PureComponent<{}, State> {
         <Loading isLoading={isLoading}>
           {() => (
             <Fragment>
-              <Header title={'RevYou admin'} me={me} />
+              <Header admin me={me} />
               <HashRouter>
                 <Switch>
                   <Route path="/employee/:id" component={Employee} />
