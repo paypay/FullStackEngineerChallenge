@@ -1,0 +1,1 @@
+export { RouterEmployee } from "./employee";

@@ -1,0 +1,35 @@
+.add {
+  float: right;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.employeeList {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.employeeCard {
+  display: flex;
+  align-items: center;
+  width: calc((100% - 12px * 2) / 3);
+  margin: 12px 12px 0 0;
+  background-color: #fff;
+}
+
+.employeeInfo {
+  margin-left: 18px;
+}
+
+.employeeCard small {
+  color: #999;
+}
+
+.employeeCard:nth-child(3n + 3) {
+  margin-right: 0;
+}

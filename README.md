@@ -1,12 +1,33 @@
 # Revyou
 
-> original requirement is [here](./docs/assignment)
+A simple review system.
 
-# Start
+> original requirement is [here](./docs/assignment.md)
 
-To run the app locally
+# Dev
+
+To run the app locally (node >= 10)
 
 ```
 > npm i
-> npm run start
+> npm run dev
 ```
+
+then access following urls
+
+| url                                | desc          |
+| ---------------------------------- | ------------- |
+| `http://localhost:8080/`           | employee view |
+| `http://localhost:8080/admin.html` | admin view    |
+
+# Test
+
+```
+> npm run test
+```
+
+# Tech Stack
+
+- language: TS
+- client: React + Blueprint
+- server: koa + sqlite3

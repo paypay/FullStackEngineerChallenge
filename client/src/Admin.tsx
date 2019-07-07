@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import "@blueprintjs/core/lib/css/blueprint.css";
 import "@blueprintjs/icons/lib/css/blueprint-icons.css";
 import "./css/app.css";
-import App from "./App";
+import Admin from "./app/Admin";
 
-ReactDOM.render(<App />, document.querySelector("#root"));
+ReactDOM.render(<Admin />, document.querySelector("#root"));
 
 if ((module as any).hot) {
-  (module as any).hot.accept("./App.tsx", () => {
-    const NewApp = require("./App");
+  (module as any).hot.accept("./Admin", () => {
+    const NewApp = require("./Admin");
     ReactDOM.render(<NewApp.default />, document.querySelector("#root"));
   });
 }

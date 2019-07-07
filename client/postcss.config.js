@@ -9,7 +9,7 @@ const plugins = [
   assets(),
   url({ url: "inline" }),
   pxtorem({
-    rootValue: 16,
+    rootValue: 14,
     unitPrecision: 3,
     selectorBlackList: [":root"]
   })

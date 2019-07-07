@@ -1,6 +1,5 @@
 {
   "extends": "../tsconfig.json",
-  "files": "src",
   "compilerOptions": {
     "outDir": "dist",
     "target": "es2016",
@@ -18,5 +17,5 @@
     },
     "esModuleInterop": true
   },
-  "include": ["src"]
+  "include": ["src", "db", "db", "db"]
 }

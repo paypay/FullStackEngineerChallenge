@@ -19,6 +19,6 @@
     },
     "esModuleInterop": true
   },
-  "include": ["src"],
+  "include": ["src", "./typings.d.ts"],
   "exclude": ["node_modules", "dist"]
 }

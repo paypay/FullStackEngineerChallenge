@@ -12,7 +12,8 @@ module.exports = {
   mode: "development",
   devtool: "cheap-module-eval-source-map",
   entry: {
-    main: __dirname + "/src/index.tsx"
+    employee: __dirname + "/src/Employee.tsx",
+    admin: __dirname + "/src/Admin.tsx"
   },
   output: {
     filename: "[name].js"
@@ -70,7 +71,7 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
-      "~": path.resolve(__dirname, "src/client")
+      "~": path.resolve(__dirname, "src")
     }
   },
   devServer: {
@@ -88,8 +89,16 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
+      chunks: ["employee"],
       inject: "body",
-      template: __dirname + "/public/index.ejs"
+      template: __dirname + "/public/index.ejs",
+      filename: "index.html"
+    }),
+    new HtmlWebpackPlugin({
+      chunks: ["admin"],
+      inject: "body",
+      template: __dirname + "/public/index.ejs",
+      filename: "admin.html"
     }),
     new InlineManifestWebpackPlugin("manifest"),
     new HappyPack({
