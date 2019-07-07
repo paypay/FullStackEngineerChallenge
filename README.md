@@ -29,5 +29,5 @@ then access following urls
 # Tech Stack
 
 - language: TS
-- client: React + Blueprint
-- server: koa + sqlite3
+- client: React + Blueprint + css-modules(postCSS)
+- server: express + sqlite3

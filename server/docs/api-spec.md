@@ -30,7 +30,7 @@ interface Employee {
 }
 ```
 
-## 1.1. `GET /employees`
+## 1.1. `GET /admin/v1/employees`
 
 #### request
 
@@ -40,18 +40,18 @@ none
 
 ```ts
 // TODO: paging
-interface ResponseEmployees {
+{
   total: number;
   list: Employee[];
 }
 ```
 
-## 1.2. `POST /employees`
+## 1.2. `POST /admin/v1/employees`
 
 #### request
 
 ```ts
-interface RequestEmployeeCreate {
+{
   employee_id: string;
   name: string;
 }
@@ -61,7 +61,7 @@ interface RequestEmployeeCreate {
 
 `Employee`
 
-## 1.3. `GET /employee/{employee_id}`
+## 1.3. `GET /admin/v1/employee/{employee_id}`
 
 #### request
 
@@ -71,12 +71,12 @@ none
 
 `Employee`
 
-## 1.3. `PUT /employee/{employee_id}`
+## 1.3. `PUT /admin/v1/employee/{employee_id}`
 
 #### request
 
 ```ts
-interface RequestEmployeeUpdate {
+{
   employee_id: string;
   name: string;
 }
@@ -86,7 +86,79 @@ interface RequestEmployeeUpdate {
 
 none
 
-## 1.4. `DELETE /employee/{employee_id}`
+## 1.4. `DELETE /admin/v1/employee/{employee_id}`
+
+#### request
+
+none
+
+#### response
+
+none
+
+# 2. Reviews
+
+```ts
+interface Review {
+  id: number;
+  reviewer: Employee;
+  reviewee: Employee;
+  text: string;
+}
+```
+
+## 2.1 `GET /admin/v1/employee/${id}/reviews`
+
+get reviews of certain employee
+
+#### request
+
+none
+
+#### response
+
+```ts
+{
+    reviews: Review[]
+}
+```
+
+## 2.2 `POST /admin/v1/employee/:employee_id/reviews`
+
+create a w review of certain employee, could be use to assign
+
+### request
+
+```ts
+{
+  reviewer: number;
+  text?: string;
+}
+```
+
+### response
+
+`Review`
+
+## 2.3 `PUT /admin/v1/employee/:employee_id/review/:review_id`
+
+update a review
+
+#### request
+
+```ts
+{
+  text: string;
+}
+```
+
+#### response
+
+none
+
+## 2.4 `DELETE /admin/v1/employee/:employee_id/review/:review_id`
+
+delete a review
 
 #### request
 

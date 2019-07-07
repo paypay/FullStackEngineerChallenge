@@ -1,20 +1,21 @@
-import React from "react";
-import { Button } from "@blueprintjs/core";
-import styles from "./EditEmployee.css";
-import api from "~/utils/api";
+import React from 'react'
+import { Button } from '@blueprintjs/core'
+import styles from './EditEmployee.css'
+import api from '~/utils/api'
+import { dismiss } from '~/components/Modals'
 
 interface Props {
-  employee: Employee;
-  onSaved: (employee: Employee) => void;
+  employee: Employee
+  onSaved: (employee: Employee) => void
 }
 
-type State = Omit<Employee, "id">;
+type State = Omit<Employee, 'id'>
 
 export default class EditEmployee extends React.PureComponent<Props, State> {
   state: State = {
     employee_id: this.props.employee.employee_id,
     name: this.props.employee.name
-  };
+  }
 
   updateField = ({
     currentTarget: { name, value }
@@ -22,31 +23,36 @@ export default class EditEmployee extends React.PureComponent<Props, State> {
     this.setState({
       ...this.state,
       [name as keyof State]: value
-    });
-  };
+    })
+  }
 
   save = async () => {
     const data = {
       ...this.state,
       id: this.props.employee.id
-    };
-    const [err] = await api.put("/employee/" + this.props.employee.id, {
-      ...this.state,
-      id: this.props.employee.id
-    });
+    }
+    const [err] = await api.put(
+      'admin',
+      '/employee/' + this.props.employee.id,
+      {
+        ...this.state,
+        id: this.props.employee.id
+      }
+    )
 
     if (!err) {
-      this.props.onSaved(data);
+      dismiss()
+      this.props.onSaved(data)
     }
-  };
+  }
 
   isValid() {
-    const { name, employee_id } = this.state;
-    return name.trim().length > 0 && employee_id.trim().length > 0;
+    const { name, employee_id } = this.state
+    return name.trim().length > 0 && employee_id.trim().length > 0
   }
 
   render() {
-    const { employee_id, name } = this.state;
+    const { employee_id, name } = this.state
     return (
       <div className={styles.outer}>
         <input
@@ -68,8 +74,6 @@ export default class EditEmployee extends React.PureComponent<Props, State> {
           onChange={this.updateField}
           value={employee_id}
         />
-        <br />
-        <br />
         <Button
           onClick={this.save}
           intent="success"
@@ -79,6 +83,6 @@ export default class EditEmployee extends React.PureComponent<Props, State> {
           Save
         </Button>
       </div>
-    );
+    )
   }
 }

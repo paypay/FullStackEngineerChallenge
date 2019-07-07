@@ -6,3 +6,7 @@
   display: block;
   margin-top: 24px;
 }
+
+.textArea {
+  width: 100%;
+}

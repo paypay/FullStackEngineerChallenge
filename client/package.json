@@ -20,6 +20,7 @@
   "homepage": "https://github.com/cmilu/FullStackEngineerChallenge#readme",
   "devDependencies": {
     "@blueprintjs/core": "^3.17.1",
+    "@blueprintjs/select": "^3.9.0",
     "@types/axios": "^0.14.0",
     "@types/jest": "^24.0.15",
     "@types/pure-render-decorator": "^0.2.28",

@@ -3,3 +3,56 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.reviews {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.reviewList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.reviewCard {
+  width: calc((100% - 12px) / 2);
+  margin: 12px 12px 0 0;
+  background-color: #fff;
+}
+
+.reviewCardHead {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.reviewCard:nth-child(2n + 2) {
+  margin-right: 0;
+}
+
+.reviewerName {
+  margin-left: 10px;
+}
+
+.badge {
+  display: block;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #999;
+}
+
+.badge .label {
+  margin-left: 5px;
+}
+
+.delete {
+  position: absolute;
+  right: 0;
+}
+
+.reviewText {
+  margin-top: 12px;
+  white-space: pre-line;
+}

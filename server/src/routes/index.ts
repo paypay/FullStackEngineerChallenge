@@ -1,1 +1,1 @@
-export { RouterEmployee } from "./employee";
+export { RouterAdmin } from "./admin";
