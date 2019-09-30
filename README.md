@@ -1,39 +1,41 @@
-# Full Stack Developer Challenge
-This is an interview challengs. Please feel free to fork. Pull Requests will be ignored.
 
-## Requirements
-Design a web application that allows employees to submit feedback toward each other's performance review.
+Minimal full-stack MERN app with authentication using passport and JWTs and MongoDB.
 
-*Partial solutions are acceptable.*  It is not necessary to submit a complete solution that implements every requirement.
+This project uses the following technologies:
 
-### Admin view
-* Add/remove/update/view employees
-* Add/update/view performance reviews
-* Assign employees to participate in another employee's performance review
+- [React](https://reactjs.org) and [React Router](https://reacttraining.com/react-router/) for frontend
+- [Express](http://expressjs.com/) and [Node](https://nodejs.org/en/) for the backend
+- [MongoDB](https://www.mongodb.com/) for the database
+- [Redux](https://redux.js.org/basics/usagewithreact) for state management between React components
 
-### Employee view
-* List of performance reviews requiring feedback
-* Submit feedback
+## Configuration
 
-## Challenge Scope
-* High level description of design and technologies used
-* Server side API (using a programming language and/or framework of your choice)
-  * Implementation of at least 3 API calls
-  * Most full stack web developers at PayPay currently use Java, Ruby on Rails, or Node.js on the server(with MySQL for the database), but feel free to use other tech if you prefer
-* Web app
-  * Implementation of 2-5 web pages using a modern web framework (e.g. React or Angular) that talks to server side
-    * This should integrate with your API, but it's fine to use static responses for some of it 
-* Document all assumptions made
-* Complete solutions aren't required, but what you do submit needs to run.
+Make sure to add your own `MONGOURI` from your [mLab](http://mlab.com) database in `config/keys.js`.
 
-## How to complete this challenge
-* Fork this repo in github
-* Complete the design and code as defined to the best of your abilities
-* Place notes in your code to help with clarity where appropriate. Make it readable enough to present to the PayPay interview team
-* Complete your work in your own github repo and send the results to us and/or present them during your interview
+```javascript
+module.exports = {
+  mongoURI: "YOUR_MONGO_URI_HERE",
+  secretOrKey: "secret"
+};
+```
 
-## What are we looking for? What does this prove?
-* Assumptions you make given limited requirements
-* Technology and design choices
-* Identify areas of your strengths
-* This is not a pass or fail test, this will serve as a common ground that we can deep dive together into specific issues
+## Quick Start
+
+```javascript
+// Install dependencies for server & client
+npm install && npm run client-install
+
+// Run client & server with concurrently
+npm run dev
+
+// Server runs on http://localhost:5000 and client on http://localhost:3001
+```
+
+## User Info
+Admin
+Username - admin@paypay.com
+Password -admin1
+
+Normal User / Employee
+Username - k88.manish@gmail.com
+Password - 123123
