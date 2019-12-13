@@ -8,6 +8,8 @@ const routes = (router) => {
 
   router.post('/logout', authController.logout);
 
+  router.post('/signup', authController.signup);
+
   return router;
 };
 

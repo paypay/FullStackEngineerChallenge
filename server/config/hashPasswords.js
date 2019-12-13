@@ -6,13 +6,14 @@ const hashPassword = (password) => {
     var hash = crypto.pbkdf2Sync(password, salt, iterations, 512, 'sha512');
     return {
         salt: salt,
-        hash: hash,
-        iterations: iterations
+        hash: hash.toString('hex'),
+        iterations,
     };
 }
 
 const isPasswordCorrect = (savedHash, savedSalt, savedIterations, passwordAttempt) => {
-    return savedHash == pbkdf2(passwordAttempt, savedSalt, savedIterations);
+    let hashedValue = crypto.pbkdf2Sync(passwordAttempt, savedSalt, savedIterations, 512, 'sha512');
+    return savedHash == hashedValue.toString('hex');
 };
 
 module.exports = {
