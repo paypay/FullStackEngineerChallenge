@@ -19,18 +19,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+/** Root Router: Healthcheck and others */
 app.use('/', indexRouter(router));
+
+/** Router: log in router module */
 app.use('/auth', authRouter(router));
 
-// authenticated routes
+/*  Router: Performance review router module*/
 app.use('/performance', /* authMiddleware, */ performaceRouter(router));
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Generic Error Handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

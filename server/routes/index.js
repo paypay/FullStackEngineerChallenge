@@ -1,9 +1,7 @@
 const routes = (router) => {
-  /* GET home page. */
   router.get('/', function (req, res, next) {
-    res.send('OK');
+    res.send('Healthcheck OK');
   });
-
   return router;
 };
 

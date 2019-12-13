@@ -4,15 +4,9 @@ const routes = (router) => {
 
   router.get('/', authController.healthcheck);
 
-  // log in
   router.post('/login', authController.login);
 
-  // log out
-  router.post('/log-out', (req, res) => {
-    res.send({
-      status : 'Todo'
-    });
-  });
+  router.post('/logout', authController.logout);
 
   return router;
 };
