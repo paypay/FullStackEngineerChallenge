@@ -6,7 +6,7 @@ const signToken = (userid) => {
         expiresIn: '1h'
     });
     return token;
-}
+};
 
 module.exports = {
     signToken

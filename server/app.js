@@ -26,8 +26,7 @@ app.use('/', indexRouter(router));
 app.use('/auth', authRouter(router));
 
 /*  Router: Performance review router module*/
-app.use('/performance', /* authMiddleware, */ performaceRouter(router));
-
+app.use('/performance', authMiddleware, performaceRouter(router));
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

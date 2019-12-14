@@ -4,17 +4,16 @@ const HEADER_CHECK = /Bearer/;
 
 // validate token from header Authorization: Bearer <token>
 const validateToken = (req, res, next) => {
-
-    let token = req.headers['Authorization'] || req.body.token;
+    let token = req.headers['authorization'];
     if (!token){
-        res.status(403).send({
+        return res.status(403).send({
             status: 'Authentication not provided',
         });
     }
     let parts = token.split(' ');
     
     if (!HEADER_CHECK.test(parts[0])) {
-        res.status(400).send({
+        return res.status(400).send({
             status: 'Bearer not provided'
         });
     }
@@ -22,7 +21,7 @@ const validateToken = (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
-                res.status(401).send({
+                return res.status(401).send({
                     status: 'Invalid token provided'
                 });
             }
@@ -30,7 +29,7 @@ const validateToken = (req, res, next) => {
             next();
         });
     } else {
-        req.status(401).send({
+        return req.status(401).send({
             status: 'Auth token is not provided'
         });
     }
