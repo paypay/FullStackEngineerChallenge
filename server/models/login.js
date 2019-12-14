@@ -14,6 +14,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         iteration: {
             type: DataTypes.INTEGER,
+        },
+        type: {
+            type: DataTypes.STRING,
         }
     }, { freezeTableName: true, timestamps: false });
 

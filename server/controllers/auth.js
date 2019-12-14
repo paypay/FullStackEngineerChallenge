@@ -33,7 +33,6 @@ const login = async (req, res) => {
     } catch (e) {
         console.error(e);
     }
-
     if (!result) {
         return res.send($.formatException('User not found'));
     }
@@ -44,7 +43,7 @@ const login = async (req, res) => {
 
     let token = auth.signToken(user_id);
 
-    return res.send($.formatException('Authenticated', { 'token': token }));
+    return res.send($.formatException('Authenticated', { 'token': token, 'user_type': result.type }));
 };
 
 const logout = (req, res) => {
@@ -54,7 +53,7 @@ const logout = (req, res) => {
 
 // this is just an interface to create dummy data in db for users table
 const signup = async (req, res, next) => {
-    let { user_id, password } = req.body;
+    let { user_id, password, user_type } = req.body;
 
     if (!user_id || !password) {
         return res.send($.formatException('data not found'));
@@ -66,12 +65,12 @@ const signup = async (req, res, next) => {
             user_id,
             salt,
             hash,
+            type: user_type,
             iteration: iterations,
         });
     } catch (e) {
         console.error('exception', e);
     }
-    console.log('Result', result);
     res.send('Ok');
 };
 
