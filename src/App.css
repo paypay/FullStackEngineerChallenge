@@ -1,0 +1,126 @@
+:root {
+    --form-light-blue: #c0daf5;
+    --background-min: #caecfb;
+    --background-max: #0e7fb2;
+    --row-bg:#52a8ce;
+    --row-bg-light: #fffe;
+    --section-bg-employee: #5a5c67;
+    --section-bg-feedback: #b6bcdc;
+}
+
+.switch-role {
+    border-radius: 3px;
+    margin: 20px;
+}
+
+.label-header {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--background-max);
+}
+
+.message-under-construction {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 15px;
+}
+
+.employee-view {
+    background-image: linear-gradient(to bottom right, var(--background-min), var(--background-max));
+    padding: 30px;
+    height: 100vh;
+}
+
+.employee-list {
+    background-color: var(--section-bg-employee);
+    border-radius: 3px;
+    padding: 5px;
+    max-width: 500px;
+}
+
+.employee-row {
+    background: var(--row-bg-light);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
+    padding: 3px 10px;
+    font-size: 12px;
+    margin-bottom: 6px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+form {
+    background-color: var(--form-light-blue);
+    border-radius: 3px;
+}
+
+input#firstName,
+input#lastName {
+    border-radius: 3px;
+    width: 200px;
+    height: 30px;
+    width: 310px;
+    margin: 1px;
+}
+
+input#employeeId {
+    border-radius: 3px;
+    width: 150px;
+    height: 30px; 
+}
+
+form.ant-form.ant-form-vertical {
+    border-radius: 3px;
+}
+
+header.ant-layout-header {
+    background-image: linear-gradient(to bottom right, var(--background-min), var(--background-max));
+}
+
+.rating-row {
+    background-color: var(--row-bg);
+    border-radius: 3px;
+    display: flex;
+    margin: 5px;
+}
+
+.slider-rating {
+    width: 150px;
+}
+
+.scale-label {
+    margin: 15px;
+}
+
+.ant-row.ant-form-item.feedback-item {
+    border-radius: 3px;
+    background-color: var(--section-bg-feedback);
+    margin: 15px;
+    width: 600px;
+}
+
+.textarea#description {
+    width: 620px;
+}
+
+.ant-row.row-feedback {
+    border-radius: 3px;
+    background-color: var(--background-max);
+    margin: 20px;
+    width: 600px;
+}
+
+button#btnReview{
+    border-radius: 3px;
+    background: var(--background-min);
+}
+
+.ant-form-vertical .ant-form-item-label {
+    padding: 15px;
+    font-weight: bold;
+}
+
+.confirmCheckbox.ant-checkbox-wrapper {
+    margin-left: 15px;
+}
