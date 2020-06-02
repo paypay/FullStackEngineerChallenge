@@ -1,39 +1,34 @@
-# Full Stack Developer Challenge
-This is an interview challengs. Please feel free to fork. Pull Requests will be ignored.
+This project is meant for the https://github.com/Pay-Baymax/FullStackEngineerChallenge programming challenge.
 
-## Requirements
-Design a web application that allows employees to submit feedback toward each other's performance review.
+It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-*Partial solutions are acceptable.*  It is not necessary to submit a complete solution that implements every requirement.
+This project mostly deals with the Frontend part, with mock data.
+- Implemented using: Javascript + React + antd React UI library
+- Used React Hooks instead of classes.
 
-### Admin view
-* Add/remove/update/view employees
-* Add/update/view performance reviews
-* Assign employees to participate in another employee's performance review
+There are 2 modes: Admin and Employee.
+- To be able to switch between the 2 modes, toggle the Switch button at the top left of the page.
+- Ideally, a Logged in user will have a role assigned to it. This feature merely simulates a user with
+either Admin or Employee role.
 
-### Employee view
-* List of performance reviews requiring feedback
-* Submit feedback
+Admin mode
+- This consists of 2 tabs: The Employees tab, and the Performance Review tab (under construction)
+- The Employees tab displays a list of employees (hardcoded data)
+    - Click on the New employee button to view a drawer, where the user can enter the details about the employee.
 
-## Challenge Scope
-* High level description of design and technologies used
-* Server side API (using a programming language and/or framework of your choice)
-  * Implementation of at least 3 API calls
-  * Most full stack web developers at PayPay currently use Java, Ruby on Rails, or Node.js on the server(with MySQL for the database), but feel free to use other tech if you prefer
-* Web app
-  * Implementation of 2-5 web pages using a modern web framework (e.g. React or Angular) that talks to server side
-    * This should integrate with your API, but it's fine to use static responses for some of it 
-* Document all assumptions made
-* Complete solutions aren't required, but what you do submit needs to run.
+Employee mode
+- This consists of only one tab: the Performance Review tab.
+- The user is presented with a list of employees to review (in this example, only one).
+- When the user presses the "Give Feedback" button beside the name of the employee, a Drawer appears, where
+the user can enter feedback for this particular employee.
 
-## How to complete this challenge
-* Fork this repo in github
-* Complete the design and code as defined to the best of your abilities
-* Place notes in your code to help with clarity where appropriate. Make it readable enough to present to the PayPay interview team
-* Complete your work in your own github repo and send the results to us and/or present them during your interview
+The backend was *not* implemented due to time constraints,
+but the plan was to create a NodeJS RESTful API with a MySQL database.
+On the Frontend side, the *plan* was to use the Axios library as the HTTP client, in order to
+perform GET, POST, PUT and DELETE operations to the Backend.
 
-## What are we looking for? What does this prove?
-* Assumptions you make given limited requirements
-* Technology and design choices
-* Identify areas of your strengths
-* This is not a pass or fail test, this will serve as a common ground that we can deep dive together into specific issues
+To run,
+
+### `npm start`
+
+Written by HMAC
