@@ -1,0 +1,10 @@
+{
+  "name": "paypay",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "cd ./api && npm run dev"
+  },
+  "author": "",
+  "license": "ISC"
+}
