@@ -1,20 +1,9 @@
 import "dotenv-flow/config";
-import { ApolloServer, gql } from "apollo-server-micro";
+
+import { ApolloServer } from "apollo-server-micro";
 import cors from "micro-cors";
 
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`;
-
-const resolvers = {
-  Query: {
-    hello(parent, args, context) {
-      return "Hello World!";
-    },
-  },
-};
+import { resolvers, typeDefs, scalars } from "./src/graphql";
 
 module.exports = cors({
   allowHeaders: [
@@ -30,7 +19,7 @@ module.exports = cors({
   // Setup apollo server
   const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers,
+    resolvers: { ...resolvers, ...scalars },
     introspection: process.env.NODE_ENV !== "production",
     playground: process.env.NODE_ENV !== "production",
   });
