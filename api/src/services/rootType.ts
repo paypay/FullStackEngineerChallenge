@@ -10,4 +10,12 @@ export const rootType = gql`
   type Mutation {
     _: Boolean
   }
+
+  type PageInfo {
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+    firstCursor: ID
+    lastCursor: ID
+    previousCursor: ID
+  }
 `;

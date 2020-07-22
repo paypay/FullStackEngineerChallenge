@@ -26,6 +26,14 @@ export type Mutation = {
   _?: Maybe<Scalars["Boolean"]>;
 };
 
+export type PageInfo = {
+  __typename?: "PageInfo";
+  hasNextPage: Scalars["Boolean"];
+  hasPreviousPage: Scalars["Boolean"];
+  firstCursor?: Maybe<Scalars["ID"]>;
+  lastCursor?: Maybe<Scalars["ID"]>;
+};
+
 export type WithIndex<TObject> = TObject & Record<string, any>;
 export type ResolversObject<TObject> = WithIndex<TObject>;
 
@@ -313,10 +321,26 @@ export type MutationResolvers<
   _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
 }>;
 
+export type PageInfoResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["PageInfo"] = ResolversParentTypes["PageInfo"]
+> = ResolversObject<{
+  hasNextPage?: Resolver<ResolversTypes["Boolean"], ParentType, ContextType>;
+  hasPreviousPage?: Resolver<
+    ResolversTypes["Boolean"],
+    ParentType,
+    ContextType
+  >;
+  firstCursor?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  lastCursor?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
 export type Resolvers<ContextType = any> = ResolversObject<{
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  PageInfo?: PageInfoResolvers<ContextType>;
 }>;
 
 /**
