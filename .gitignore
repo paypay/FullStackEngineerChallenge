@@ -1,2 +1,7 @@
+
 # Dependency directories
-api/node_modules/
+*/node_modules/
+
+# docker
+api/src/database/mysql/data/*
+api/src/database/mysql/sql/*

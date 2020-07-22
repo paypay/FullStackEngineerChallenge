@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "dev": "micro-dev --silent --port 5000 index.js"
+    "dev": "micro-dev --silent --port 5000 index.js",
+    "db:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make",
+    "db:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
+    "db:migrate:rollback": "knex --knexfile src/database/knexfile.ts migrate:rollback",
+    "db:seed:make": "knex --knexfile src/database/knexfile.ts seed:make",
+    "db:seed:run": "knex --knexfile src/database/knexfile.ts seed:run",
+    "db:types": "schemats generate"
   },
   "author": "",
   "license": "ISC",
@@ -12,11 +18,14 @@
     "apollo-server-micro": "^2.16.0",
     "dotenv-flow": "^3.2.0",
     "graphql": "^15.3.0",
+    "knex": "^0.21.2",
     "merge-graphql-schemas": "^1.7.8",
     "micro": "^9.3.4",
-    "micro-cors": "^0.1.1"
+    "micro-cors": "^0.1.1",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.12",
     "@types/graphql": "^14.5.0",
     "@types/jest": "^26.0.5",
     "@types/micro-cors": "^0.1.1",
@@ -27,9 +36,11 @@
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",
+    "faker": "^4.1.0",
     "jest": "^26.1.0",
     "micro-dev": "^3.0.0",
     "prettier": "^2.0.5",
+    "schemats": "^3.0.3",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
   }
