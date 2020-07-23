@@ -1,7 +1,1 @@
-export const HelloResolvers = {
-  Query: {
-    hello() {
-      return "Hello World!";
-    },
-  },
-};
+export * from "../services/user/UserResolvers";

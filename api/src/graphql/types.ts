@@ -6,6 +6,10 @@ import {
 import { DeepPartial } from "utility-types";
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: any }> = { [K in keyof T]: T[K] };
+export type RequireFields<T, K extends keyof T> = {
+  [X in Exclude<keyof T, K>]?: T[X];
+} &
+  { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -32,6 +36,40 @@ export type PageInfo = {
   hasPreviousPage: Scalars["Boolean"];
   firstCursor?: Maybe<Scalars["ID"]>;
   lastCursor?: Maybe<Scalars["ID"]>;
+};
+
+export enum UserType {
+  Admin = "ADMIN",
+  Employee = "EMPLOYEE",
+}
+
+export enum UserOrderByInput {
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+}
+
+export type User = {
+  __typename?: "User";
+  id: Scalars["Int"];
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  userType: UserType;
+  avatar?: Maybe<Scalars["String"]>;
+  createdAt: Scalars["Date"];
+};
+
+export type UserEdge = {
+  __typename?: "UserEdge";
+  node: User;
+  cursor: Scalars["ID"];
+};
+
+export type UserConnection = {
+  __typename?: "UserConnection";
+  edges: Array<UserEdge>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars["Int"]>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -336,11 +374,51 @@ export type PageInfoResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  userType?: Resolver<ResolversTypes["UserType"], ParentType, ContextType>;
+  avatar?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type UserEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["UserEdge"] = ResolversParentTypes["UserEdge"]
+> = ResolversObject<{
+  node?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  cursor?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type UserConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["UserConnection"] = ResolversParentTypes["UserConnection"]
+> = ResolversObject<{
+  edges?: Resolver<Array<ResolversTypes["UserEdge"]>, ParentType, ContextType>;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["PageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  totalCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
 export type Resolvers<ContextType = any> = ResolversObject<{
   Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  UserEdge?: UserEdgeResolvers<ContextType>;
+  UserConnection?: UserConnectionResolvers<ContextType>;
 }>;
 
 /**

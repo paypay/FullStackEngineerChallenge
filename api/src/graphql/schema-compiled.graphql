@@ -2,6 +2,7 @@ scalar Date
 
 type Query {
   _: Boolean
+  users(first: Int, after: ID, orderBy: UserOrderByInput): UserConnection!
 }
 
 type Mutation {
@@ -24,4 +25,35 @@ enum Role {
 input UserFiltersInput {
   SEARCH: String
   USER_TYPE: UserType
+}
+
+enum UserType {
+  ADMIN
+  EMPLOYEE
+}
+
+enum UserOrderByInput {
+  ID_ASC
+  ID_DESC
+}
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  userType: UserType!
+  avatar: String
+  createdAt: Date!
+}
+
+type UserEdge {
+  node: User!
+  cursor: ID!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
 }
