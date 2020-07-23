@@ -5,7 +5,7 @@ import { createTestClient } from "apollo-server-testing";
 import { default as knex } from "../../src/database";
 import { cleanup } from "./cleanup";
 
-import { resolvers, typeDefs } from "../../src/graphql";
+import { resolvers, typeDefs, formatError } from "../../src/graphql";
 
 export const setupServer = (baseContext = {}) => {
   const context = { ...baseContext };
@@ -14,6 +14,7 @@ export const setupServer = (baseContext = {}) => {
     typeDefs,
     resolvers,
     context,
+    formatError,
   });
 
   return createTestClient(server);

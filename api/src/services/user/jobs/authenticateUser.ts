@@ -4,10 +4,20 @@ import db from "../../../database";
 import { user as userDB } from "../../../database/types";
 import { AuthenticateInput } from "../../../graphql/types";
 import generateToken from "../../../helpers/generateToken";
-import { FIELDS } from "../UserModel";
+import validateSchema from "../../../helpers/validateSchema";
+import { FIELDS, validations } from "../UserModel";
 import transformer from "../UserTransformer";
 
-const authenticateUser = async ({ email, password }: AuthenticateInput) => {
+const validationSchema = {
+  password: validations.password.required(),
+  email: validations.email.required(),
+};
+
+const authenticateUser = async (input: AuthenticateInput) => {
+  await validateSchema(validationSchema, input);
+
+  const { email, password } = input;
+
   const user = await db("user")
     .select<userDB>([...FIELDS, "password"])
     .where("email", "=", email)
@@ -24,7 +34,7 @@ const authenticateUser = async ({ email, password }: AuthenticateInput) => {
 
   return {
     user: transformer(user),
-    token: generateToken(user.id),
+    token: generateToken(user.id, user.userType),
   };
 };
 
