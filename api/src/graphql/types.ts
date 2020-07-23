@@ -30,12 +30,33 @@ export type Mutation = {
   _?: Maybe<Scalars["Boolean"]>;
 };
 
+export type CreateReviewPayload = {
+  __typename?: 'CreateReviewPayload';
+  review: Review;
+};
+
+export type ReviewFiltersInput = {
+  USER_ID?: Maybe<Scalars['Int']>;
+  REVIEWEE_ID?: Maybe<Scalars['Int']>;
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   hasNextPage: Scalars["Boolean"];
   hasPreviousPage: Scalars["Boolean"];
   firstCursor?: Maybe<Scalars["ID"]>;
   lastCursor?: Maybe<Scalars["ID"]>;
+};
+
+export type AuthenticateInput = {
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
+
+export type AuthenticatePayload = {
+  __typename?: 'AuthenticatePayload';
+  user: User;
+  token: Scalars['String'];
 };
 
 export enum UserType {
@@ -416,6 +437,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  AuthenticatePayload?: AuthenticatePayloadResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;

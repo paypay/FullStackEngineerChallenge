@@ -11,6 +11,20 @@ export const UserType = gql`
     ): UserConnection!
   }
 
+  extend type Mutation {
+    Authenticate(input: AuthenticateInput!): AuthenticatePayload!
+  }
+
+  input AuthenticateInput {
+    email: String!
+    password: String!
+  }
+
+  type AuthenticatePayload {
+    user: User!
+    token: String!
+  }
+
   enum UserType {
     ADMIN
     EMPLOYEE

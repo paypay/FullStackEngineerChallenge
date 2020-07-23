@@ -7,6 +7,7 @@ type Query {
 }
 
 type Mutation {
+  Authenticate(input: AuthenticateInput!): AuthenticatePayload!
   _: Boolean
 }
 
@@ -26,6 +27,16 @@ enum Role {
 input UserFiltersInput {
   SEARCH: String
   USER_TYPE: UserType
+}
+
+input AuthenticateInput {
+  email: String!
+  password: String!
+}
+
+type AuthenticatePayload {
+  user: User!
+  token: String!
 }
 
 enum UserType {
