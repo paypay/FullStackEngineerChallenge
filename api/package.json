@@ -5,6 +5,7 @@
   "main": "index.ts",
   "scripts": {
     "dev": "micro-dev --silent --port 5000 index.js",
+    "test": "NODE_ENV=test npm run db:migrate:latest && jest --coverage --runInBand",
     "gql:types": "graphql-codegen --config codegen.yml",
     "db:migrate:make": "knex --knexfile src/database/knexfile.ts migrate:make",
     "db:migrate:latest": "knex --knexfile src/database/knexfile.ts migrate:latest",
@@ -12,6 +13,19 @@
     "db:seed:make": "knex --knexfile src/database/knexfile.ts seed:make",
     "db:seed:run": "knex --knexfile src/database/knexfile.ts seed:run",
     "db:types": "schemats generate"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx|js)?$": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "globalTeardown": "./tests/jest/globalTeardown.ts"
   },
   "author": "",
   "license": "ISC",
@@ -27,6 +41,8 @@
     "mysql": "^2.18.1"
   },
   "devDependencies": {
+    "eslint-plugin-jest": "^23.18.0",
+    "ts-jest": "^26.1.3",
     "@graphql-codegen/add": "^1.17.3",
     "@graphql-codegen/cli": "^1.17.3",
     "@graphql-codegen/schema-ast": "^1.17.3",
@@ -41,6 +57,7 @@
     "@types/yup": "^0.29.3",
     "@typescript-eslint/eslint-plugin": "^3.7.0",
     "@typescript-eslint/parser": "^3.7.0",
+    "apollo-server-testing": "^2.16.0",
     "eslint": "^7.5.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-prettier": "^3.1.4",

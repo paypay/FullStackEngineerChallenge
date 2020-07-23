@@ -4,4 +4,8 @@
 
 # docker
 api/src/database/mysql/data/*
-api/src/database/mysql/sql/*
+api/src/database/mysql/*
+
+
+# Coverage file
+*/coverage
