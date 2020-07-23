@@ -2,7 +2,13 @@ import { gql } from "apollo-server-micro";
 
 export const UserType = gql`
   extend type Query {
-    users(first: Int, after: ID, orderBy: UserOrderByInput): UserConnection!
+    user(id: Int!): User!
+    users(
+      first: Int
+      after: ID
+      filters: UserFiltersInput
+      orderBy: UserOrderByInput
+    ): UserConnection!
   }
 
   enum UserType {
