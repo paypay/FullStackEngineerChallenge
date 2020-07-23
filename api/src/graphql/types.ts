@@ -53,12 +53,29 @@ export type ReviewEdge = {
   cursor: Scalars["ID"];
 };
 
+export type MutationUpdateUserArgs = {
+  id: Scalars["Int"];
+  input: UpdateUserInput;
+};
+
 export type PageInfo = {
   __typename?: "PageInfo";
   hasNextPage: Scalars["Boolean"];
   hasPreviousPage: Scalars["Boolean"];
   firstCursor?: Maybe<Scalars["ID"]>;
   lastCursor?: Maybe<Scalars["ID"]>;
+};
+
+export type UpdateUserInput = {
+  firstName?: Maybe<Scalars["String"]>;
+  lastName?: Maybe<Scalars["String"]>;
+  email?: Maybe<Scalars["String"]>;
+  avatar?: Maybe<Scalars["String"]>;
+};
+
+export type UpdateUserPayload = {
+  __typename?: "UpdateUserPayload";
+  user: User;
 };
 
 export type CreateUserInput = {
@@ -467,6 +484,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  UpdateUserPayload?: UpdateUserPayloadResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   AuthenticatePayload?: AuthenticatePayloadResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
