@@ -13,6 +13,23 @@ export const UserType = gql`
 
   extend type Mutation {
     Authenticate(input: AuthenticateInput!): AuthenticatePayload!
+    CreateUser(input: CreateUserInput!): CreateUserPayload!
+  }
+
+  input CreateUserInput {
+    firstName: String!
+    lastName: String!
+    email: String!
+    password: String
+    avatar: String
+    address: String
+    phone: String
+    mobilePhone: String
+    birthday: Date
+  }
+
+  type CreateUserPayload {
+    user: User!
   }
 
   input AuthenticateInput {

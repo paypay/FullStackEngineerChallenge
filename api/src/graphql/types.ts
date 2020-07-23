@@ -31,13 +31,26 @@ export type Mutation = {
 };
 
 export type CreateReviewPayload = {
-  __typename?: 'CreateReviewPayload';
+  __typename?: "CreateReviewPayload";
   review: Review;
 };
 
 export type ReviewFiltersInput = {
-  USER_ID?: Maybe<Scalars['Int']>;
-  REVIEWEE_ID?: Maybe<Scalars['Int']>;
+  USER_ID?: Maybe<Scalars["Int"]>;
+  REVIEWEE_ID?: Maybe<Scalars["Int"]>;
+};
+
+export enum ReviewOrderByInput {
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  RatingAsc = "RATING_ASC",
+  RatingDesc = "RATING_DESC",
+}
+
+export type ReviewEdge = {
+  __typename?: "ReviewEdge";
+  node: Review;
+  cursor: Scalars["ID"];
 };
 
 export type PageInfo = {
@@ -48,15 +61,32 @@ export type PageInfo = {
   lastCursor?: Maybe<Scalars["ID"]>;
 };
 
+export type CreateUserInput = {
+  firstName: Scalars["String"];
+  lastName: Scalars["String"];
+  email: Scalars["String"];
+  password?: Maybe<Scalars["String"]>;
+  avatar?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  mobilePhone?: Maybe<Scalars["String"]>;
+  birthday?: Maybe<Scalars["Date"]>;
+};
+
+export type CreateUserPayload = {
+  __typename?: "CreateUserPayload";
+  user: User;
+};
+
 export type AuthenticateInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars["String"];
+  password: Scalars["String"];
 };
 
 export type AuthenticatePayload = {
-  __typename?: 'AuthenticatePayload';
+  __typename?: "AuthenticatePayload";
   user: User;
-  token: Scalars['String'];
+  token: Scalars["String"];
 };
 
 export enum UserType {
@@ -437,6 +467,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   AuthenticatePayload?: AuthenticatePayloadResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;

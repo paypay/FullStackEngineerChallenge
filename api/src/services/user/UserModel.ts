@@ -1,3 +1,5 @@
+import * as yup from "yup";
+
 import { UserOrderByInput } from "../../graphql/types";
 
 export const FIELDS = [
@@ -23,4 +25,18 @@ export const ORDER_MAP = {
     field: "id",
     sort: "ASC",
   },
+};
+
+export const validations = {
+  firstName: yup.string().min(3).max(255),
+  lastName: yup.string().min(3).max(255),
+  password: yup.string().min(3).max(255),
+  email: yup.string().email().lowercase(),
+  avatar: yup.string(),
+  address: yup.string().min(3).max(255),
+  phone: yup.string().min(4).max(20),
+  mobilePhone: yup.string().min(4).max(20),
+  birthday: yup.date().transform((_, originalValue) => {
+    return new Date(originalValue);
+  }),
 };
