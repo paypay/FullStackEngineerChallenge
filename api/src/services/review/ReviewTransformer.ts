@@ -2,7 +2,9 @@ import { assignment, review as reviewDB } from "../../database/types";
 import { Review as ReviewGraphQL } from "../../graphql/types";
 import { getRating } from "./ReviewModel";
 
-type Review = ReviewGraphQL & Pick<reviewDB, "userId" | "revieweeId">;
+export type UsersId = Pick<assignment, "userId" | "revieweeId"> & {
+  assignmentId: number;
+};
 
 export type Review = Omit<ReviewGraphQL, "user" | "assignment" | "reviewee"> &
   UsersId;

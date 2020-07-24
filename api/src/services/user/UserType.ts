@@ -102,4 +102,14 @@ export const UserType = gql`
     pageInfo: PageInfo
     totalCount: Int
   }
+
+  extend type Review {
+    user: User!
+    reviewee: User!
+  }
+
+  extend type Assignment {
+    user: User!
+    reviewee: User!
+  }
 `;

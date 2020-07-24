@@ -56,17 +56,20 @@ type User {
 }
 
 type Review {
-  id: Int!
-  rating: Int!
-  comment: String!
+  assignment: Assignment!
   attitude: Int!
+  comment: String!
   communication: Int!
-  growth: Int!
+  createdAt: Date!
   dependability: Int!
-  productivity: Int!
+  growth: Int!
+  id: Int!
   initiative: Int!
   innovation: Int!
-  createdAt: Date!
+  productivity: Int!
+  rating: Int!
+  reviewee: User!
+  user: User!
 }
 
 input CreateReviewInput {
