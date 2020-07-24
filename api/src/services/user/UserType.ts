@@ -15,6 +15,16 @@ export const UserType = gql`
     Authenticate(input: AuthenticateInput!): AuthenticatePayload!
     CreateUser(input: CreateUserInput!): CreateUserPayload!
     UpdateUser(id: Int!, input: UpdateUserInput!): UpdateUserPayload!
+    DeleteUser(id: Int!): DeleteUserPayload!
+  }
+
+  input UserFiltersInput {
+    SEARCH: String
+    USER_TYPE: UserType
+  }
+
+  type DeleteUserPayload {
+    user: User!
   }
 
   input UpdateUserInput {

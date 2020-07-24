@@ -9,6 +9,7 @@ type Query {
 type Mutation {
   Authenticate(input: AuthenticateInput!): AuthenticatePayload!
   CreateUser(input: CreateUserInput!): CreateUserPayload!
+  DeleteUser(id: Int!): DeleteUserPayload!
   UpdateUser(id: Int!, input: UpdateUserInput!): UpdateUserPayload!
   _: Boolean
 }
@@ -29,6 +30,10 @@ enum Role {
 input UserFiltersInput {
   SEARCH: String
   USER_TYPE: UserType
+}
+
+type DeleteUserPayload {
+  user: User!
 }
 
 input UpdateUserInput {

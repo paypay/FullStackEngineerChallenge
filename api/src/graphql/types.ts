@@ -66,6 +66,11 @@ export type PageInfo = {
   lastCursor?: Maybe<Scalars["ID"]>;
 };
 
+export type DeleteUserPayload = {
+  __typename?: "DeleteUserPayload";
+  user: User;
+};
+
 export type UpdateUserInput = {
   firstName?: Maybe<Scalars["String"]>;
   lastName?: Maybe<Scalars["String"]>;
@@ -484,6 +489,7 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   Query?: QueryResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
+  DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;
   UpdateUserPayload?: UpdateUserPayloadResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   AuthenticatePayload?: AuthenticatePayloadResolvers<ContextType>;
