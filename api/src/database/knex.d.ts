@@ -7,6 +7,7 @@ declare module "knex" {
   }
 
   interface QueryBuilder {
+    orderBy(columnName: string | Raw, order: string): void;
     _single: { table: string; limit?: number };
     _statements: { grouping: string; direction: "ASC" | "DESC" }[];
   }

@@ -1,18 +1,113 @@
-scalar Date
+directive @hasRole(role: [Role]) on OBJECT | FIELD_DEFINITION
 
 type Query {
   _: Boolean
+  reviews(first: Int, after: ID, orderBy: ReviewOrderByInput): ReviewConnection!
   user(id: Int!): User!
   users(first: Int, after: ID, filters: UserFiltersInput, orderBy: UserOrderByInput): UserConnection!
 }
 
-type Mutation {
-  Authenticate(input: AuthenticateInput!): AuthenticatePayload!
-  CreateUser(input: CreateUserInput!): CreateUserPayload!
-  DeleteUser(id: Int!): DeleteUserPayload!
-  UpdateUser(id: Int!, input: UpdateUserInput!): UpdateUserPayload!
-  _: Boolean
+enum ReviewOrderByInput {
+  ID_ASC
+  ID_DESC
+  STATUS_ASC
+  STATUS_DESC
 }
+
+type Assignment {
+  createdAt: Date!
+  id: Int!
+  review: Review
+  reviewee: User!
+  status: AssignmentStatus!
+  user: User!
+}
+
+type AssignmentEdge {
+  node: Assignment!
+  cursor: ID!
+}
+
+type AssignmentConnection {
+  edges: [AssignmentEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
+}
+
+type User {
+  address: String!
+  assignmentStats: AssignmentStats!
+  assignments(first: Int, after: ID, filters: AssignmentFiltersInput, orderBy: AssignmentOrderByInput): AssignmentConnection!
+  avatar: String!
+  birthday: Date
+  createdAt: Date!
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
+  mobilePhone: String!
+  phone: String!
+  rating: Float!
+  reviews(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
+  reviewsFromUsers(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
+  reviewsSummary: ReviewSSummary!
+  userType: UserType!
+}
+
+type Review {
+  id: Int!
+  rating: Int!
+  comment: String!
+  attitude: Int!
+  communication: Int!
+  growth: Int!
+  dependability: Int!
+  productivity: Int!
+  initiative: Int!
+  innovation: Int!
+  createdAt: Date!
+}
+
+input CreateReviewInput {
+  assignmentId: Int!
+  comment: String!
+  attitude: Int!
+  communication: Int!
+  growth: Int!
+  dependability: Int!
+  productivity: Int!
+  initiative: Int!
+  innovation: Int!
+}
+
+type CreateReviewPayload {
+  review: Review!
+}
+
+input ReviewFiltersInput {
+  USER_ID: Int
+  REVIEWEE_ID: Int
+}
+
+enum ReviewOrderByInput {
+  ID_ASC
+  ID_DESC
+  RATING_ASC
+  RATING_DESC
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: ID!
+}
+
+type ReviewConnection {
+  edges: [ReviewEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
+}
+
+scalar Date
 
 type PageInfo {
   hasNextPage: Boolean!

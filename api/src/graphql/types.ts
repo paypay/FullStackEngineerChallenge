@@ -23,6 +23,60 @@ export type Scalars = {
 export type Query = {
   __typename?: "Query";
   _?: Maybe<Scalars["Boolean"]>;
+  reviews: ReviewConnection;
+  user: User;
+  users: UserConnection;
+};
+
+export type QueryReviewsArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  orderBy?: Maybe<ReviewOrderByInput>;
+};
+
+export type QueryUserArgs = {
+  id: Scalars["Int"];
+};
+
+export type QueryUsersArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  orderBy?: Maybe<UserOrderByInput>;
+};
+
+export enum ReviewOrderByInput {
+  IdAsc = "ID_ASC",
+  IdDesc = "ID_DESC",
+  RatingAsc = "RATING_ASC",
+  RatingDesc = "RATING_DESC",
+}
+
+export type Review = {
+  __typename?: "Review";
+  id: Scalars["Int"];
+  rating: Scalars["Int"];
+  comment: Scalars["String"];
+  attitude: Scalars["Int"];
+  communication: Scalars["Int"];
+  growth: Scalars["Int"];
+  dependability: Scalars["Int"];
+  productivity: Scalars["Int"];
+  initiative: Scalars["Int"];
+  innovation: Scalars["Int"];
+  createdAt: Scalars["Date"];
+};
+
+export type ReviewEdge = {
+  __typename?: "ReviewEdge";
+  node: Review;
+  cursor: Scalars["ID"];
+};
+
+export type ReviewConnection = {
+  __typename?: "ReviewConnection";
+  edges: Array<ReviewEdge>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars["Int"]>;
 };
 
 export type Mutation = {
@@ -254,18 +308,43 @@ export type DirectiveResolverFn<
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
-  Date: ResolverTypeWrapper<DeepPartial<Scalars["Date"]>>;
   Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<DeepPartial<Scalars["Boolean"]>>;
-  Mutation: ResolverTypeWrapper<{}>;
+  Int: ResolverTypeWrapper<DeepPartial<Scalars["Int"]>>;
+  ID: ResolverTypeWrapper<DeepPartial<Scalars["ID"]>>;
+  ReviewOrderByInput: ResolverTypeWrapper<DeepPartial<ReviewOrderByInput>>;
+  Review: ResolverTypeWrapper<DeepPartial<Review>>;
   String: ResolverTypeWrapper<DeepPartial<Scalars["String"]>>;
+  ReviewEdge: ResolverTypeWrapper<DeepPartial<ReviewEdge>>;
+  ReviewConnection: ResolverTypeWrapper<DeepPartial<ReviewConnection>>;
+  Date: ResolverTypeWrapper<DeepPartial<Scalars["Date"]>>;
+  Mutation: ResolverTypeWrapper<{}>;
+  PageInfo: ResolverTypeWrapper<DeepPartial<PageInfo>>;
+  DeleteUserPayload: ResolverTypeWrapper<DeepPartial<DeleteUserPayload>>;
+  UpdateUserInput: ResolverTypeWrapper<DeepPartial<UpdateUserInput>>;
+  UpdateUserPayload: ResolverTypeWrapper<DeepPartial<UpdateUserPayload>>;
+  CreateUserInput: ResolverTypeWrapper<DeepPartial<CreateUserInput>>;
+  CreateUserPayload: ResolverTypeWrapper<DeepPartial<CreateUserPayload>>;
+  AuthenticateInput: ResolverTypeWrapper<DeepPartial<AuthenticateInput>>;
+  AuthenticatePayload: ResolverTypeWrapper<DeepPartial<AuthenticatePayload>>;
+  UserType: ResolverTypeWrapper<DeepPartial<UserType>>;
+  UserOrderByInput: ResolverTypeWrapper<DeepPartial<UserOrderByInput>>;
+  User: ResolverTypeWrapper<DeepPartial<User>>;
+  UserEdge: ResolverTypeWrapper<DeepPartial<UserEdge>>;
+  UserConnection: ResolverTypeWrapper<DeepPartial<UserConnection>>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
-  Date: DeepPartial<Scalars["Date"]>;
   Query: {};
   Boolean: DeepPartial<Scalars["Boolean"]>;
+  Int: DeepPartial<Scalars["Int"]>;
+  ID: DeepPartial<Scalars["ID"]>;
+  Review: DeepPartial<Review>;
+  String: DeepPartial<Scalars["String"]>;
+  ReviewEdge: DeepPartial<ReviewEdge>;
+  ReviewConnection: DeepPartial<ReviewConnection>;
+  Date: DeepPartial<Scalars["Date"]>;
   Mutation: {};
   String: DeepPartial<Scalars["String"]>;
   DeleteAssignmentPayload: DeepPartial<DeleteAssignmentPayload>;
@@ -298,27 +377,11 @@ export type ResolversParentTypes = ResolversObject<{
   UserConnection: DeepPartial<UserConnection>;
 }>;
 
-export type HasRoleDirectiveArgs = { role?: Maybe<Array<Maybe<Role>>> };
-
-export type HasRoleDirectiveResolver<
-  Result,
-  Parent,
-  ContextType = any,
-  Args = HasRoleDirectiveArgs
-> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
-
 export type QueryResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
-  me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
-  review?: Resolver<
-    ResolversTypes["Review"],
-    ParentType,
-    ContextType,
-    RequireFields<QueryReviewArgs, "id">
-  >;
   reviews?: Resolver<
     ResolversTypes["ReviewConnection"],
     ParentType,
@@ -343,20 +406,81 @@ export type ReviewResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
 > = ResolversObject<{
-  attitude?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  communication?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  dependability?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  growth?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  attitude?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  communication?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  growth?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  dependability?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  productivity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   initiative?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
   innovation?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  productivity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  reviewee?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type ReviewEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["ReviewEdge"] = ResolversParentTypes["ReviewEdge"]
+> = ResolversObject<{
+  node?: Resolver<ResolversTypes["Review"], ParentType, ContextType>;
+  cursor?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type ReviewConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["ReviewConnection"] = ResolversParentTypes["ReviewConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Array<ResolversTypes["ReviewEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["PageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  totalCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export interface DateScalarConfig
+  extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
+  name: "Date";
+}
+
+export type MutationResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
+> = ResolversObject<{
+  Authenticate?: Resolver<
+    ResolversTypes["AuthenticatePayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationAuthenticateArgs, "input">
+  >;
+  CreateUser?: Resolver<
+    ResolversTypes["CreateUserPayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateUserArgs, "input">
+  >;
+  DeleteUser?: Resolver<
+    ResolversTypes["DeleteUserPayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationDeleteUserArgs, "id">
+  >;
+  UpdateUser?: Resolver<
+    ResolversTypes["UpdateUserPayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationUpdateUserArgs, "id" | "input">
+  >;
+  _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
 }>;
 
 export type ReviewEdgeResolvers<
@@ -485,8 +609,19 @@ export type UserConnectionResolvers<
 }>;
 
 export type Resolvers<ContextType = any> = ResolversObject<{
-  Date?: GraphQLScalarType;
   Query?: QueryResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
+  DeleteAssignmentPayload?: DeleteAssignmentPayloadResolvers<ContextType>;
+  CreateAssignmentPayload?: CreateAssignmentPayloadResolvers<ContextType>;
+  Assignment?: AssignmentResolvers<ContextType>;
+  AssignmentEdge?: AssignmentEdgeResolvers<ContextType>;
+  AssignmentConnection?: AssignmentConnectionResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  Review?: ReviewResolvers<ContextType>;
+  CreateReviewPayload?: CreateReviewPayloadResolvers<ContextType>;
+  ReviewEdge?: ReviewEdgeResolvers<ContextType>;
+  ReviewConnection?: ReviewConnectionResolvers<ContextType>;
+  Date?: GraphQLScalarType;
   Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;
