@@ -2,6 +2,7 @@ directive @hasRole(role: [Role]) on OBJECT | FIELD_DEFINITION
 
 type Query {
   _: Boolean
+  review(id: Int!): Review!
   reviews(first: Int, after: ID, orderBy: ReviewOrderByInput): ReviewConnection!
   user(id: Int!): User!
   users(first: Int, after: ID, filters: UserFiltersInput, orderBy: UserOrderByInput): UserConnection!

@@ -2,6 +2,7 @@ import { gql } from "apollo-server-micro";
 
 export const ReviewType = gql`
   extend type Query {
+    review(id: Int!): Review!
     reviews(
       first: Int
       after: ID
