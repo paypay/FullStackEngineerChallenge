@@ -6,6 +6,10 @@
 api/src/database/mysql/data/*
 api/src/database/mysql/*
 
+#lingui
+**/src/locales/**/*.js
+**/src/locales/_build/
+
 
 # Coverage file
 */coverage

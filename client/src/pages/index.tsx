@@ -1,11 +1,22 @@
-import { Layout } from "../components/Layout";
+import { useRouter } from "next/dist/client/router";
+import Head from "next/head";
+import { useEffect } from "react";
 
-const Home = () => {
+import { getLocale } from "../helpers/getLocale";
+
+const Index = () => {
+  const { replace } = useRouter();
+
+  useEffect(() => {
+    //When no language is passed on the url, redirect to valid one
+    replace(`/${getLocale()}/login/`);
+  });
+
   return (
-    <Layout title="Home">
-      <h1 className="text-6xl text-center">Home page</h1>
-    </Layout>
+    <Head>
+      <meta name="robots" content="noindex, nofollow" />
+    </Head>
   );
 };
 
-export default Home;
+export default Index;
