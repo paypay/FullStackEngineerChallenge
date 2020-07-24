@@ -111,6 +111,18 @@ type ReviewConnection {
   totalCount: Int
 }
 
+type AssignmentStats {
+  progress: Int
+  pending: Int
+  completed: Int
+  total: Int
+}
+
+type ReviewSSummary {
+  rating: Float!
+  userType: UserType!
+}
+
 scalar Date
 
 type PageInfo {
@@ -184,16 +196,6 @@ enum UserType {
 enum UserOrderByInput {
   ID_ASC
   ID_DESC
-}
-
-type User {
-  id: Int!
-  firstName: String!
-  lastName: String!
-  email: String!
-  userType: UserType!
-  avatar: String
-  createdAt: Date!
 }
 
 type UserEdge {

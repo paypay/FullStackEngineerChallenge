@@ -329,7 +329,6 @@ export type ResolversTypes = ResolversObject<{
   AuthenticatePayload: ResolverTypeWrapper<DeepPartial<AuthenticatePayload>>;
   UserType: ResolverTypeWrapper<DeepPartial<UserType>>;
   UserOrderByInput: ResolverTypeWrapper<DeepPartial<UserOrderByInput>>;
-  User: ResolverTypeWrapper<DeepPartial<User>>;
   UserEdge: ResolverTypeWrapper<DeepPartial<UserEdge>>;
   UserConnection: ResolverTypeWrapper<DeepPartial<UserConnection>>;
 }>;
@@ -621,14 +620,14 @@ export type Resolvers<ContextType = any> = ResolversObject<{
   CreateReviewPayload?: CreateReviewPayloadResolvers<ContextType>;
   ReviewEdge?: ReviewEdgeResolvers<ContextType>;
   ReviewConnection?: ReviewConnectionResolvers<ContextType>;
+  AssignmentStats?: AssignmentStatsResolvers<ContextType>;
+  ReviewSSummary?: ReviewSSummaryResolvers<ContextType>;
   Date?: GraphQLScalarType;
-  Mutation?: MutationResolvers<ContextType>;
   PageInfo?: PageInfoResolvers<ContextType>;
   DeleteUserPayload?: DeleteUserPayloadResolvers<ContextType>;
   UpdateUserPayload?: UpdateUserPayloadResolvers<ContextType>;
   CreateUserPayload?: CreateUserPayloadResolvers<ContextType>;
   AuthenticatePayload?: AuthenticatePayloadResolvers<ContextType>;
-  User?: UserResolvers<ContextType>;
   UserEdge?: UserEdgeResolvers<ContextType>;
   UserConnection?: UserConnectionResolvers<ContextType>;
 }>;

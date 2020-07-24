@@ -41,4 +41,33 @@ export const ReviewType = gql`
     pageInfo: PageInfo
     totalCount: Int
   }
+
+  type AssignmentStats {
+    progress: Int
+    pending: Int
+    completed: Int
+    total: Int
+  }
+
+  extend type User {
+    rating: Float!
+  }
+
+  extend type Assignment {
+    review: Review
+  }
+
+  type ReviewSSummary {
+    rating: Float!
+    attitude: Float!
+    communication: Float!
+    growth: Float!
+    dependability: Float!
+    productivity: Float!
+    initiative: Float!
+    innovation: Float!
+  }
+  extend type User {
+    reviewsSummary: ReviewSSummary!
+  }
 `;

@@ -1,7 +1,7 @@
 import { user as userDB } from "../../database/types";
 import { User as UserGraphQL } from "../../graphql/types";
 
-const transformer = (user: userDB): UserGraphQL => ({
+const transformer = (user: userDB): Omit<UserGraphQL, "rating"> => ({
   id: user.id,
   email: user.email,
   firstName: user.firstName,
