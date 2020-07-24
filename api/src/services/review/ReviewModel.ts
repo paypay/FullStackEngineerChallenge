@@ -43,7 +43,12 @@ export const ORDER_MAP = {
   },
 };
 
-const rating = yup.number().min(1).max(5);
+export const FILTER_MAP = {
+  USER_ID: "assignment.userId",
+  REVIEWEE_ID: "assignment.revieweeId",
+};
+
+const rating = yup.number().min(1).max(5).required();
 
 export const validations = {
   comment: yup.string().min(5).max(255),

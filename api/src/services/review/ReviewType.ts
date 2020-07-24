@@ -6,8 +6,34 @@ export const ReviewType = gql`
     reviews(
       first: Int
       after: ID
+      filters: ReviewFiltersInput
       orderBy: ReviewOrderByInput
     ): ReviewConnection!
+  }
+
+  extend type Mutation {
+    CreateReview(input: CreateReviewInput!): CreateReviewPayload
+  }
+
+  input CreateReviewInput {
+    assignmentId: Int!
+    comment: String!
+    attitude: Int!
+    communication: Int!
+    growth: Int!
+    dependability: Int!
+    productivity: Int!
+    initiative: Int!
+    innovation: Int!
+  }
+
+  type CreateReviewPayload {
+    review: Review!
+  }
+
+  input ReviewFiltersInput {
+    USER_ID: Int
+    REVIEWEE_ID: Int
   }
 
   enum ReviewOrderByInput {
@@ -51,6 +77,19 @@ export const ReviewType = gql`
 
   extend type User {
     rating: Float!
+    assignmentStats: AssignmentStats!
+    reviews(
+      first: Int
+      after: ID
+      filters: ReviewFiltersInput
+      orderBy: ReviewOrderByInput
+    ): ReviewConnection!
+    reviewsFromUsers(
+      first: Int
+      after: ID
+      filters: ReviewFiltersInput
+      orderBy: ReviewOrderByInput
+    ): ReviewConnection!
   }
 
   extend type Assignment {

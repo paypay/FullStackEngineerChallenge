@@ -44,6 +44,11 @@ export type QueryUsersArgs = {
   orderBy?: Maybe<UserOrderByInput>;
 };
 
+export type ReviewFiltersInput = {
+  USER_ID?: Maybe<Scalars["Int"]>;
+  REVIEWEE_ID?: Maybe<Scalars["Int"]>;
+};
+
 export enum ReviewOrderByInput {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",

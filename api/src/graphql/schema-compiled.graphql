@@ -3,12 +3,47 @@ directive @hasRole(role: [Role]) on OBJECT | FIELD_DEFINITION
 type Query {
   _: Boolean
   review(id: Int!): Review!
-  reviews(first: Int, after: ID, orderBy: ReviewOrderByInput): ReviewConnection!
+  reviews(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
   user(id: Int!): User!
   users(first: Int, after: ID, filters: UserFiltersInput, orderBy: UserOrderByInput): UserConnection!
 }
 
-enum ReviewOrderByInput {
+type Mutation {
+  Authenticate(input: AuthenticateInput!): AuthenticatePayload!
+  CreateAssignment(input: CreateAssignmentInput!): CreateAssignmentPayload!
+  CreateReview(input: CreateReviewInput!): CreateReviewPayload
+  CreateUser(input: CreateUserInput!): CreateUserPayload!
+  DeleteUser(id: Int!): DeleteUserPayload!
+  UpdateUser(id: Int!, input: UpdateUserInput!): UpdateUserPayload!
+  _: Boolean
+}
+
+input AssignmentFiltersInput {
+  SEARCH: String
+  STATUS: AssignmentStatus
+  USER_ID: Int
+  REVIEWEE_ID: Int
+}
+
+type DeleteAssignmentPayload {
+  assignment: Assignment!
+}
+
+input CreateAssignmentInput {
+  revieweeId: Int!
+  reviewerIds: [Int!]!
+}
+
+type CreateAssignmentPayload {
+  assignments: [Assignment!]!
+}
+
+enum AssignmentStatus {
+  PENDING
+  COMPLETED
+}
+
+enum AssignmentOrderByInput {
   ID_ASC
   ID_DESC
   STATUS_ASC
@@ -120,7 +155,13 @@ type AssignmentStats {
 
 type ReviewSSummary {
   rating: Float!
-  userType: UserType!
+  attitude: Float!
+  communication: Float!
+  growth: Float!
+  dependability: Float!
+  productivity: Float!
+  initiative: Float!
+  innovation: Float!
 }
 
 scalar Date

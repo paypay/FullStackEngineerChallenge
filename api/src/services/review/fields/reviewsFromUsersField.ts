@@ -3,13 +3,13 @@ import connection from "../../../helpers/connection";
 import getReviews from "../jobs/getReviews";
 import transformer from "../ReviewTransformer";
 
-const reviews: QueryResolvers["reviews"] = async (
-  _,
-  { first = 10, after, orderBy, filters }
-) => {
-  const query = getReviews(first!, filters, orderBy);
+const reviewsFromUsersField: QueryResolvers<
+  {},
+  { id: number }
+>["reviews"] = async ({ id }, { first = 10, after, filters, orderBy }) => {
+  const query = getReviews(first!, { ...filters, REVIEWEE_ID: id }, orderBy);
 
   return connection<Review>(query, after, transformer);
 };
 
-export default reviews;
+export default reviewsFromUsersField;
