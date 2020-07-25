@@ -3,9 +3,16 @@ import "dotenv-flow/config";
 import { ApolloServer } from "apollo-server-micro";
 import cors from "micro-cors";
 
-import { formatError, resolvers, scalars, typeDefs } from "./src/graphql";
+import {
+  context,
+  formatError,
+  resolvers,
+  scalars,
+  typeDefs,
+} from "./src/graphql";
 
 module.exports = cors({
+  allowCredentials: true,
   allowHeaders: [
     "X-Requested-With",
     "Access-Control-Allow-Origin",
@@ -13,7 +20,6 @@ module.exports = cors({
     "Content-Type",
     "authorization",
     "Accept",
-    "locale",
   ],
 })((req, res) => {
   // Setup apollo server
@@ -21,6 +27,7 @@ module.exports = cors({
     typeDefs,
     resolvers: { ...resolvers, ...scalars },
     formatError,
+    context: context(req),
     introspection: process.env.NODE_ENV !== "production",
     playground: process.env.NODE_ENV !== "production",
   });

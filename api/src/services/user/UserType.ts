@@ -2,6 +2,7 @@ import { gql } from "apollo-server-micro";
 
 export const UserType = gql`
   extend type Query {
+    me: User
     user(id: Int!): User!
     users(
       first: Int

@@ -3,6 +3,7 @@ import { mergeResolvers, mergeTypes } from "merge-graphql-schemas";
 import * as resolversList from "./resolvers";
 import * as typesList from "./typeDefs";
 
+export { default as context } from "./context";
 export { default as formatError } from "./formatError";
 
 const typesArray = Object.keys(typesList).map((key) => typesList[key]);
