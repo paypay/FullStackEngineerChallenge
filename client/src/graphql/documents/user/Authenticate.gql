@@ -1,0 +1,12 @@
+mutation Authenticate($input: AuthenticateInput!) {
+  Authenticate(input: $input) {
+    user {
+      id
+      firstName
+      lastName
+      avatar
+      userType
+    }
+    token
+  }
+}

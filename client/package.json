@@ -8,19 +8,32 @@
     "start": "npm run locale:compile && next start",
     "locale:add": "lingui add-locale",
     "locale:extract": "lingui extract --clean",
-    "locale:compile": "lingui compile"
+    "locale:compile": "lingui compile",
+    "gql:types": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@apollo/link-error": "^2.0.0-beta.3",
+    "@apollo/react-common": "^3.1.4",
+    "@apollo/react-hooks": "^4.0.0",
+    "@graphql-codegen/typescript-react-apollo": "^1.17.4",
     "@lingui/react": "^2.9.1",
     "classnames": "^2.2.6",
+    "graphql": "^15.3.0",
     "next": "9.3.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "sass": "^1.26.10",
-    "tailwindcss": "^1.5.2"
+    "scroll-into-view-if-needed": "^2.2.25",
+    "tailwindcss": "^1.5.2",
+    "universal-cookie": "^4.0.3",
+    "whatwg-fetch": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.5",
+    "@graphql-codegen/cli": "^1.17.4",
+    "@graphql-codegen/fragment-matcher": "^1.17.4",
+    "@graphql-codegen/typescript": "^1.17.4",
+    "@graphql-codegen/typescript-operations": "^1.17.4",
     "@lingui/cli": "^2.9.1",
     "@lingui/macro": "^2.9.1",
     "@types/classnames": "^2.2.10",
