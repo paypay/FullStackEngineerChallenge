@@ -36,6 +36,7 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   first?: Maybe<Scalars['Int']>;
   after?: Maybe<Scalars['ID']>;
+  filters?: Maybe<UserFiltersInput>;
   orderBy?: Maybe<UserOrderByInput>;
 };
 
@@ -88,6 +89,11 @@ export type PageInfo = {
   hasPreviousPage: Scalars['Boolean'];
   firstCursor?: Maybe<Scalars['ID']>;
   lastCursor?: Maybe<Scalars['ID']>;
+};
+
+export type UserFiltersInput = {
+  SEARCH?: Maybe<Scalars['String']>;
+  USER_TYPE?: Maybe<UserType>;
 };
 
 export type DeleteUserPayload = {
@@ -151,6 +157,7 @@ export type User = {
   avatar?: Maybe<Scalars['String']>;
   createdAt: Scalars['Date'];
   rating: Scalars['Float'];
+  assignmentStats: AssignmentStats;
   reviews: ReviewConnection;
   reviewsFromUsers: ReviewConnection;
 };
@@ -226,6 +233,14 @@ export type ReviewConnection = {
   totalCount?: Maybe<Scalars['Int']>;
 };
 
+export type AssignmentStats = {
+  __typename?: 'AssignmentStats';
+  progress?: Maybe<Scalars['Int']>;
+  pending?: Maybe<Scalars['Int']>;
+  completed?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+};
+
 export enum CacheControlScope {
   Public = 'PUBLIC',
   Private = 'PRIVATE'
@@ -258,6 +273,37 @@ export type MeQuery = (
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'avatar' | 'userType'>
   )> }
+);
+
+export type UsersQueryVariables = Exact<{
+  first?: Maybe<Scalars['Int']>;
+  after?: Maybe<Scalars['ID']>;
+  filters?: Maybe<UserFiltersInput>;
+  orderBy?: Maybe<UserOrderByInput>;
+}>;
+
+
+export type UsersQuery = (
+  { __typename?: 'Query' }
+  & { users: (
+    { __typename?: 'UserConnection' }
+    & Pick<UserConnection, 'totalCount'>
+    & { edges: Array<(
+      { __typename?: 'UserEdge' }
+      & Pick<UserEdge, 'cursor'>
+      & { node: (
+        { __typename?: 'User' }
+        & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'avatar' | 'rating'>
+        & { assignmentStats: (
+          { __typename?: 'AssignmentStats' }
+          & Pick<AssignmentStats, 'progress' | 'completed' | 'total'>
+        ) }
+      ) }
+    )>, pageInfo?: Maybe<(
+      { __typename?: 'PageInfo' }
+      & Pick<PageInfo, 'hasNextPage' | 'hasPreviousPage' | 'firstCursor' | 'lastCursor'>
+    )> }
+  ) }
 );
 
 
@@ -336,3 +382,61 @@ export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptio
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
+export const UsersDocument = gql`
+    query Users($first: Int, $after: ID, $filters: UserFiltersInput, $orderBy: UserOrderByInput) {
+  users(first: $first, after: $after, filters: $filters, orderBy: $orderBy) {
+    edges {
+      node {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        rating
+        assignmentStats {
+          progress
+          completed
+          total
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      firstCursor
+      lastCursor
+    }
+    totalCount
+  }
+}
+    `;
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *      after: // value for 'after'
+ *      filters: // value for 'filters'
+ *      orderBy: // value for 'orderBy'
+ *   },
+ * });
+ */
+export function useUsersQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<UsersQuery, UsersQueryVariables>) {
+        return ApolloReactHooks.useQuery<UsersQuery, UsersQueryVariables>(UsersDocument, baseOptions);
+      }
+export function useUsersLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<UsersQuery, UsersQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<UsersQuery, UsersQueryVariables>(UsersDocument, baseOptions);
+        }
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
+export type UsersQueryResult = ApolloReactCommon.QueryResult<UsersQuery, UsersQueryVariables>;

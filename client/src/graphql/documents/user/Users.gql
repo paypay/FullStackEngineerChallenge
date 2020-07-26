@@ -1,0 +1,32 @@
+query Users(
+  $first: Int
+  $after: ID
+  $filters: UserFiltersInput
+  $orderBy: UserOrderByInput
+) {
+  users(first: $first, after: $after, filters: $filters, orderBy: $orderBy) {
+    edges {
+      node {
+        id
+        firstName
+        lastName
+        email
+        avatar
+        rating
+        assignmentStats {
+          progress
+          completed
+          total
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      firstCursor
+      lastCursor
+    }
+    totalCount
+  }
+}
