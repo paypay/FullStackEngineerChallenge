@@ -1,5 +1,3 @@
-directive @hasRole(role: [Role]) on OBJECT | FIELD_DEFINITION
-
 type Query {
   _: Boolean
   assignment(id: Int!): Assignment!
@@ -175,11 +173,6 @@ type PageInfo {
   firstCursor: ID
   lastCursor: ID
   previousCursor: ID
-}
-
-enum Role {
-  EMPLOYEE
-  ADMIN
 }
 
 input UserFiltersInput {

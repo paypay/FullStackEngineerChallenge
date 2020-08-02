@@ -23,14 +23,34 @@ export type Scalars = {
 export type Query = {
   __typename?: "Query";
   _?: Maybe<Scalars["Boolean"]>;
+  assignment: Assignment;
+  assignments: AssignmentConnection;
+  me?: Maybe<User>;
+  review: Review;
   reviews: ReviewConnection;
   user: User;
   users: UserConnection;
 };
 
+export type QueryAssignmentArgs = {
+  id: Scalars["Int"];
+};
+
+export type QueryAssignmentsArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<AssignmentFiltersInput>;
+  orderBy?: Maybe<AssignmentOrderByInput>;
+};
+
+export type QueryReviewArgs = {
+  id: Scalars["Int"];
+};
+
 export type QueryReviewsArgs = {
   first?: Maybe<Scalars["Int"]>;
   after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<ReviewFiltersInput>;
   orderBy?: Maybe<ReviewOrderByInput>;
 };
 
@@ -41,25 +61,165 @@ export type QueryUserArgs = {
 export type QueryUsersArgs = {
   first?: Maybe<Scalars["Int"]>;
   after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<UserFiltersInput>;
   orderBy?: Maybe<UserOrderByInput>;
 };
 
-export type ReviewFiltersInput = {
+export type Mutation = {
+  __typename?: "Mutation";
+  Authenticate: AuthenticatePayload;
+  CreateAssignment: CreateAssignmentPayload;
+  CreateReview?: Maybe<CreateReviewPayload>;
+  CreateUser: CreateUserPayload;
+  DeleteUser: DeleteUserPayload;
+  UpdateUser: UpdateUserPayload;
+  _?: Maybe<Scalars["Boolean"]>;
+};
+
+export type MutationAuthenticateArgs = {
+  input: AuthenticateInput;
+};
+
+export type MutationCreateAssignmentArgs = {
+  input: CreateAssignmentInput;
+};
+
+export type MutationCreateReviewArgs = {
+  input: CreateReviewInput;
+};
+
+export type MutationCreateUserArgs = {
+  input: CreateUserInput;
+};
+
+export type MutationDeleteUserArgs = {
+  id: Scalars["Int"];
+};
+
+export type MutationUpdateUserArgs = {
+  id: Scalars["Int"];
+  input: UpdateUserInput;
+};
+
+export type AssignmentFiltersInput = {
+  SEARCH?: Maybe<Scalars["String"]>;
+  STATUS?: Maybe<AssignmentStatus>;
   USER_ID?: Maybe<Scalars["Int"]>;
   REVIEWEE_ID?: Maybe<Scalars["Int"]>;
 };
 
-export enum ReviewOrderByInput {
+export type DeleteAssignmentPayload = {
+  __typename?: "DeleteAssignmentPayload";
+  assignment: Assignment;
+};
+
+export type CreateAssignmentInput = {
+  revieweeId: Scalars["Int"];
+  reviewerIds: Array<Scalars["Int"]>;
+};
+
+export type CreateAssignmentPayload = {
+  __typename?: "CreateAssignmentPayload";
+  assignments: Array<Assignment>;
+};
+
+export enum AssignmentStatus {
+  Pending = "PENDING",
+  Completed = "COMPLETED",
+}
+
+export enum AssignmentOrderByInput {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
-  RatingAsc = "RATING_ASC",
-  RatingDesc = "RATING_DESC",
+  StatusAsc = "STATUS_ASC",
+  StatusDesc = "STATUS_DESC",
 }
+
+export type Assignment = {
+  __typename?: "Assignment";
+  createdAt: Scalars["Date"];
+  id: Scalars["Int"];
+  review?: Maybe<Review>;
+  reviewee: User;
+  status: AssignmentStatus;
+  user: User;
+};
+
+export type AssignmentEdge = {
+  __typename?: "AssignmentEdge";
+  node: Assignment;
+  cursor: Scalars["ID"];
+};
+
+export type AssignmentConnection = {
+  __typename?: "AssignmentConnection";
+  edges: Array<AssignmentEdge>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars["Int"]>;
+};
+
+export type User = {
+  __typename?: "User";
+  address: Scalars["String"];
+  assignmentStats: AssignmentStats;
+  assignments: AssignmentConnection;
+  avatar: Scalars["String"];
+  birthday?: Maybe<Scalars["Date"]>;
+  createdAt: Scalars["Date"];
+  email: Scalars["String"];
+  firstName: Scalars["String"];
+  id: Scalars["Int"];
+  lastName: Scalars["String"];
+  mobilePhone: Scalars["String"];
+  phone: Scalars["String"];
+  rating: Scalars["Float"];
+  reviews: ReviewConnection;
+  reviewsFromUsers: ReviewConnection;
+  reviewsSummary: ReviewSSummary;
+  userType: UserType;
+};
+
+export type UserAssignmentsArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<AssignmentFiltersInput>;
+  orderBy?: Maybe<AssignmentOrderByInput>;
+};
+
+export type UserReviewsArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<ReviewFiltersInput>;
+  orderBy?: Maybe<ReviewOrderByInput>;
+};
+
+export type UserReviewsFromUsersArgs = {
+  first?: Maybe<Scalars["Int"]>;
+  after?: Maybe<Scalars["ID"]>;
+  filters?: Maybe<ReviewFiltersInput>;
+  orderBy?: Maybe<ReviewOrderByInput>;
+};
 
 export type Review = {
   __typename?: "Review";
+  assignment: Assignment;
+  attitude: Scalars["Int"];
+  comment: Scalars["String"];
+  communication: Scalars["Int"];
+  createdAt: Scalars["Date"];
+  dependability: Scalars["Int"];
+  growth: Scalars["Int"];
   id: Scalars["Int"];
+  initiative: Scalars["Int"];
+  innovation: Scalars["Int"];
+  productivity: Scalars["Int"];
   rating: Scalars["Int"];
+  reviewee: User;
+  user: User;
+};
+
+export type CreateReviewInput = {
+  assignmentId: Scalars["Int"];
   comment: Scalars["String"];
   attitude: Scalars["Int"];
   communication: Scalars["Int"];
@@ -68,25 +228,6 @@ export type Review = {
   productivity: Scalars["Int"];
   initiative: Scalars["Int"];
   innovation: Scalars["Int"];
-  createdAt: Scalars["Date"];
-};
-
-export type ReviewEdge = {
-  __typename?: "ReviewEdge";
-  node: Review;
-  cursor: Scalars["ID"];
-};
-
-export type ReviewConnection = {
-  __typename?: "ReviewConnection";
-  edges: Array<ReviewEdge>;
-  pageInfo?: Maybe<PageInfo>;
-  totalCount?: Maybe<Scalars["Int"]>;
-};
-
-export type Mutation = {
-  __typename?: "Mutation";
-  _?: Maybe<Scalars["Boolean"]>;
 };
 
 export type CreateReviewPayload = {
@@ -112,9 +253,31 @@ export type ReviewEdge = {
   cursor: Scalars["ID"];
 };
 
-export type MutationUpdateUserArgs = {
-  id: Scalars["Int"];
-  input: UpdateUserInput;
+export type ReviewConnection = {
+  __typename?: "ReviewConnection";
+  edges: Array<ReviewEdge>;
+  pageInfo?: Maybe<PageInfo>;
+  totalCount?: Maybe<Scalars["Int"]>;
+};
+
+export type AssignmentStats = {
+  __typename?: "AssignmentStats";
+  progress?: Maybe<Scalars["Int"]>;
+  pending?: Maybe<Scalars["Int"]>;
+  completed?: Maybe<Scalars["Int"]>;
+  total?: Maybe<Scalars["Int"]>;
+};
+
+export type ReviewSSummary = {
+  __typename?: "ReviewSSummary";
+  rating: Scalars["Float"];
+  attitude: Scalars["Float"];
+  communication: Scalars["Float"];
+  growth: Scalars["Float"];
+  dependability: Scalars["Float"];
+  productivity: Scalars["Float"];
+  initiative: Scalars["Float"];
+  innovation: Scalars["Float"];
 };
 
 export type PageInfo = {
@@ -123,6 +286,12 @@ export type PageInfo = {
   hasPreviousPage: Scalars["Boolean"];
   firstCursor?: Maybe<Scalars["ID"]>;
   lastCursor?: Maybe<Scalars["ID"]>;
+  previousCursor?: Maybe<Scalars["ID"]>;
+};
+
+export type UserFiltersInput = {
+  SEARCH?: Maybe<Scalars["String"]>;
+  USER_TYPE?: Maybe<UserType>;
 };
 
 export type DeleteUserPayload = {
@@ -135,6 +304,10 @@ export type UpdateUserInput = {
   lastName?: Maybe<Scalars["String"]>;
   email?: Maybe<Scalars["String"]>;
   avatar?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars["String"]>;
+  mobilePhone?: Maybe<Scalars["String"]>;
+  birthday?: Maybe<Scalars["Date"]>;
 };
 
 export type UpdateUserPayload = {
@@ -179,17 +352,6 @@ export enum UserOrderByInput {
   IdAsc = "ID_ASC",
   IdDesc = "ID_DESC",
 }
-
-export type User = {
-  __typename?: "User";
-  id: Scalars["Int"];
-  firstName: Scalars["String"];
-  lastName: Scalars["String"];
-  email: Scalars["String"];
-  userType: UserType;
-  avatar?: Maybe<Scalars["String"]>;
-  createdAt: Scalars["Date"];
-};
 
 export type UserEdge = {
   __typename?: "UserEdge";
@@ -317,14 +479,41 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<DeepPartial<Scalars["Boolean"]>>;
   Int: ResolverTypeWrapper<DeepPartial<Scalars["Int"]>>;
   ID: ResolverTypeWrapper<DeepPartial<Scalars["ID"]>>;
-  ReviewOrderByInput: ResolverTypeWrapper<DeepPartial<ReviewOrderByInput>>;
-  Review: ResolverTypeWrapper<DeepPartial<Review>>;
+  Mutation: ResolverTypeWrapper<{}>;
+  AssignmentFiltersInput: ResolverTypeWrapper<
+    DeepPartial<AssignmentFiltersInput>
+  >;
   String: ResolverTypeWrapper<DeepPartial<Scalars["String"]>>;
+  DeleteAssignmentPayload: ResolverTypeWrapper<
+    DeepPartial<DeleteAssignmentPayload>
+  >;
+  CreateAssignmentInput: ResolverTypeWrapper<
+    DeepPartial<CreateAssignmentInput>
+  >;
+  CreateAssignmentPayload: ResolverTypeWrapper<
+    DeepPartial<CreateAssignmentPayload>
+  >;
+  AssignmentStatus: ResolverTypeWrapper<DeepPartial<AssignmentStatus>>;
+  AssignmentOrderByInput: ResolverTypeWrapper<
+    DeepPartial<AssignmentOrderByInput>
+  >;
+  Assignment: ResolverTypeWrapper<DeepPartial<Assignment>>;
+  AssignmentEdge: ResolverTypeWrapper<DeepPartial<AssignmentEdge>>;
+  AssignmentConnection: ResolverTypeWrapper<DeepPartial<AssignmentConnection>>;
+  User: ResolverTypeWrapper<DeepPartial<User>>;
+  Float: ResolverTypeWrapper<DeepPartial<Scalars["Float"]>>;
+  Review: ResolverTypeWrapper<DeepPartial<Review>>;
+  CreateReviewInput: ResolverTypeWrapper<DeepPartial<CreateReviewInput>>;
+  CreateReviewPayload: ResolverTypeWrapper<DeepPartial<CreateReviewPayload>>;
+  ReviewFiltersInput: ResolverTypeWrapper<DeepPartial<ReviewFiltersInput>>;
+  ReviewOrderByInput: ResolverTypeWrapper<DeepPartial<ReviewOrderByInput>>;
   ReviewEdge: ResolverTypeWrapper<DeepPartial<ReviewEdge>>;
   ReviewConnection: ResolverTypeWrapper<DeepPartial<ReviewConnection>>;
+  AssignmentStats: ResolverTypeWrapper<DeepPartial<AssignmentStats>>;
+  ReviewSSummary: ResolverTypeWrapper<DeepPartial<ReviewSSummary>>;
   Date: ResolverTypeWrapper<DeepPartial<Scalars["Date"]>>;
-  Mutation: ResolverTypeWrapper<{}>;
   PageInfo: ResolverTypeWrapper<DeepPartial<PageInfo>>;
+  UserFiltersInput: ResolverTypeWrapper<DeepPartial<UserFiltersInput>>;
   DeleteUserPayload: ResolverTypeWrapper<DeepPartial<DeleteUserPayload>>;
   UpdateUserInput: ResolverTypeWrapper<DeepPartial<UpdateUserInput>>;
   UpdateUserPayload: ResolverTypeWrapper<DeepPartial<UpdateUserPayload>>;
@@ -344,12 +533,8 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: DeepPartial<Scalars["Boolean"]>;
   Int: DeepPartial<Scalars["Int"]>;
   ID: DeepPartial<Scalars["ID"]>;
-  Review: DeepPartial<Review>;
-  String: DeepPartial<Scalars["String"]>;
-  ReviewEdge: DeepPartial<ReviewEdge>;
-  ReviewConnection: DeepPartial<ReviewConnection>;
-  Date: DeepPartial<Scalars["Date"]>;
   Mutation: {};
+  AssignmentFiltersInput: DeepPartial<AssignmentFiltersInput>;
   String: DeepPartial<Scalars["String"]>;
   DeleteAssignmentPayload: DeepPartial<DeleteAssignmentPayload>;
   CreateAssignmentInput: DeepPartial<CreateAssignmentInput>;
@@ -386,6 +571,25 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
 > = ResolversObject<{
   _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
+  assignment?: Resolver<
+    ResolversTypes["Assignment"],
+    ParentType,
+    ContextType,
+    RequireFields<QueryAssignmentArgs, "id">
+  >;
+  assignments?: Resolver<
+    ResolversTypes["AssignmentConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<QueryAssignmentsArgs, never>
+  >;
+  me?: Resolver<Maybe<ResolversTypes["User"]>, ParentType, ContextType>;
+  review?: Resolver<
+    ResolversTypes["Review"],
+    ParentType,
+    ContextType,
+    RequireFields<QueryReviewArgs, "id">
+  >;
   reviews?: Resolver<
     ResolversTypes["ReviewConnection"],
     ParentType,
@@ -406,56 +610,6 @@ export type QueryResolvers<
   >;
 }>;
 
-export type ReviewResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
-> = ResolversObject<{
-  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  attitude?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  communication?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  growth?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  dependability?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  productivity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  initiative?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  innovation?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-}>;
-
-export type ReviewEdgeResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["ReviewEdge"] = ResolversParentTypes["ReviewEdge"]
-> = ResolversObject<{
-  node?: Resolver<ResolversTypes["Review"], ParentType, ContextType>;
-  cursor?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-}>;
-
-export type ReviewConnectionResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["ReviewConnection"] = ResolversParentTypes["ReviewConnection"]
-> = ResolversObject<{
-  edges?: Resolver<
-    Array<ResolversTypes["ReviewEdge"]>,
-    ParentType,
-    ContextType
-  >;
-  pageInfo?: Resolver<
-    Maybe<ResolversTypes["PageInfo"]>,
-    ParentType,
-    ContextType
-  >;
-  totalCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
-}>;
-
-export interface DateScalarConfig
-  extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
-  name: "Date";
-}
-
 export type MutationResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
@@ -465,6 +619,18 @@ export type MutationResolvers<
     ParentType,
     ContextType,
     RequireFields<MutationAuthenticateArgs, "input">
+  >;
+  CreateAssignment?: Resolver<
+    ResolversTypes["CreateAssignmentPayload"],
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateAssignmentArgs, "input">
+  >;
+  CreateReview?: Resolver<
+    Maybe<ResolversTypes["CreateReviewPayload"]>,
+    ParentType,
+    ContextType,
+    RequireFields<MutationCreateReviewArgs, "input">
   >;
   CreateUser?: Resolver<
     ResolversTypes["CreateUserPayload"],
@@ -487,6 +653,146 @@ export type MutationResolvers<
   _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
 }>;
 
+export type DeleteAssignmentPayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["DeleteAssignmentPayload"] = ResolversParentTypes["DeleteAssignmentPayload"]
+> = ResolversObject<{
+  assignment?: Resolver<ResolversTypes["Assignment"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type CreateAssignmentPayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["CreateAssignmentPayload"] = ResolversParentTypes["CreateAssignmentPayload"]
+> = ResolversObject<{
+  assignments?: Resolver<
+    Array<ResolversTypes["Assignment"]>,
+    ParentType,
+    ContextType
+  >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type AssignmentResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Assignment"] = ResolversParentTypes["Assignment"]
+> = ResolversObject<{
+  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  review?: Resolver<Maybe<ResolversTypes["Review"]>, ParentType, ContextType>;
+  reviewee?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  status?: Resolver<
+    ResolversTypes["AssignmentStatus"],
+    ParentType,
+    ContextType
+  >;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type AssignmentEdgeResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["AssignmentEdge"] = ResolversParentTypes["AssignmentEdge"]
+> = ResolversObject<{
+  node?: Resolver<ResolversTypes["Assignment"], ParentType, ContextType>;
+  cursor?: Resolver<ResolversTypes["ID"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type AssignmentConnectionResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["AssignmentConnection"] = ResolversParentTypes["AssignmentConnection"]
+> = ResolversObject<{
+  edges?: Resolver<
+    Array<ResolversTypes["AssignmentEdge"]>,
+    ParentType,
+    ContextType
+  >;
+  pageInfo?: Resolver<
+    Maybe<ResolversTypes["PageInfo"]>,
+    ParentType,
+    ContextType
+  >;
+  totalCount?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type UserResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+> = ResolversObject<{
+  address?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  assignmentStats?: Resolver<
+    ResolversTypes["AssignmentStats"],
+    ParentType,
+    ContextType
+  >;
+  assignments?: Resolver<
+    ResolversTypes["AssignmentConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<UserAssignmentsArgs, never>
+  >;
+  avatar?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  birthday?: Resolver<Maybe<ResolversTypes["Date"]>, ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  mobilePhone?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  phone?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  reviews?: Resolver<
+    ResolversTypes["ReviewConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<UserReviewsArgs, never>
+  >;
+  reviewsFromUsers?: Resolver<
+    ResolversTypes["ReviewConnection"],
+    ParentType,
+    ContextType,
+    RequireFields<UserReviewsFromUsersArgs, never>
+  >;
+  reviewsSummary?: Resolver<
+    ResolversTypes["ReviewSSummary"],
+    ParentType,
+    ContextType
+  >;
+  userType?: Resolver<ResolversTypes["UserType"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type ReviewResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["Review"] = ResolversParentTypes["Review"]
+> = ResolversObject<{
+  assignment?: Resolver<ResolversTypes["Assignment"], ParentType, ContextType>;
+  attitude?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  comment?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  communication?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  dependability?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  growth?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  initiative?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  innovation?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  productivity?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  rating?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
+  reviewee?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type CreateReviewPayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["CreateReviewPayload"] = ResolversParentTypes["CreateReviewPayload"]
+> = ResolversObject<{
+  review?: Resolver<ResolversTypes["Review"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
 export type ReviewEdgeResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes["ReviewEdge"] = ResolversParentTypes["ReviewEdge"]
@@ -514,30 +820,29 @@ export type ReviewConnectionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
-export type UserResolvers<
+export type AssignmentStatsResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+  ParentType extends ResolversParentTypes["AssignmentStats"] = ResolversParentTypes["AssignmentStats"]
 > = ResolversObject<{
-  avatar?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
+  progress?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  pending?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  completed?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  total?: Resolver<Maybe<ResolversTypes["Int"]>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type ReviewSSummaryResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["ReviewSSummary"] = ResolversParentTypes["ReviewSSummary"]
+> = ResolversObject<{
   rating?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
-  reviews?: Resolver<
-    ResolversTypes["ReviewConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<UserReviewsArgs, never>
-  >;
-  reviewsFromUsers?: Resolver<
-    ResolversTypes["ReviewConnection"],
-    ParentType,
-    ContextType,
-    RequireFields<UserReviewsFromUsersArgs, never>
-  >;
-  userType?: Resolver<ResolversTypes["UserType"], ParentType, ContextType>;
+  attitude?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  communication?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  growth?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  dependability?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  productivity?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  initiative?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
+  innovation?: Resolver<ResolversTypes["Float"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
@@ -545,20 +850,6 @@ export interface DateScalarConfig
   extends GraphQLScalarTypeConfig<ResolversTypes["Date"], any> {
   name: "Date";
 }
-
-export type QueryResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["Query"] = ResolversParentTypes["Query"]
-> = ResolversObject<{
-  _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
-}>;
-
-export type MutationResolvers<
-  ContextType = any,
-  ParentType extends ResolversParentTypes["Mutation"] = ResolversParentTypes["Mutation"]
-> = ResolversObject<{
-  _?: Resolver<Maybe<ResolversTypes["Boolean"]>, ParentType, ContextType>;
-}>;
 
 export type PageInfoResolvers<
   ContextType = any,
@@ -572,20 +863,44 @@ export type PageInfoResolvers<
   >;
   firstCursor?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
   lastCursor?: Resolver<Maybe<ResolversTypes["ID"]>, ParentType, ContextType>;
+  previousCursor?: Resolver<
+    Maybe<ResolversTypes["ID"]>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
-export type UserResolvers<
+export type DeleteUserPayloadResolvers<
   ContextType = any,
-  ParentType extends ResolversParentTypes["User"] = ResolversParentTypes["User"]
+  ParentType extends ResolversParentTypes["DeleteUserPayload"] = ResolversParentTypes["DeleteUserPayload"]
 > = ResolversObject<{
-  id?: Resolver<ResolversTypes["Int"], ParentType, ContextType>;
-  firstName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  lastName?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  email?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
-  userType?: Resolver<ResolversTypes["UserType"], ParentType, ContextType>;
-  avatar?: Resolver<Maybe<ResolversTypes["String"]>, ParentType, ContextType>;
-  createdAt?: Resolver<ResolversTypes["Date"], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type UpdateUserPayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["UpdateUserPayload"] = ResolversParentTypes["UpdateUserPayload"]
+> = ResolversObject<{
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type CreateUserPayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["CreateUserPayload"] = ResolversParentTypes["CreateUserPayload"]
+> = ResolversObject<{
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+}>;
+
+export type AuthenticatePayloadResolvers<
+  ContextType = any,
+  ParentType extends ResolversParentTypes["AuthenticatePayload"] = ResolversParentTypes["AuthenticatePayload"]
+> = ResolversObject<{
+  user?: Resolver<ResolversTypes["User"], ParentType, ContextType>;
+  token?: Resolver<ResolversTypes["String"], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType>;
 }>;
 
