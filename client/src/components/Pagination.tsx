@@ -8,7 +8,7 @@ import { Button } from "./";
 
 export interface PaginationProps {
   pageInfo?: Partial<PageInfo> | null;
-  onPaginate?: (direction: string) => void;
+  onPaginate?: (direction?: string | null) => void;
 }
 export const Pagination: FC<PaginationProps> = ({ pageInfo, onPaginate }) => {
   const router = useRouter();

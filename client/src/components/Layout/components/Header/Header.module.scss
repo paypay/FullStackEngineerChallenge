@@ -1,0 +1,22 @@
+.header {
+  @apply flex w-full items-center justify-between;
+  li > a {
+    @apply pb-4;
+    &:hover {
+      @apply text-red-500 border-b-2 border-red-500;
+    }
+  }
+
+  ul li {
+    @apply hidden;
+  }
+
+  ul li:last-child {
+    @apply block;
+  }
+  @screen md {
+    ul li {
+      @apply block;
+    }
+  }
+}
