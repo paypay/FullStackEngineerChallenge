@@ -9,10 +9,12 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { onError } from "@apollo/link-error";
+import Router from "next/router";
 import { useMemo } from "react";
 
 import { API_HOST, COOKIE_TOKEN } from "../constants";
 import cookies from "../helpers/cookies";
+import { getLocale } from "../helpers/getLocale";
 
 let apolloClient: ApolloClient<NormalizedCacheObject>;
 
@@ -31,11 +33,13 @@ const errorLink = onError(({ graphQLErrors }) => {
       const code = err.extensions?.code;
       switch (code) {
         case "UNAUTHENTICATED":
+        case "FORBIDDEN":
+          // Redirect to login
+          cookies().remove(COOKIE_TOKEN);
+          Router.replace(`/${getLocale()}/login`);
           break;
       }
     }
-
-    if (networkError) console.log(`[Network error]: ${networkError}`);
   }
 });
 
@@ -57,7 +61,7 @@ const createApolloClient = () => {
   });
 };
 
-export const initApollo = (initialState: NormalizedCacheObject) => {
+export const initApollo = (initialState?: NormalizedCacheObject) => {
   const _apolloClient = apolloClient ?? createApolloClient();
 
   // The initial state gets hydrated here
@@ -72,7 +76,7 @@ export const initApollo = (initialState: NormalizedCacheObject) => {
   return _apolloClient;
 };
 
-export const useApollo = (initialState: NormalizedCacheObject) => {
+export const useApollo = (initialState?: NormalizedCacheObject) => {
   const store = useMemo(() => initApollo(initialState), [initialState]);
   return store;
 };

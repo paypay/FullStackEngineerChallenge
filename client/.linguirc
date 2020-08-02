@@ -1,7 +1,12 @@
 {
     "sourceLocale": "en",
     "fallbackLocale": "en",
-    "localeDir": "src/locales/",
-    "srcPathDirs": ["src/"],
-    "format": "minimal"
+    "format": "minimal",
+    "locales": ["en", "ja"],
+    rootDir: ".",
+    "catalogs": [{
+        "path": "src/locales/{locale}/messages",
+        "include": ["src"],
+        "exclude": ["**/node_modules/**"]
+    }],
 }
