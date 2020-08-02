@@ -1,0 +1,21 @@
+#import "../../fragments/User.gql"
+query ReviewsComments($first: Int, $after: ID, $filters: ReviewFiltersInput) {
+  reviews(first: $first, after: $after, filters: $filters) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      previousCursor
+      firstCursor
+      lastCursor
+    }
+    edges {
+      node {
+        id
+        comment
+        user {
+          ...User
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+query Assignment($id: Int!) {
+  assignment(id: $id) {
+    id
+    status
+    review {
+      id
+      attitude
+      communication
+      growth
+      dependability
+      productivity
+      initiative
+      innovation
+      comment
+      rating
+    }
+    reviewee {
+      id
+      firstName
+      lastName
+      avatar
+      reviewsSummary {
+        rating
+      }
+    }
+  }
+}

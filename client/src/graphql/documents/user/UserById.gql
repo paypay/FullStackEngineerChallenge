@@ -1,0 +1,10 @@
+#import "../../fragments/User.gql"
+query UserById($id: Int!) {
+  user(id: $id) {
+    ...User
+    birthday
+    address
+    phone
+    mobilePhone
+  }
+}

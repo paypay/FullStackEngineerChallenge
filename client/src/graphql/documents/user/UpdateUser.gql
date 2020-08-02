@@ -1,0 +1,12 @@
+#import "../../fragments/User.gql"
+mutation UpdateUser($id: Int!, $input: UpdateUserInput!) {
+  UpdateUser(id: $id, input: $input) {
+    user {
+      ...User
+      birthday
+      address
+      phone
+      mobilePhone
+    }
+  }
+}

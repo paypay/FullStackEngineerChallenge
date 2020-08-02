@@ -1,10 +1,8 @@
+#import "../../fragments/User.gql"
 mutation Authenticate($input: AuthenticateInput!) {
   Authenticate(input: $input) {
     user {
-      id
-      firstName
-      lastName
-      avatar
+      ...User
       userType
     }
     token

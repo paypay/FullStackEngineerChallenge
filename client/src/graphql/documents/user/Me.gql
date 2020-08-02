@@ -1,9 +1,7 @@
+#import "../../fragments/User.gql"
 query Me {
   me {
-    id
-    firstName
-    lastName
-    avatar
+    ...User
     userType
   }
 }

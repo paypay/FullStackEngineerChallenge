@@ -1,3 +1,4 @@
+#import "../../fragments/User.gql"
 query Users(
   $first: Int
   $after: ID
@@ -7,11 +8,7 @@ query Users(
   users(first: $first, after: $after, filters: $filters, orderBy: $orderBy) {
     edges {
       node {
-        id
-        firstName
-        lastName
-        email
-        avatar
+        ...User
         rating
         assignmentStats {
           progress
@@ -24,6 +21,7 @@ query Users(
     pageInfo {
       hasNextPage
       hasPreviousPage
+      previousCursor
       firstCursor
       lastCursor
     }
