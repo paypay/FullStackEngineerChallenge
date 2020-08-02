@@ -1,5 +1,6 @@
-import { DEFAULT_LOCALE } from "../constants";
-import * as catalogs from "../locales";
+import { COOKIE_LANGUAGE, DEFAULT_LOCALE } from "../constants";
+import localeDisplayNames from "../locales/localeDisplayNames.json";
+import cookies from "./cookies";
 
 export const isLocale = (tested?: string) =>
   // Check if tested locale is defined and return true if it's exist on catalogs
@@ -10,6 +11,11 @@ export const isLocale = (tested?: string) =>
 
 export function getLocale(): string {
   const isSSR = typeof window !== undefined;
+  const languageFromCookie = cookies().get(COOKIE_LANGUAGE);
+
+  if (isLocale(languageFromCookie)) {
+    return languageFromCookie;
+  }
 
   // Check browser when is not in server side rendering
   if (!isSSR) {

@@ -2,8 +2,10 @@ import { useRouter } from "next/dist/client/router";
 import React, { FC, useEffect, useState } from "react";
 
 import { COOKIE_TOKEN } from "../constants";
+import { useApollo } from "../graphql/setupApollo";
 import { useMeLazyQuery, User } from "../graphql/types";
 import cookies from "../helpers/cookies";
+import { getLocale } from "../helpers/getLocale";
 
 interface AuthProps {
   readonly user?: Partial<User> | null;
@@ -21,14 +23,11 @@ export const AuthContext = React.createContext<AuthProps>({
 });
 
 export const AuthProvider: FC = ({ children }) => {
-  const router = useRouter();
   const [state, setState] = useState<AuthProps>({
     setUser: (data) => setState({ ...state, user: data }),
   });
-
   const [meQuery, { data, loading }] = useMeLazyQuery({
     ssr: false,
-    // Remove cache from previous user
     fetchPolicy: "network-only",
   });
 
@@ -40,17 +39,9 @@ export const AuthProvider: FC = ({ children }) => {
     }
   }, [state.user]);
 
-  const isAdminRoute = !!router.route.includes("admin");
-  const isAdmin = data?.me?.userType === "ADMIN";
-
   return (
     <AuthContext.Provider value={{ ...state, user: data && data.me, loading }}>
-      {/* TODO: Create loading component */}
-      {validToken && loading && null}
-      {/* If public access, render immediately */}
-      {!loading && !isAdminRoute && children}
-      {/* We will capture Forbidden access using apollo error link */}
-      {isAdminRoute && (isAdmin ? children : null)}
+      {children}
     </AuthContext.Provider>
   );
 };
@@ -63,21 +54,25 @@ interface UseAuthProps extends AuthProps {
 export const useAuth = (): UseAuthProps => {
   const state = React.useContext(AuthContext);
   const router = useRouter();
+  const client = useApollo();
 
   const login = ({ token, user }: AuthPayload) => {
-    state.setUser(user);
     cookies().set(COOKIE_TOKEN, token);
+    state.setUser(user);
+
     if (user.userType === "ADMIN") {
-      router.replace("/admin");
+      router.push("/[lang]/admin/employees", `/${getLocale()}/admin/employees`);
       return;
     }
-    router.replace("/");
+    router.push("/[lang]/auth/reviews", `/${getLocale()}/auth/reviews`);
   };
 
-  const logout = () => {
-    state.setUser(undefined);
+  const logout = async () => {
+    router.replace("/[lang]/login", `/${getLocale()}/login`);
     cookies().remove(COOKIE_TOKEN);
-    router.replace("/");
+    state.setUser(undefined);
+    //Clear cache
+    client.clearStore();
   };
 
   return {
