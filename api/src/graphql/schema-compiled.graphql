@@ -1,0 +1,247 @@
+type Query {
+  _: Boolean
+  assignment(id: Int!): Assignment!
+  assignments(first: Int, after: ID, filters: AssignmentFiltersInput, orderBy: AssignmentOrderByInput): AssignmentConnection!
+  me: User
+  review(id: Int!): Review!
+  reviews(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
+  user(id: Int!): User!
+  users(first: Int, after: ID, filters: UserFiltersInput, orderBy: UserOrderByInput): UserConnection!
+}
+
+type Mutation {
+  Authenticate(input: AuthenticateInput!): AuthenticatePayload!
+  CreateAssignment(input: CreateAssignmentInput!): CreateAssignmentPayload!
+  CreateReview(input: CreateReviewInput!): CreateReviewPayload
+  CreateUser(input: CreateUserInput!): CreateUserPayload!
+  DeleteUser(id: Int!): DeleteUserPayload!
+  UpdateUser(id: Int!, input: UpdateUserInput!): UpdateUserPayload!
+  _: Boolean
+}
+
+input AssignmentFiltersInput {
+  SEARCH: String
+  STATUS: AssignmentStatus
+  USER_ID: Int
+  REVIEWEE_ID: Int
+}
+
+type DeleteAssignmentPayload {
+  assignment: Assignment!
+}
+
+input CreateAssignmentInput {
+  revieweeId: Int!
+  reviewerIds: [Int!]!
+}
+
+type CreateAssignmentPayload {
+  assignments: [Assignment!]!
+}
+
+enum AssignmentStatus {
+  PENDING
+  COMPLETED
+}
+
+enum AssignmentOrderByInput {
+  ID_ASC
+  ID_DESC
+  STATUS_ASC
+  STATUS_DESC
+}
+
+type Assignment {
+  createdAt: Date!
+  id: Int!
+  review: Review
+  reviewee: User!
+  status: AssignmentStatus!
+  user: User!
+}
+
+type AssignmentEdge {
+  node: Assignment!
+  cursor: ID!
+}
+
+type AssignmentConnection {
+  edges: [AssignmentEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
+}
+
+type User {
+  address: String!
+  assignmentStats: AssignmentStats!
+  assignments(first: Int, after: ID, filters: AssignmentFiltersInput, orderBy: AssignmentOrderByInput): AssignmentConnection!
+  avatar: String!
+  birthday: Date
+  createdAt: Date!
+  email: String!
+  firstName: String!
+  id: Int!
+  lastName: String!
+  mobilePhone: String!
+  phone: String!
+  rating: Float!
+  reviews(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
+  reviewsFromUsers(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
+  reviewsSummary: ReviewSSummary!
+  userType: UserType!
+}
+
+type Review {
+  assignment: Assignment!
+  attitude: Int!
+  comment: String!
+  communication: Int!
+  createdAt: Date!
+  dependability: Int!
+  growth: Int!
+  id: Int!
+  initiative: Int!
+  innovation: Int!
+  productivity: Int!
+  rating: Int!
+  reviewee: User!
+  user: User!
+}
+
+input CreateReviewInput {
+  assignmentId: Int!
+  comment: String!
+  attitude: Int!
+  communication: Int!
+  growth: Int!
+  dependability: Int!
+  productivity: Int!
+  initiative: Int!
+  innovation: Int!
+}
+
+type CreateReviewPayload {
+  review: Review!
+}
+
+input ReviewFiltersInput {
+  USER_ID: Int
+  REVIEWEE_ID: Int
+}
+
+enum ReviewOrderByInput {
+  ID_ASC
+  ID_DESC
+  RATING_ASC
+  RATING_DESC
+}
+
+type ReviewEdge {
+  node: Review!
+  cursor: ID!
+}
+
+type ReviewConnection {
+  edges: [ReviewEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
+}
+
+type AssignmentStats {
+  progress: Int
+  pending: Int
+  completed: Int
+  total: Int
+}
+
+type ReviewSSummary {
+  rating: Float!
+  attitude: Float!
+  communication: Float!
+  growth: Float!
+  dependability: Float!
+  productivity: Float!
+  initiative: Float!
+  innovation: Float!
+}
+
+scalar Date
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  firstCursor: ID
+  lastCursor: ID
+  previousCursor: ID
+}
+
+input UserFiltersInput {
+  SEARCH: String
+  USER_TYPE: UserType
+}
+
+type DeleteUserPayload {
+  user: User!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
+  avatar: String
+  address: String
+  phone: String
+  mobilePhone: String
+  birthday: Date
+}
+
+type UpdateUserPayload {
+  user: User!
+}
+
+input CreateUserInput {
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String
+  avatar: String
+  address: String
+  phone: String
+  mobilePhone: String
+  birthday: Date
+}
+
+type CreateUserPayload {
+  user: User!
+}
+
+input AuthenticateInput {
+  email: String!
+  password: String!
+}
+
+type AuthenticatePayload {
+  user: User!
+  token: String!
+}
+
+enum UserType {
+  ADMIN
+  EMPLOYEE
+}
+
+enum UserOrderByInput {
+  ID_ASC
+  ID_DESC
+}
+
+type UserEdge {
+  node: User!
+  cursor: ID!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo
+  totalCount: Int
+}

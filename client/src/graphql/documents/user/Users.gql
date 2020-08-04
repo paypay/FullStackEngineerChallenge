@@ -1,0 +1,30 @@
+#import "../../fragments/User.gql"
+query Users(
+  $first: Int
+  $after: ID
+  $filters: UserFiltersInput
+  $orderBy: UserOrderByInput
+) {
+  users(first: $first, after: $after, filters: $filters, orderBy: $orderBy) {
+    edges {
+      node {
+        ...User
+        rating
+        assignmentStats {
+          progress
+          completed
+          total
+        }
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      previousCursor
+      firstCursor
+      lastCursor
+    }
+    totalCount
+  }
+}

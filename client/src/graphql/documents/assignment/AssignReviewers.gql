@@ -1,0 +1,15 @@
+mutation AssignReviewers($input: CreateAssignmentInput!) {
+  CreateAssignment(input: $input) {
+    assignments {
+      id
+      reviewee {
+        id
+        assignmentStats {
+          progress
+          completed
+          total
+        }
+      }
+    }
+  }
+}

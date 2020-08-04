@@ -1,0 +1,19 @@
+overwrite: true
+schema:
+  "./src/**/*.ts":
+    noRequire: true
+generates:
+  src/graphql/schema-compiled.graphql:
+    plugins:
+      - schema-ast
+    config:
+      commentDescriptions: true
+  src/graphql/types.ts:
+    plugins:
+      - "typescript"
+      - "typescript-resolvers"
+      - add: "import { DeepPartial } from 'utility-types';"
+    config:
+      noSchemaStitching: true
+      useIndexSignature: true
+      defaultMapper: DeepPartial<{T}>

@@ -1,0 +1,26 @@
+#import "../../fragments/User.gql"
+query MeAssignments($after: ID, $filters: AssignmentFiltersInput) {
+  me {
+    id
+    assignments(after: $after, filters: $filters) {
+      edges {
+        node {
+          id
+          status
+          reviewee {
+            ...User
+            rating
+          }
+        }
+      }
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        previousCursor
+        firstCursor
+        lastCursor
+      }
+      totalCount
+    }
+  }
+}

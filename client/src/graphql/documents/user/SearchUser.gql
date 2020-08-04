@@ -1,0 +1,15 @@
+#import "../../fragments/User.gql"
+query SearchUser(
+  $first: Int
+  $after: ID
+  $filters: UserFiltersInput
+  $orderBy: UserOrderByInput
+) {
+  users(first: $first, after: $after, filters: $filters, orderBy: $orderBy) {
+    edges {
+      node {
+        ...User
+      }
+    }
+  }
+}

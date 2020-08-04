@@ -1,0 +1,41 @@
+version: "2"
+
+services:
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root.password
+      MYSQL_DATABASE: paypay
+      MYSQL_USER: paypay.user
+      MYSQL_PASSWORD: paypay.pass
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - ./src/database/mysql/data:/var/lib/mysql
+      - /etc/mysql/conf.d/my.cnf
+      - ./src/database/mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3309:3306
+    networks:
+      - default_network
+  db-test:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: root.password
+      MYSQL_DATABASE: paypay_test
+      MYSQL_USER: paypay.user
+      MYSQL_PASSWORD: paypay.pass
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION"
+    volumes:
+      - ./src/database/mysql/data-test:/var/lib/mysql
+      - /etc/mysql/conf.d/my.cnf
+      - ./src/database/testing/mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+      - 3310:3306
+    networks:
+      - default_network
+
+networks:
+  default_network:
+    driver: bridge

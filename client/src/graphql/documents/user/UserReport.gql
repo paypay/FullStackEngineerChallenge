@@ -1,0 +1,16 @@
+#import "../../fragments/User.gql"
+query UserReport($id: Int!) {
+  user(id: $id) {
+    ...User
+    reviewsSummary {
+      rating
+      attitude
+      communication
+      growth
+      dependability
+      productivity
+      initiative
+      innovation
+    }
+  }
+}

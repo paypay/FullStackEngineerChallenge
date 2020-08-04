@@ -1,0 +1,12 @@
+{
+    "sourceLocale": "en",
+    "fallbackLocale": "en",
+    "format": "minimal",
+    "locales": ["en", "ja"],
+    rootDir: ".",
+    "catalogs": [{
+        "path": "src/locales/{locale}/messages",
+        "include": ["src"],
+        "exclude": ["**/node_modules/**"]
+    }],
+}
