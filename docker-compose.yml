@@ -1,0 +1,14 @@
+version: "3"
+
+services:
+  mysql:
+    container_name: paypay-mysql
+    build: ./mysql
+    volumes: 
+      - ./.docker_volumes/paypay-mysql-data:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: paypay
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: supersecret

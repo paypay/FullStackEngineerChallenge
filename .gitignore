@@ -1,0 +1,5 @@
+# misc
+.DS_Store
+
+# docker volumes (mysql in this project)
+/.docker_volumes

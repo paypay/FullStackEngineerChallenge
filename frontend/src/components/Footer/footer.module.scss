@@ -1,0 +1,47 @@
+.App {
+  text-align: center;
+}
+
+.AppHeader {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.HomeLink {
+  color: #61dafb;
+  position: fixed;
+  bottom: 15px;
+  left: 15px;
+  z-index: 50;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.LogoutLink {
+  color: #61dafb;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  z-index: 50;
+  cursor: pointer;
+  text-decoration: underline;
+  font-weight: bold;  
+}
+
+.loader {
+  color: white;
+  left: calc(50% - 16px);
+  position: absolute;
+  top: calc(50% - 16px);
+}
+
+.errorMessage {
+  color: red;
+}

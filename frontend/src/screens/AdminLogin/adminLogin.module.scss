@@ -1,0 +1,29 @@
+.App {
+  text-align: center;
+}
+
+.AppHeader {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.AppLink {
+  color: #61dafb;
+}
+
+.loader {
+  color: white;
+  left: calc(50% - 16px);
+  position: absolute;
+  top: calc(50% - 16px);
+}
+
+.errorMessage {
+  color: red;
+}
