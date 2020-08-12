@@ -25,9 +25,9 @@ CREATE TABLE IF NOT EXISTS `paypay`.`reviews` (
   `employee` INT NOT NULL,
   `createdAt` DATETIME NOT NULL,
   `updatedAt` DATETIME NOT NULL,
-  CONSTRAINT fk_employee
+  CONSTRAINT fk_employees
   FOREIGN KEY (employee) 
-    REFERENCES employee(id)
+    REFERENCES employees(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
   PRIMARY KEY (`id`))
@@ -43,12 +43,12 @@ CREATE TABLE IF NOT EXISTS `paypay`.`feedbacks` (
   `updatedAt` DATETIME NOT NULL,
   CONSTRAINT fk_author
   FOREIGN KEY (author) 
-    REFERENCES employee(id)
+    REFERENCES employees(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
   CONSTRAINT fk_review
   FOREIGN KEY (review) 
-    REFERENCES review(id)
+    REFERENCES reviews(id)
       ON UPDATE CASCADE
       ON DELETE CASCADE,
   PRIMARY KEY (`id`))
