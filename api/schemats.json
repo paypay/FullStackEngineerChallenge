@@ -1,4 +1,4 @@
 {
-  "conn": "mysql://paypay.user:paypay.pass@127.0.0.1:3309/paypay",
+  "conn": "postgres://paypay.user:paypay.pass@127.0.0.1:5442/paypay",
   "output": "src/database/types.ts"
 }

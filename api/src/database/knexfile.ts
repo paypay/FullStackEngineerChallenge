@@ -3,7 +3,8 @@ require("dotenv-flow").config({
 });
 
 module.exports = {
-  client: "mysql",
+  client: "postgres",
+  version: "11",
   connection: {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,

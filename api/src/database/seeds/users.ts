@@ -41,8 +41,6 @@ export const employees = [...Array(50)].map(() => ({
 export const users = [...presetUsers, ...employees];
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex.raw("SET FOREIGN_KEY_CHECKS=0;");
-  await knex("user").del();
-  await knex.raw("ALTER TABLE user AUTO_INCREMENT = 1");
+  await knex.raw('TRUNCATE "user" RESTART IDENTITY CASCADE');
   await knex("user").insert(users);
 }

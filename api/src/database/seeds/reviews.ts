@@ -36,13 +36,13 @@ export const assignments = [...Array(300)].map((_, i) => {
 });
 
 export async function seed(knex: Knex): Promise<void> {
-  await knex.raw("SET FOREIGN_KEY_CHECKS=0;");
-  await knex("review").del();
-  await knex("assignment").del();
+  await knex.raw("SET session_replication_role = 'replica'");
 
-  await knex.raw("ALTER TABLE review AUTO_INCREMENT = 1");
-  await knex.raw("ALTER TABLE assignment AUTO_INCREMENT = 1");
+  await knex.raw('TRUNCATE "review" RESTART IDENTITY CASCADE');
+  await knex.raw('TRUNCATE "assignment" RESTART IDENTITY CASCADE');
 
   await knex("review").insert(reviews);
   await knex("assignment").insert(assignments);
+
+  await knex.raw("SET session_replication_role = 'origin'");
 }

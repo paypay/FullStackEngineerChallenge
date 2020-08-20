@@ -2,7 +2,8 @@ import knex from "knex";
 
 const setupKnex = () => {
   return knex({
-    client: "mysql",
+    client: "postgres",
+    version: "11",
     connection: {
       host: process.env.DB_HOST,
       port: Number(process.env.DB_PORT),
