@@ -3,13 +3,7 @@ import "dotenv-flow/config";
 import { ApolloServer } from "apollo-server-micro";
 import cors from "micro-cors";
 
-import {
-  context,
-  formatError,
-  resolvers,
-  scalars,
-  typeDefs,
-} from "./src/graphql";
+import { context, formatError, resolvers, scalars, typeDefs } from "./graphql";
 
 module.exports = cors({
   allowCredentials: true,
@@ -27,9 +21,10 @@ module.exports = cors({
     typeDefs,
     resolvers: { ...resolvers, ...scalars },
     formatError,
-    context: context(req),
-    introspection: process.env.NODE_ENV !== "production",
-    playground: process.env.NODE_ENV !== "production",
+    context,
+    //information about what queries it supports
+    introspection: true,
+    playground: true,
   });
 
   const handler = apolloServer.createHandler();

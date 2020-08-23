@@ -67,9 +67,10 @@ export const ModalViewReview: FC<ModalProps> = ({
 
         <span className="mt-8 flex justify-end rounded-md sm:mt-0 sm:w-auto">
           <Button
+            type="button"
             variant="default"
             className="w-auto"
-            type="button"
+            size="sm"
             onClick={() => handleClose()}
           >
             <Trans id="modal.close">Close</Trans>

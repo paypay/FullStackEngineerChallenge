@@ -45,7 +45,7 @@ export const ReviewType = gql`
 
   type Review {
     id: Int!
-    rating: Int!
+    rating: Float!
     comment: String!
     attitude: Int!
     communication: Int!
@@ -76,7 +76,6 @@ export const ReviewType = gql`
   }
 
   extend type User {
-    rating: Float!
     assignmentStats: AssignmentStats!
     reviews(
       first: Int
@@ -96,7 +95,7 @@ export const ReviewType = gql`
     review: Review
   }
 
-  type ReviewSSummary {
+  type ReviewsSummary {
     rating: Float!
     attitude: Float!
     communication: Float!
@@ -107,6 +106,6 @@ export const ReviewType = gql`
     innovation: Float!
   }
   extend type User {
-    reviewsSummary: ReviewSSummary!
+    reviewsSummary: ReviewsSummary!
   }
 `;

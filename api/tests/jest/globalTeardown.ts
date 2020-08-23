@@ -9,7 +9,7 @@ interface TABLE_SCHEMA {
 
 // Remove tables from test database
 export default async () => {
-  await db.raw("SET FOREIGN_KEY_CHECKS=0;");
+  await db.raw("SET session_replication_role = 'replica'");
 
   const [tables] = await db.raw<[TABLE_SCHEMA[]]>(
     `SELECT DISTINCT TABLE_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA = '${process.env.DB_NAME}'`
@@ -20,7 +20,7 @@ export default async () => {
   });
 
   // Re enable foreign key checks
-  await db.raw("SET FOREIGN_KEY_CHECKS=1;");
+  await db.raw("SET session_replication_role = 'origin'");
 
   // Close connection
   await db.destroy();

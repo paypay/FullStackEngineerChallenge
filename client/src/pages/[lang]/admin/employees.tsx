@@ -8,7 +8,7 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import {
   AvatarInfo,
@@ -26,21 +26,27 @@ import { ModalDeleteUser } from "../../../components/AdminEmployee/ModalDeleteUs
 import { ModalEditUser } from "../../../components/AdminEmployee/ModalEditUser";
 import { ModalViewUser } from "../../../components/AdminEmployee/ModalViewUser";
 import { PopOverAssignReviewer } from "../../../components/AdminEmployee/PopoverAssignReviewer";
-import { UserType, useUsersQuery } from "../../../graphql/types";
+import { UserType, useUsersLazyQuery } from "../../../graphql/types";
 import { getLocationSearch } from "../../../helpers/getRoutePath";
 
 const Employees: FC = () => {
   const router = useRouter();
 
-  const { data, refetch, variables: refetchVariables, loading } = useUsersQuery(
-    {
-      variables: {
-        first: 10,
-        after: router.query.after as string,
-        filters: { USER_TYPE: UserType.Employee },
-      },
-    }
-  );
+  const [
+    fetchUsers,
+    { data, loading, variables: refetchVariables },
+  ] = useUsersLazyQuery({
+    variables: {
+      first: 10,
+      after: router.query.after as string,
+      filters: { USER_TYPE: UserType.Employee },
+    },
+  });
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   const users = data?.users.edges;
 
   return (
@@ -109,10 +115,12 @@ const Employees: FC = () => {
               <SearchForm
                 name="search"
                 onDebounce={(value) =>
-                  refetch({
-                    filters: {
-                      SEARCH: value,
-                      USER_TYPE: UserType.Employee,
+                  fetchUsers({
+                    variables: {
+                      filters: {
+                        SEARCH: value,
+                        USER_TYPE: UserType.Employee,
+                      },
                     },
                   })
                 }
@@ -158,11 +166,11 @@ const Employees: FC = () => {
               {users?.map(({ node: user }) => (
                 <tr key={user.id} className="border-gray-400 border-t">
                   <td className="py-3 px-4">
-                    <AvatarInfo data={user} />
+                    <AvatarInfo data={{ ...user, reviewsSummary: undefined }} />
                   </td>
 
                   <td className="whitespace-no-wrap px-4">
-                    <Rating rate={user.rating} />
+                    <Rating rate={user.reviewsSummary.rating} />
                   </td>
                   <td />
                   <td className="whitespace-no-wrap px-4">
@@ -185,7 +193,7 @@ const Employees: FC = () => {
                       <LaunchIcon className="mx-1 md:mx-3 text-gray-300 cursor-not-allowed" />
 
                       <PopOverAssignReviewer
-                        reviewee={user}
+                        reviewee={{ ...user, reviewsSummary: undefined }}
                         refetchVariables={refetchVariables}
                       />
 

@@ -1,7 +1,10 @@
 import { gql } from "apollo-server-micro";
 
 import { db, setupServer } from "../../../../tests/helpers/setupServer";
-import { seed as userSeeds, presetUsers } from "../../../database/seeds/users";
+import {
+  presetUsers,
+  seed as userSeeds,
+} from "../../../database/seeds/20200722175030_users";
 
 const MUTATION_UPDATE_USER = gql`
   mutation UpdateUser($id: Int!, $input: UpdateUserInput!) {

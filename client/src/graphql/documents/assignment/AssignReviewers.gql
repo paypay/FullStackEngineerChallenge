@@ -1,9 +1,22 @@
+#import "../../fragments/User.gql"
 mutation AssignReviewers($input: CreateAssignmentInput!) {
   CreateAssignment(input: $input) {
     assignments {
       id
-      reviewee {
+      review {
         id
+        attitude
+        communication
+        growth
+        dependability
+        productivity
+        initiative
+        innovation
+        comment
+        rating
+      }
+      reviewee {
+        ...User
         assignmentStats {
           progress
           completed

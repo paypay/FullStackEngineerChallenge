@@ -68,7 +68,7 @@ export const useAuth = (): UseAuthProps => {
   };
 
   const logout = async () => {
-    router.replace("/[lang]/login", `/${getLocale()}/login`);
+    router.replace(`/${getLocale()}/login`);
     cookies().remove(COOKIE_TOKEN);
     state.setUser(undefined);
     //Clear cache

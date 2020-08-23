@@ -9,7 +9,9 @@ query Users(
     edges {
       node {
         ...User
-        rating
+        reviewsSummary {
+          rating
+        }
         assignmentStats {
           progress
           completed

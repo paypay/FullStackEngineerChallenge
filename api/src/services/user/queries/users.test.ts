@@ -1,7 +1,10 @@
 import { gql } from "apollo-server-micro";
 
 import { db, setupServer } from "../../../../tests/helpers/setupServer";
-import { seed as userSeeds, users } from "../../../database/seeds/users";
+import {
+  seed as userSeeds,
+  users,
+} from "../../../database/seeds/20200722175030_users";
 
 const QUERY_USERS = gql`
   query users($first: Int, $after: ID, $orderBy: UserOrderByInput) {

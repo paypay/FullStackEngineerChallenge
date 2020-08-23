@@ -74,5 +74,5 @@ export const getRating = (
     review.innovation +
     review.productivity;
 
-  return Math.round(total / 7);
+  return Math.round((total / 7 + Number.EPSILON) * 100) / 100;
 };

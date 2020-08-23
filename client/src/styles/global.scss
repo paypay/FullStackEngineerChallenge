@@ -16,18 +16,6 @@
   animation: opac 20s;
 }
 
-.max-h-64 {
-  max-height: 16rem;
-}
-
-.max-h-84 {
-  max-height: 18.75rem;
-}
-
-.text-2lg {
-  font-size: 1.775rem;
-}
-
 .rounded-xl {
   border-radius: 1.25rem;
 }
@@ -35,10 +23,6 @@
 .rounded-l-xl {
   border-top-left-radius: 1.25rem;
   border-bottom-left-radius: 1.25rem;
-}
-
-.min-h-32 {
-  height: 512px;
 }
 
 a[aria-disabled="true"] {

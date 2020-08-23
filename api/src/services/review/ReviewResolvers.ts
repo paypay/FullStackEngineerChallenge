@@ -1,5 +1,4 @@
 import assignmentReviewField from "./fields/assignmentReviewField";
-import ratingField from "./fields/ratingField";
 import reviewsFromUsersField from "./fields/reviewsFromUsersField";
 import userAssignmentStatsField from "./fields/userAssignmentStatsField";
 import userReviewsField from "./fields/userReviewsField";
@@ -20,7 +19,6 @@ export const ReviewResolvers = {
     review: assignmentReviewField,
   },
   User: {
-    rating: ratingField,
     reviews: userReviewsField,
     reviewsSummary: userReviewsSummaryField,
 

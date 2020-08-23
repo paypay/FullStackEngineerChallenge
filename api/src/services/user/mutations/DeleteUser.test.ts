@@ -1,7 +1,7 @@
 import { gql } from "apollo-server-micro";
 
 import { db, setupServer } from "../../../../tests/helpers/setupServer";
-import { seed as userSeeds } from "../../../database/seeds/users";
+import { seed as userSeeds } from "../../../database/seeds/20200722175030_users";
 
 const MUTATION_DELETE_USER = gql`
   mutation DeleteUser($id: Int!) {

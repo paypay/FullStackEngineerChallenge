@@ -2,8 +2,7 @@ import db from "../../../database";
 import { CreateUserInput } from "../../../graphql/types";
 import { hashPassword } from "../../../helpers/hashPassword";
 import validateSchema from "../../../helpers/validateSchema";
-import { validations } from "../UserModel";
-import getUserBy from "./getUser";
+import { FIELDS, validations } from "../UserModel";
 
 const validationSchema = {
   firstName: validations.firstName.required(),
@@ -30,9 +29,11 @@ const createUser = async (input: CreateUserInput) => {
     password = await hashPassword(input.password);
   }
 
-  const id: number = await db("user").insert({ ...input, password });
+  const [user] = await db("user")
+    .insert({ ...input, password })
+    .returning(FIELDS);
 
-  return getUserBy(id);
+  return user;
 };
 
 export default createUser;

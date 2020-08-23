@@ -84,10 +84,9 @@ type User {
   lastName: String!
   mobilePhone: String!
   phone: String!
-  rating: Float!
   reviews(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
   reviewsFromUsers(first: Int, after: ID, filters: ReviewFiltersInput, orderBy: ReviewOrderByInput): ReviewConnection!
-  reviewsSummary: ReviewSSummary!
+  reviewsSummary: ReviewsSummary!
   userType: UserType!
 }
 
@@ -103,7 +102,7 @@ type Review {
   initiative: Int!
   innovation: Int!
   productivity: Int!
-  rating: Int!
+  rating: Float!
   reviewee: User!
   user: User!
 }
@@ -154,7 +153,7 @@ type AssignmentStats {
   total: Int
 }
 
-type ReviewSSummary {
+type ReviewsSummary {
   rating: Float!
   attitude: Float!
   communication: Float!

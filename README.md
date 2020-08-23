@@ -43,6 +43,11 @@ Client and server for the Review performance project. It features:
 - TypeScript typings
 - GraphQL Playground
 
+## Live Demo
+
+- <a href="https://client-paypay.herokuapp.com/en/login">Client</a>
+- <a href="https://api-paypay.herokuapp.com/graphql">Api</a>
+
 ## Getting Started
 
 1. Clone the repo to your local machine by running `git clone https://github.com/zeddz92/FullStackEngineerChallenge.git`.

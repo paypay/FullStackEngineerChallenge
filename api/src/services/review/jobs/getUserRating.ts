@@ -2,7 +2,7 @@ import db from "../../../database";
 
 const getUserRating = async (id: number) => {
   const rate =
-    "(review.attitude + review.communication + review.dependability + review.growth + review.initiative + review.innovation + review.productivity) /7";
+    '("review"."attitude" + "review"."communication" + "review"."dependability" + "review"."growth" + "review"."initiative" + "review"."innovation" + "review"."productivity") /7';
 
   const review = await db("review")
     .select<{ total: number; rate: number }>(
@@ -12,7 +12,7 @@ const getUserRating = async (id: number) => {
     .where("assignment.revieweeId", id)
     .first();
 
-  if (!review || review.total === 0) {
+  if (!review || review.total == 0) {
     return 0;
   }
 

@@ -1,6 +1,6 @@
 import { i18n } from "@lingui/core";
 import { defineMessage } from "@lingui/macro";
-import React, { FC } from "react";
+import React, { FC, Fragment } from "react";
 
 import { FormGroup, Rating } from ".";
 import { Review } from "../graphql/types";
@@ -10,6 +10,9 @@ export interface ReviewSummaryBlockProps {
 }
 
 export const ReviewSummaryBlock: FC<ReviewSummaryBlockProps> = ({ review }) => {
+  if (!review?.rating) {
+    return <Fragment />;
+  }
   return (
     <div className="grid md:grid-cols-2 gap-8 md:gap-6">
       <FormGroup

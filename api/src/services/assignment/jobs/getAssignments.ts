@@ -16,7 +16,7 @@ const getAssignments = (
     if (filters.SEARCH) {
       query.leftJoin("user", "assignment.revieweeId", "user.id");
       query.whereRaw(
-        `CONCAT(user.firstName, ' ', user.lastName) LIKE '%${filters.SEARCH}%'`
+        `CONCAT("user"."firstName", ' ', "user"."lastName") ILIKE '%${filters.SEARCH}%'`
       );
     }
     if (filters.USER_ID) {

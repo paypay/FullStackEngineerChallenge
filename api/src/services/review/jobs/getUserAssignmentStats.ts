@@ -5,8 +5,8 @@ const getUserAssignmentStats = async (id: number) => {
     .select<{ pending: number; completed: number }>(
       db.raw(
         `
-        SUM(if(assignment.status = 'PENDING', 1, 0)) as pending, 
-        SUM(if(assignment.status = 'COMPLETED', 1, 0)) as completed
+        SUM(CASE "assignment"."status" WHEN 'PENDING' THEN 1 ELSE 0 END)::INTEGER as pending, 
+        SUM(CASE "assignment"."status" WHEN 'COMPLETED' THEN 1 ELSE 0 END)::INTEGER as completed
         `
       )
     )

@@ -1,7 +1,7 @@
-import { Resolver, ReviewSSummary } from "../../../graphql/types";
+import { Resolver, ReviewsSummary } from "../../../graphql/types";
 import getUserSummary from "../jobs/getUserSummary";
 
-type SummaryResolver = Resolver<ReviewSSummary, { id: number }>;
+type SummaryResolver = Resolver<ReviewsSummary, { id: number }>;
 
 const userReviewsSummaryField: SummaryResolver = async ({ id }) => {
   return getUserSummary(id);

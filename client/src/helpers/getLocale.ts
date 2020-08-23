@@ -1,3 +1,5 @@
+import Router from "next/router";
+
 import { COOKIE_LANGUAGE, DEFAULT_LOCALE } from "../constants";
 import localeDisplayNames from "../locales/localeDisplayNames.json";
 import cookies from "./cookies";
@@ -12,6 +14,11 @@ export const isLocale = (tested?: string) =>
 export function getLocale(): string {
   const isSSR = typeof window !== undefined;
   const languageFromCookie = cookies().get(COOKIE_LANGUAGE);
+  const languageFromUrl = Router.query.lang as string;
+
+  if (languageFromUrl && isLocale(languageFromUrl)) {
+    return languageFromUrl;
+  }
 
   if (isLocale(languageFromCookie)) {
     return languageFromCookie;

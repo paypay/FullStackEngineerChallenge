@@ -15,16 +15,19 @@ export const SearchForm: FC<SearchFormProps> = ({
   clearOnRouteChange,
   ...props
 }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string | undefined>(undefined);
 
   const resetSearch = () => {
-    setSearch("");
+    setSearch(undefined);
   };
 
   const debouncedText = useDebounce(search, DEBOUNCE_TIME);
 
   useEffect(() => {
-    onDebounce(debouncedText);
+    // Prevent calling the function on mount
+    if (typeof debouncedText !== "undefined") {
+      onDebounce(debouncedText);
+    }
   }, [debouncedText]);
 
   // Clear input when route changes
@@ -44,7 +47,7 @@ export const SearchForm: FC<SearchFormProps> = ({
         {...props}
         autoFocus
         spellCheck={false}
-        value={search}
+        value={search || ""}
         onChange={(e) => setSearch(e.target["value"])}
         type="search"
       />

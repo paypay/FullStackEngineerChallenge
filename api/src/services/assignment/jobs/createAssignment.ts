@@ -2,8 +2,7 @@ import db from "../../../database";
 
 import { CreateAssignmentInput } from "../../../graphql/types";
 import validateSchema from "../../../helpers/validateSchema";
-import { validations } from "../AssignmentModel";
-import getAssignmentBy from "./getAssignment";
+import { validations, FIELDS } from "../AssignmentModel";
 
 const createAssignment = async (input: CreateAssignmentInput) => {
   await validateSchema(validations, input);
@@ -19,12 +18,14 @@ const createAssignment = async (input: CreateAssignmentInput) => {
 
   const assignments = Promise.all(
     removeDuplicates.map(async (reviewerId) => {
-      const id: number = await db("assignment").insert({
-        userId: reviewerId,
-        revieweeId: input.revieweeId,
-      });
+      const [assignment] = await db("assignment")
+        .insert({
+          userId: reviewerId,
+          revieweeId: input.revieweeId,
+        })
+        .returning(FIELDS);
 
-      return await getAssignmentBy(id);
+      return assignment;
     })
   );
 

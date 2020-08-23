@@ -238,6 +238,7 @@ export const UserForm: FC<UserFormProps> = ({
           <Button
             type="button"
             variant="default"
+            disabled={loading}
             className="w-auto"
             size="sm"
             onClick={() => handleClose()}

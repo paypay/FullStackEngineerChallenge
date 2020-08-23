@@ -36,7 +36,9 @@ const errorLink = onError(({ graphQLErrors }) => {
         case "FORBIDDEN":
           // Redirect to login
           cookies().remove(COOKIE_TOKEN);
-          Router.replace(`/${getLocale()}/login`);
+          if (!Router.pathname.includes("/login")) {
+            Router.replace(`/${getLocale()}/login`);
+          }
           break;
       }
     }

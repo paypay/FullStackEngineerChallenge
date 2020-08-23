@@ -28,6 +28,7 @@ export const Option: FC<OptionProps> = ({
       scrollIntoView(ref.current, {
         behavior: "smooth",
         scrollMode: "if-needed",
+        boundary: ref.current.parentElement,
       });
     }
   }, [selected]);

@@ -33,7 +33,7 @@ export const Modal: FC<ModalProps> = ({
   ...props
 }) => {
   const classes = classNames(
-    "w-full bg-white shadow-xl px-8 py-6 rounded-lg relative m-auto",
+    "w-full bg-white shadow-xl px-8 py-6 rounded-lg relative m-auto outline-none",
     {
       "h-auto sm:max-w-screen-lg md:mx-4 xl-mx-0": size === "xl",
       "sm:max-w-lg mx-4": size === "md",
