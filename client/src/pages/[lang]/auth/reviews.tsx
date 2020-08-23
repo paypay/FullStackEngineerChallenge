@@ -2,7 +2,7 @@ import { i18n } from "@lingui/core";
 import { defineMessage, Trans } from "@lingui/macro";
 import { useRouter } from "next/dist/client/router";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 
 import {
   Avatar,
@@ -18,7 +18,7 @@ import { ModalViewReview } from "../../../components/ReviewPage/ModalViewReview"
 import { ModalWriteReview } from "../../../components/ReviewPage/ModalWriteReview";
 import {
   AssignmentStatus,
-  useMeAssignmentsQuery,
+  useMeAssignmentsLazyQuery,
 } from "../../../graphql/types";
 import {
   getCurrentLocationParams,
@@ -31,12 +31,10 @@ const Reviews: FC = () => {
   const filterStatus =
     (query.status as AssignmentStatus) || AssignmentStatus.Pending;
 
-  const {
-    data,
-    refetch,
-    variables: refetchVariables,
-    loading,
-  } = useMeAssignmentsQuery({
+  const [
+    fetchAssignments,
+    { data, variables: refetchVariables, loading },
+  ] = useMeAssignmentsLazyQuery({
     variables: {
       after: query.after as string,
       filters: {
@@ -44,6 +42,10 @@ const Reviews: FC = () => {
       },
     },
   });
+
+  useEffect(() => {
+    fetchAssignments();
+  }, [filterStatus]);
 
   const assignments = data?.me?.assignments.edges;
 
@@ -86,11 +88,13 @@ const Reviews: FC = () => {
           name="search"
           clearOnRouteChange={true}
           onDebounce={(value) => {
-            refetch({
-              after: undefined,
-              filters: {
-                ...refetchVariables!.filters,
-                SEARCH: value,
+            fetchAssignments({
+              variables: {
+                after: undefined,
+                filters: {
+                  ...refetchVariables!.filters,
+                  SEARCH: value,
+                },
               },
             });
           }}

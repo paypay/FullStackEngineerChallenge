@@ -9,7 +9,9 @@ query MeAssignments($after: ID, $filters: AssignmentFiltersInput) {
           status
           reviewee {
             ...User
-            rating
+            reviewsSummary {
+              rating
+            }
           }
         }
       }

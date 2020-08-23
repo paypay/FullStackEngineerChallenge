@@ -14,7 +14,7 @@ export const Head: FC<HeadProps> = ({
 }) => {
   return (
     <NextHead>
-      <title>PAYPAY - {title}</title>
+      <title>{title}</title>
       <meta name="description" content={description} />
       <meta property="og:title" content={title} />
       <meta name="description" content={description} />

@@ -1,6 +1,6 @@
 import React, { FC, TableHTMLAttributes } from "react";
 
-import { Pagination, Loading, Empty, EmptySearchResults } from ".";
+import { Empty, EmptySearchResults, Loading, Pagination } from ".";
 import { PageInfo } from "../graphql/types";
 
 interface TableProps extends TableHTMLAttributes<HTMLTableElement> {
@@ -21,16 +21,21 @@ export const Table: FC<TableProps> = ({
 
   return (
     <div className="overflow-x-scroll w-full mt-8">
-      {loading && <Loading />}
-      {noSearchResults && <EmptySearchResults className="mt-8" />}
-      {isEmpty && !search && <Empty className="mt-8" />}
-
-      {!isEmpty && (
+      {loading ? (
+        <Loading />
+      ) : (
         <>
-          <table className="w-full transition ease-in-out duration-150">
-            {children}
-          </table>
-          <Pagination pageInfo={pageInfo} />
+          {noSearchResults && <EmptySearchResults className="mt-8" />}
+          {isEmpty && !search && <Empty className="mt-8" />}
+
+          {!isEmpty && (
+            <>
+              <table className="w-full transition ease-in-out duration-150">
+                {children}
+              </table>
+              <Pagination pageInfo={pageInfo} />
+            </>
+          )}
         </>
       )}
     </div>

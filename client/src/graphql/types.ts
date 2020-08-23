@@ -196,11 +196,10 @@ export type User = {
   mobilePhone: Scalars['String'];
   birthday?: Maybe<Scalars['Date']>;
   createdAt: Scalars['Date'];
-  rating: Scalars['Float'];
   assignmentStats: AssignmentStats;
   reviews: ReviewConnection;
   reviewsFromUsers: ReviewConnection;
-  reviewsSummary: ReviewSSummary;
+  reviewsSummary: ReviewsSummary;
   assignments: AssignmentConnection;
 };
 
@@ -246,7 +245,7 @@ export type Review = {
   user: User;
   reviewee: User;
   id: Scalars['Int'];
-  rating: Scalars['Int'];
+  rating: Scalars['Float'];
   comment: Scalars['String'];
   attitude: Scalars['Int'];
   communication: Scalars['Int'];
@@ -319,8 +318,8 @@ export type AssignmentStats = {
   total?: Maybe<Scalars['Int']>;
 };
 
-export type ReviewSSummary = {
-  __typename?: 'ReviewSSummary';
+export type ReviewsSummary = {
+  __typename?: 'ReviewsSummary';
   rating: Scalars['Float'];
   attitude: Scalars['Float'];
   communication: Scalars['Float'];
@@ -396,13 +395,16 @@ export type AssignReviewersMutation = (
     & { assignments: Array<(
       { __typename?: 'Assignment' }
       & Pick<Assignment, 'id'>
-      & { reviewee: (
+      & { review?: Maybe<(
+        { __typename?: 'Review' }
+        & Pick<Review, 'id' | 'attitude' | 'communication' | 'growth' | 'dependability' | 'productivity' | 'initiative' | 'innovation' | 'comment' | 'rating'>
+      )>, reviewee: (
         { __typename?: 'User' }
-        & Pick<User, 'id'>
         & { assignmentStats: (
           { __typename?: 'AssignmentStats' }
           & Pick<AssignmentStats, 'progress' | 'completed' | 'total'>
         ) }
+        & UserFragment
       ) }
     )> }
   ) }
@@ -425,8 +427,8 @@ export type AssignmentQuery = (
       { __typename?: 'User' }
       & Pick<User, 'id' | 'firstName' | 'lastName' | 'avatar'>
       & { reviewsSummary: (
-        { __typename?: 'ReviewSSummary' }
-        & Pick<ReviewSSummary, 'rating'>
+        { __typename?: 'ReviewsSummary' }
+        & Pick<ReviewsSummary, 'rating'>
       ) }
     ) }
   ) }
@@ -447,9 +449,16 @@ export type CreateReviewMutation = (
       & { assignment: (
         { __typename?: 'Assignment' }
         & Pick<Assignment, 'id' | 'status'>
-        & { reviewee: (
+        & { review?: Maybe<(
+          { __typename?: 'Review' }
+          & Pick<Review, 'id' | 'attitude' | 'communication' | 'growth' | 'dependability' | 'productivity' | 'initiative' | 'innovation' | 'comment' | 'rating'>
+        )>, reviewee: (
           { __typename?: 'User' }
-          & Pick<User, 'id' | 'firstName' | 'lastName' | 'avatar' | 'rating'>
+          & Pick<User, 'id' | 'firstName' | 'lastName' | 'avatar'>
+          & { reviewsSummary: (
+            { __typename?: 'ReviewsSummary' }
+            & Pick<ReviewsSummary, 'rating'>
+          ) }
         ) }
       ) }
     ) }
@@ -568,7 +577,10 @@ export type MeAssignmentsQuery = (
           & Pick<Assignment, 'id' | 'status'>
           & { reviewee: (
             { __typename?: 'User' }
-            & Pick<User, 'rating'>
+            & { reviewsSummary: (
+              { __typename?: 'ReviewsSummary' }
+              & Pick<ReviewsSummary, 'rating'>
+            ) }
             & UserFragment
           ) }
         ) }
@@ -644,8 +656,8 @@ export type UserReportQuery = (
   & { user: (
     { __typename?: 'User' }
     & { reviewsSummary: (
-      { __typename?: 'ReviewSSummary' }
-      & Pick<ReviewSSummary, 'rating' | 'attitude' | 'communication' | 'growth' | 'dependability' | 'productivity' | 'initiative' | 'innovation'>
+      { __typename?: 'ReviewsSummary' }
+      & Pick<ReviewsSummary, 'rating' | 'attitude' | 'communication' | 'growth' | 'dependability' | 'productivity' | 'initiative' | 'innovation'>
     ) }
     & UserFragment
   ) }
@@ -669,8 +681,10 @@ export type UsersQuery = (
       & Pick<UserEdge, 'cursor'>
       & { node: (
         { __typename?: 'User' }
-        & Pick<User, 'rating'>
-        & { assignmentStats: (
+        & { reviewsSummary: (
+          { __typename?: 'ReviewsSummary' }
+          & Pick<ReviewsSummary, 'rating'>
+        ), assignmentStats: (
           { __typename?: 'AssignmentStats' }
           & Pick<AssignmentStats, 'progress' | 'completed' | 'total'>
         ) }
@@ -702,8 +716,20 @@ export const AssignReviewersDocument = gql`
   CreateAssignment(input: $input) {
     assignments {
       id
-      reviewee {
+      review {
         id
+        attitude
+        communication
+        growth
+        dependability
+        productivity
+        initiative
+        innovation
+        comment
+        rating
+      }
+      reviewee {
+        ...User
         assignmentStats {
           progress
           completed
@@ -713,7 +739,7 @@ export const AssignReviewersDocument = gql`
     }
   }
 }
-    `;
+    ${UserFragmentDoc}`;
 export type AssignReviewersMutationFn = ApolloReactCommon.MutationFunction<AssignReviewersMutation, AssignReviewersMutationVariables>;
 
 /**
@@ -802,12 +828,26 @@ export const CreateReviewDocument = gql`
       assignment {
         id
         status
+        review {
+          id
+          attitude
+          communication
+          growth
+          dependability
+          productivity
+          initiative
+          innovation
+          comment
+          rating
+        }
         reviewee {
           id
           firstName
           lastName
           avatar
-          rating
+          reviewsSummary {
+            rating
+          }
         }
       }
     }
@@ -1042,7 +1082,9 @@ export const MeAssignmentsDocument = gql`
           status
           reviewee {
             ...User
-            rating
+            reviewsSummary {
+              rating
+            }
           }
         }
       }
@@ -1250,7 +1292,9 @@ export const UsersDocument = gql`
     edges {
       node {
         ...User
-        rating
+        reviewsSummary {
+          rating
+        }
         assignmentStats {
           progress
           completed

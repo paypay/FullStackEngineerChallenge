@@ -5,12 +5,26 @@ mutation CreateReview($input: CreateReviewInput!) {
       assignment {
         id
         status
+        review {
+          id
+          attitude
+          communication
+          growth
+          dependability
+          productivity
+          initiative
+          innovation
+          comment
+          rating
+        }
         reviewee {
           id
           firstName
           lastName
           avatar
-          rating
+          reviewsSummary {
+            rating
+          }
         }
       }
     }

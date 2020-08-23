@@ -59,6 +59,7 @@ const Login = () => {
         <div className="z-10 h-screen md:h-auto bg-white flex items-center max-w-6xl justify-center m-auto rounded-xl shadow-xl">
           <div className="hidden md:block w-7/12 relative flex-shrink-0 flex-grow-0">
             <img
+              style={{ minHeight: 425, minWidth: 450 }}
               src="/login-bg-side.jpg"
               className="max-h-screen w-full object-cover rounded-l-xl"
             />
@@ -84,7 +85,7 @@ const Login = () => {
               <img
                 src="/logo.jpg"
                 alt="logo"
-                className="object-cover h-auto w-full"
+                className="object-scale-down h-24 w-full mb-3"
               />
               <h1 className="text-2xl text-gray-700 font-medium mb-5">
                 <Trans id="login.submit">Sign In</Trans>

@@ -11,6 +11,7 @@ import { useUID } from "react-uid";
 import { DEBOUNCE_TIME } from "../../constants";
 import { useDebounce } from "../../helpers/useDebounce";
 import { Input } from "../Input";
+import { Loading } from "../Loading";
 import { Option } from "./components/Option";
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -159,35 +160,41 @@ export function Autocomplete<T>({
         />
       </div>
 
-      {open && options && !loading && (
+      {open && (
         <div>
           <ul
             role="listbox"
             id={id}
             className="absolute max-h-64 w-full mt-2 p-2 bg-white shadow-md border border-gray-200 rounded overflow-y-scroll"
           >
-            {options.length > 0 &&
-              options.map((option, index) => (
-                <Option
-                  key={`${id}-${index}`}
-                  id={`${id}-option-${index}`}
-                  selected={enabledOptions[cursor] === index}
-                  disabled={!enabledOptions.includes(index)}
-                  onClick={() => {
-                    onSelected && onSelected(option);
-                    discardSearch();
-                  }}
-                >
-                  {renderOption(option)}
-                </Option>
-              ))}
-            {open && options.length === 0 && (
-              <div className="px-3 text-gray-500 py-5">
-                <Trans id="autocomplete.error.generic">
-                  We could not find any results matching your criteria, try
-                  changing the filters.
-                </Trans>
-              </div>
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                {options.length > 0 &&
+                  options.map((option, index) => (
+                    <Option
+                      key={`${id}-${index}`}
+                      id={`${id}-option-${index}`}
+                      selected={enabledOptions[cursor] === index}
+                      disabled={!enabledOptions.includes(index)}
+                      onClick={() => {
+                        onSelected && onSelected(option);
+                        discardSearch();
+                      }}
+                    >
+                      {renderOption(option)}
+                    </Option>
+                  ))}
+                {options.length === 0 && (
+                  <div className="px-3 text-gray-500 py-5">
+                    <Trans id="autocomplete.error.generic">
+                      We could not find any results matching your criteria, try
+                      changing the filters.
+                    </Trans>
+                  </div>
+                )}
+              </>
             )}
           </ul>
         </div>
