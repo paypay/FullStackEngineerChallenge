@@ -1,17 +1,17 @@
 import db from "../../../database";
-import { ReviewSSummary } from "../../../graphql/types";
+import { ReviewsSummary } from "../../../graphql/types";
 
 const getUserSummary = async (id: number) => {
   const review = await db("review")
-    .select<ReviewSSummary & { total: number }>(
-      db.raw(`SUM(review.attitude) as attitude,
-       SUM(review.communication) as communication,
-       SUM(review.dependability) as dependability,
-       SUM(review.growth) as growth,
-       SUM(review.initiative) as initiative,
-       SUM(review.innovation) as innovation,
-       SUM(review.productivity) as productivity,
-       COUNT(*) as total`)
+    .select<ReviewsSummary & { total: number }>(
+      db.raw(`SUM(review.attitude)::INTEGER as attitude,
+       SUM(review.communication)::INTEGER as communication,
+       SUM(review.dependability)::INTEGER as dependability,
+       SUM(review.growth)::INTEGER as growth,
+       SUM(review.initiative)::INTEGER as initiative,
+       SUM(review.innovation)::INTEGER as innovation,
+       SUM(review.productivity)::INTEGER as productivity,
+       COUNT(*)::INTEGER as total`)
     )
     .innerJoin("assignment", "assignment.id", "review.assignmentId")
     .where("assignment.revieweeId", id)

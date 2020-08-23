@@ -13,8 +13,8 @@ const getUsers = (
     if (filters.SEARCH) {
       query.where((query) => {
         query.orWhere(
-          db.raw("CONCAT(user.firstName, ' ', user.lastName)"),
-          "LIKE",
+          db.raw(`CONCAT("user"."firstName", ' ', "user"."lastName")`),
+          "ILIKE",
           `%${filters.SEARCH}%`
         );
         query.orWhere("user.email", "LIKE", `%${filters.SEARCH}%`);

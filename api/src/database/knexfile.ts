@@ -3,19 +3,23 @@ require("dotenv-flow").config({
 });
 
 module.exports = {
-  client: "postgres",
-  version: "11",
+  client: process.env.DB_CLIENT,
+  version: process.env.DB_VERSION,
   connection: {
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     user: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
+    ssl: {
+      require: process.env.DB_SSL,
+      rejectUnauthorized: false,
+    },
     timezone: "UTC",
   },
   pool: {
     min: 2,
-    max: 10,
+    max: 8,
   },
   migrations: {
     tableName: "knex_migrations",

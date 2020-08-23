@@ -1,8 +1,11 @@
 import { gql } from "apollo-server-micro";
 
 import { db, setupServer } from "../../../../tests/helpers/setupServer";
-import { seed as userSeeds } from "../../../database/seeds/users";
-import { seed as reviewSeeds, reviews } from "../../../database/seeds/reviews";
+import { seed as userSeeds } from "../../../database/seeds/20200722175030_users";
+import {
+  reviews,
+  seed as reviewSeeds,
+} from "../../../database/seeds/20200724020753_reviews";
 
 const QUERY_REVIEWS = gql`
   query reviews($first: Int, $after: ID, $orderBy: ReviewOrderByInput) {

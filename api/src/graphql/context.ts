@@ -1,4 +1,4 @@
-import { IncomingMessage } from "http";
+import { IncomingMessage, ServerResponse } from "http";
 
 import decodeAuthToken from "../helpers/decodeAuthToken";
 
@@ -9,8 +9,13 @@ export interface Context {
   };
 }
 
-const context = (request: IncomingMessage): Context => {
-  const authToken = request.headers && request.headers["authorization"];
+interface Request {
+  req: IncomingMessage;
+  res: ServerResponse;
+}
+
+const context = ({ req }: Request): Context => {
+  const authToken = req.headers && req.headers["authorization"];
 
   let auth;
 

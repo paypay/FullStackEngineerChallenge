@@ -6,7 +6,7 @@ import getReviewBy from "./getReview";
 
 const createReview = async (input: CreateReviewInput) => {
   await validateSchema(validations, input);
-  const id: number = await db("review").insert(input);
+  const [id] = await db("review").insert(input).returning("review.id");
 
   await db("assignment")
     .where("assignment.id", input.assignmentId)
