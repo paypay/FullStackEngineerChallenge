@@ -12,7 +12,7 @@
   <img style="padding: 5px 20px; object-fit: cover;" height="58" src="./images/icons/apollo.png"/>
   <img style="padding: 5px 20px; object-fit: cover;" height="58" src="./images/icons/docker.png"/>
   <img style="padding: 5px 20px; object-fit: cover;" height="58" src="./images/icons/knex.png"/>
-  <img style="padding: 5px 20px; object-fit: cover;" height="58" src="./images/icons/mysql.png"/>
+  <img style="padding: 5px 20px; object-fit: cover;" height="58" src="./images/icons/postgres.png"/>
 </div>
 
 Client and server for the Review performance project. It features:
