@@ -54,12 +54,14 @@ const Login = () => {
       <div className="h-screen w-full md:flex items-center justify-center relative">
         <img
           src="/login-bg.jpg"
+          alt="login-bg"
           className=" md:block absolute h-full object-cover z-0"
         />
         <div className="z-10 h-screen md:h-auto bg-white flex items-center max-w-6xl justify-center m-auto rounded-xl shadow-xl">
           <div className="hidden md:block w-7/12 relative flex-shrink-0 flex-grow-0">
             <img
               style={{ minHeight: 425, minWidth: 450 }}
+              alt="login-bg-side"
               src="/login-bg-side.jpg"
               className="max-h-screen w-full object-cover rounded-l-xl"
             />
@@ -128,7 +130,7 @@ const Login = () => {
                   placeholder={i18n._(
                     defineMessage({
                       id: "login.field.password",
-                      message: "Email",
+                      message: "Password",
                     })
                   )}
                   rounded

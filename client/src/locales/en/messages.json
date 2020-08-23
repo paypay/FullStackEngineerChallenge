@@ -74,7 +74,7 @@
   "input.birthday.year.placeholder": "YYYY",
   "login.button.submit": "Sign In",
   "login.field.email": "Email",
-  "login.field.password": "Email",
+  "login.field.password": "Password",
   "login.generic.error": "Authentication failed. You entered an incorrect username or password.",
   "login.help": "Don't have an account? Contact HR to create an account.",
   "login.seo.title": "Sign in",
@@ -93,6 +93,5 @@
   "rating.veryGood": "Very Good",
   "review.modal.create.notification.success": "Review created successfully",
   "searchResults.generic.description": "No results match the search criteria.",
-  "searchResults.generic.title": "No results found",
-  "web.home.title": "Home Page"
+  "searchResults.generic.title": "No results found"
 }
