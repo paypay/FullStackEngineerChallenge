@@ -1,0 +1,14 @@
+[{
+  "from": "User1",
+  "to": "User2",
+  "id": 1
+}, {
+  "from": "User2",
+  "to": "User1",
+  "id": 2
+}, {
+  "from": "User1",
+  "to": "User3",
+  "id": 3
+}
+]

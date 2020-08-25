@@ -1,0 +1,15 @@
+[{
+  "fullName": "User1",
+  "id": 1,
+  "age": 26,
+  "jobTitle": "Backend developer",
+  "department": "Application development department",
+  "email": "user1@company.com"
+}, {
+  "fullName": "User2",
+  "id": 2,
+  "age": 32,
+  "jobTitle": "Product manager",
+  "department": "Application development department",
+  "email": "user2@company.com"
+}]

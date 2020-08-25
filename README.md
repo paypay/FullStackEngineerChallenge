@@ -36,3 +36,27 @@ Design a web application that allows employees to submit feedback toward each ot
 * Assumptions you make given limited requirements
 * Technology and design choices
 * Identify areas of your strengths
+
+## Project setup
+```
+yarn install
+```
+
+### Compiles and hot-reloads for development
+```
+yarn serve
+```
+
+### Compiles and minifies for production
+```
+yarn build
+```
+
+### Lints and fixes files
+```
+yarn lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
