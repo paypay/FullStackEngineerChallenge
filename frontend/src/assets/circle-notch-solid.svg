@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="2em" id="spinner" height="2em" viewBox="0 0 127 128" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 55.2 (78181) - https://sketchapp.com -->
+    <title>logo</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Splash-screen" transform="translate(-122.000000, -271.000000)">
+            <g id="logo" transform="translate(128.000000, 274.000000)">
+                <path d="M57.6744186,2.79069767 C25.8217168,2.79069767 0,28.8206541 0,60.9302326 C0,93.039811 25.8217168,119.069767 57.6744186,119.069767 C89.5271205,119.069767 115.348837,93.039811 115.348837,60.9302326" id="Path" stroke="currentColor" stroke-width="11" stroke-linecap="round"></path>
+                <circle id="Oval" fill="currentColor" cx="77.2093023" cy="4.65116279" r="4.65116279"></circle>
+                <circle id="Oval" fill="currentColor" cx="96.2790698" cy="17.2093023" r="6.97674419"></circle>
+                <circle id="Oval" fill="currentColor" cx="111.627907" cy="36.2790698" r="8.37209302"></circle>
+            </g>
+        </g>
+    </g>
+</svg>
