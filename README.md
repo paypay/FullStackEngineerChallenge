@@ -36,3 +36,11 @@ Design a web application that allows employees to submit feedback toward each ot
 * Assumptions you make given limited requirements
 * Technology and design choices
 * Identify areas of your strengths
+
+## Start application in docker
+* make sure docker daemon is running
+* make sure that the folder-location is mounted in dockers ressources/file-sharing options
+* start all containers with `docker-compose up`
+* stop them with `docker-compose down` or ^+c in the terminal
+* frontend runs on localhost:3000
+* backend  runs on localhost:8080

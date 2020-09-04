@@ -1,0 +1,22 @@
+FROM node:10.5.0
+RUN mkdir -p /home/node/node_modules
+WORKDIR /home/node
+COPY package*.json ./
+RUN npm install --production
+
+ARG CACHEBUST=1
+COPY . .
+
+ARG DATABASE_HOST
+ENV DATABASE_HOST $DATABASE_HOST
+
+ARG DATABASE_PORT
+ENV DATABASE_PORT $DATABASE_PORT
+
+ARG DATABASE_NAME
+ENV DATABASE_NAME $DATABASE_NAME
+
+ARG PORT
+ENV PORT $PORT
+
+CMD [ "npm", "start" ]

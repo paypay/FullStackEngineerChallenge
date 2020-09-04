@@ -1,0 +1,13 @@
+.git
+.editorconfig
+.config
+.history
+.DS_Store
+.gitlab-ci.yml
+.vscode
+
+
+Dockerfile
+dev.Dockerfile
+node_modules
+requests.http

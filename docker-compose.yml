@@ -1,0 +1,32 @@
+version: '3'
+services:
+  paypay_mongo:
+    container_name: paypay_mongo
+    image: mongo
+    ports:
+      - "27018:27017"
+
+  paypay_backend:
+    container_name: paypay_backend
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 8080:8080
+    links:
+      - paypay_mongo
+    restart: always
+    environment:
+      SECRET: "27z37517b12d2450a9cf37130f834c4e"
+      NODE_ENV: production
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 27017
+      DATABASE_NAME: mongo
+      PORT: 8080
+      MAILHOST: shaula.uberspace.de
+      MAILUSER: spielhoe-dci
+      MAILPW: cVb7BRvSHfhH9p
+      MAILPORT: 587
+      PUBLIC_VAPID_KEY: "BCeK0p0kZsQQr3oNmuVpbXbButaLzaZtdUjisovWITQebS7DEhe2vRf9bDpIx8Z10ga1YSud1Kj0IDpm8X4CCig"
+      PRIVATE_VAPID_KEY: "0QBFN8GzJfp1ILPrIJbRKWBi3g3v4CIGt6GmrvFsDmY"
+      WEB_PUSH_CONTACT: "mailto: spielhoelle@posteo.net"
