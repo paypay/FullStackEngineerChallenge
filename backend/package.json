@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon -i node_modules -P 2000 index.js",
+    "dev": "nodemon -L -i node_modules -P 2000 index.js",
     "seed": "node seeds.js"
   },
   "keywords": [],
