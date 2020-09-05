@@ -1,8 +1,9 @@
 require("dotenv").config({ path: "./.env" });
 const Employee = require("./app/employees/Employee");
+const Review = require("./app/reviews/Review");
 const dbConfig = require("./helpers/db-config");
 const port = process.env.PORT || 8080;
-const { defaultEmployees } = require("./seeddata");
+const { defaultEmployees, seedRandomNtoN, seedRandomNtoOne, defaultReviews } = require("./seeddata");
 const { ApolloServer, gql } = require('apollo-server');
 const path = require("path");
 const { createWriteStream, unlink } = require('fs')
@@ -34,12 +35,16 @@ const resolvers = [
 const uuidv4 = require("uuid/v4");
 const UPLOAD_DIR = './uploads'
 
-
 dbConfig.open().then(async () => {
-  const employee = await Employee.findOne({ email: "admin@example.com" });
-  if (!employee) {
-    await Employee.create(defaultEmployees);
-  }
+  await Employee.deleteMany();
+  await Review.deleteMany();
+  const createdEmployees = await Employee.create(defaultEmployees);
+  var associatedReviews = await seedRandomNtoOne(
+    defaultReviews,
+    createdEmployees,
+    Employee
+  );
+  await Review.insertMany(associatedReviews)
   try {
     const server = new ApolloServer({
       typeDefs,
