@@ -19,7 +19,7 @@ const AuthMetaLinks: React.FC<any> = (props: any) => {
             as={NavLink}
           >
             Login
-        </ButtonLink>
+          </ButtonLink>
         )}
         {!isResetPassword && (
           <ButtonLink
@@ -29,7 +29,7 @@ const AuthMetaLinks: React.FC<any> = (props: any) => {
             to="/reset-password"
           >
             Forgot password?
-        </ButtonLink>
+          </ButtonLink>
         )}
       </div>
       <div style={{ marginTop: `.5em` }}>

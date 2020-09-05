@@ -15,12 +15,13 @@ interface IDefaultTheme {
 		bg2: string;
 		main: string;
 		secondary: string;
+		grey: string;
 		backgroundGradient: string;
 
 	};
 }
 
-const tommyCupTheme: IDefaultTheme = {
+const feedbackTheme: IDefaultTheme = {
 	colors: {
 		backgroundGradient: `linear-gradient(white, #fef8fa)`,
 		bg: "#fff",
@@ -28,6 +29,7 @@ const tommyCupTheme: IDefaultTheme = {
 		bg1: "#fafafa",
 		bg2: "#e4e4e4",
 		secondary: "#27ae60",
+		grey: "#555",
 	},
 	variables: {
 		breakpoint0: `576px`,
@@ -44,10 +46,10 @@ const adminThemeOverwrites = {
 
 };
 const adminTheme = {
-	...tommyCupTheme,
+	...feedbackTheme,
 	colors: {
-		...tommyCupTheme.colors,
+		...feedbackTheme.colors,
 		...adminThemeOverwrites,
 	},
 }
-export { tommyCupTheme, adminTheme };
+export { feedbackTheme, adminTheme };

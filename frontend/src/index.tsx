@@ -7,31 +7,35 @@ import App from "./App";
 import "./index.css";
 import * as serviceWorker from "./serviceWorker";
 import { ApolloProvider } from "@apollo/react-hooks";
-import { ApolloLink } from 'apollo-link';
+import { createHttpLink } from "apollo-link-http";
+const httpLink = createHttpLink({
+    uri: process.env.REACT_APP_BACKENDHOST,
+});
+const authLink = setContext((_, { headers }) => {
+    const token = localStorage.getItem("id_token");
+    return {
+        headers: {
+            ...headers,
+            authorization: token ? `Bearer ${token}` : "",
+        },
+    };
+});
 
-const link = ApolloLink.from([
-    setContext((_, { headers }) => {
-        // get the authentication token from local storage if it exists
-        const token = localStorage.getItem("id_token");
-        // return the headers to the context so httpLink can read them
-        return {
-            headers: {
-                ...headers,
-                authorization: token ? `Bearer ${token}` : "",
-            },
-        };
-    })
-]);
-const apolloClient = new ApolloClient({
-    link,
+const client = new ApolloClient({
+    link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
-    connectToDevTools: true
-})
+});
+
 const AppContainer = () => (
-    <ApolloProvider client={apolloClient}>
+    <ApolloProvider client={client}>
         <App />
     </ApolloProvider>
 );
-render(<AppContainer />, document.getElementById("root"));
 
+render(<AppContainer />, document.getElementById("root"));
 serviceWorker.register();
+
+// If you want your app to work offline and load faster, you can change
+// unregister() to register() below. Note this comes with some pitfalls.
+// Learn more about service workers: https://bit.ly/CRA-PWA
+// subscribeUser()

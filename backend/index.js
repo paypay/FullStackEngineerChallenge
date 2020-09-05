@@ -1,12 +1,16 @@
 require("dotenv").config({ path: "./.env" });
+const User = require("./app/users/User");
 const dbConfig = require("./helpers/db-config");
 const port = process.env.PORT || 8080;
-const {
-  adminUser,
-} = require("./seeddata");
+const { adminUser } = require("./seeddata");
 const { ApolloServer, gql } = require('apollo-server');
 const path = require("path");
 const { createWriteStream, unlink } = require('fs')
+const {
+  employeeTypeDefs,
+  employeeRsolvers
+} = require("./schemas/employee");
+
 const initialTypeDefs = gql`
   type Query {
     _empty: String
@@ -16,20 +20,26 @@ const initialTypeDefs = gql`
   }
 `;
 const initialResolvers = {
-  Query: {
-
-  },
-  Mutation: {
-
-  },
+  Query: {},
+  Mutation: {},
 };
-const typeDefs = [initialTypeDefs]
-const resolvers = [initialResolvers]
+const typeDefs = [
+  initialTypeDefs,
+  employeeTypeDefs
+]
+const resolvers = [
+  initialResolvers,
+  employeeRsolvers,
+]
 const uuidv4 = require("uuid/v4");
 const UPLOAD_DIR = './uploads'
 
 
 dbConfig.open().then(async () => {
+  const user = await User.findOne({ email: "admin@example.com" });
+  if (!user) {
+    await User.create(adminUser);
+  }
   try {
     const server = new ApolloServer({
       typeDefs,
@@ -41,7 +51,6 @@ dbConfig.open().then(async () => {
       context: ({ req }) => {
         const authorization = req.headers.authorization
         return {
-          storeUpload,
           authorization
         }
       }

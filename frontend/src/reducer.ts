@@ -1,4 +1,4 @@
-import { adminTheme, tommyCupTheme } from "./styledComponents/Theme";
+import { adminTheme, feedbackTheme } from "./styledComponents/Theme";
 import { StateInterface } from "./types";
 
 export const reducer = (state, action) => {
@@ -30,61 +30,23 @@ export const reducer = (state, action) => {
   }
 };
 const tempTheme: any = localStorage.getItem("active_theme");
-const initialTheme = !!tempTheme ? JSON.parse(tempTheme) : tommyCupTheme;
+const initialTheme = !!tempTheme ? JSON.parse(tempTheme) : feedbackTheme;
 export const initialState: StateInterface = {
   user: undefined,
-  invoices: [],
-  todos: [{
-    content: "",
-    isCompleted: false,
-    date: new Date().toISOString(),
-    prio: 0,
-  }],
   popup: { open: false },
   modal: { open: false },
   sidebaropen: false,
   sidebartoggled: false,
-  online_status: true,
-  email_form: {
-    to: "user@example.com",
-    subject: "How are you?",
-    body: "Lot of text and greetings and so on....",
-  },
+  active_theme: initialTheme || feedbackTheme,
   form: {
     email: "admin@example.com",
     password: "password",
     firstname: "",
     lastname: "",
   },
-  clientform: {
-    id: undefined,
-    name: "",
-    address: "",
-    company: "",
-  },
   toast: {
     message: "",
     open: false,
     type: undefined,
-  },
-  active_theme: initialTheme || tommyCupTheme,
-  productform: {
-    title: undefined,
-    paid: false,
-    is_offer: false,
-    is_taxfree: false,
-    date: new Date().toISOString().substr(0, 10),
-    number: Date.now(),
-    notes: "",
-    client: undefined,
-    location: undefined,
-    // client: {
-    //   id: "",
-    //   name: "",
-    //   address: "",
-    //   company: ""
-    // },
-    private_note: "",
-    items: [{ date: new Date().toISOString().substr(0, 10), description: "", hours: 0, minutes: 0, price: 0, is_expense: false }],
   },
 };

@@ -22,6 +22,7 @@ export interface StateInterface {
     firstname: string,
     lastname: string
   },
+  active_theme: any,
   toast: {
     open: boolean;
     loading?: boolean;

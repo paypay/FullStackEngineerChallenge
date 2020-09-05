@@ -1,15 +1,11 @@
 import React, { useContext, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import { ReactComponent as BackIcon } from "./assets/arrow_icon.svg";
 import { ReactComponent as MenuIcon } from "./assets/bars-solid.svg";
-import { ReactComponent as Hexa } from "./assets/hexa.svg";
 import { ReactComponent as Cogs } from "./assets/cogs-solid.svg";
 import { ReactComponent as Mug } from "./assets/mug-hot-solid.svg";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
 import { ReactComponent as Lowvision } from "./assets/low-vision-solid.svg";
-import { ReactComponent as Plant } from "./assets/plant.svg";
 import { AppContext } from "./AppProvider";
 import AuthService from "./AuthService";
 import {
@@ -21,7 +17,7 @@ import {
 	NavIcon,
 	StyledMenuIcon,
 	StyledNavLink,
-	tommyCupTheme,
+	feedbackTheme,
 } from "./styledComponents";
 import styled, { keyframes } from "styled-components/macro";
 import * as H from "history";
@@ -31,13 +27,13 @@ interface SidebarProps {
 }
 
 const Sidebar = styled.div`
-  color: #333;
+  color: #fff;
   bottom: 0;
   position: fixed;
   z-index: 850;
   width: 100%;
   max-width: 400px;
-  @media (min-width: ${tommyCupTheme.variables.breakpoint2}) {
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
 		position: relative;
 	}
   a {
@@ -52,11 +48,10 @@ const RightMenu = styled.div`
 `;
 
 const NavBar: any = styled.div`
-  // position: ${(props: SidebarProps) => /\/explore/.test(props.location.pathname) ? `fixed` : `relative`};
   ${RightMenu}, ${LeftMenu} {
     pointer-events: all !important;
   }
-  color: ${(props: any) => (props.online ? `#333` : `#fff`)};
+  color: #fff;
   justify-content: center;
   display: grid;
   align-items: center;
@@ -107,7 +102,7 @@ const ResponsiveNavbar = styled.div<any>`
   transition:  transform 0.3s ease, opacity 0.3s ease;
   opacity: ${props => props.sidebartoggled ? 1 : props.sidebaropen ? '.9' : '0'};
   position: fixed;
-  @media (min-width: ${tommyCupTheme.variables.breakpoint2}) {
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
 		pointer-events: all;
 		opacity: 1;
 		position: relative;
@@ -132,11 +127,6 @@ const ResponsiveNavbar = styled.div<any>`
     overflow-y: scroll;
     width: 100%;
   }
-  svg#plant {
-    width: 2.5em;
-    padding: .8em;
-    height: 2.5em;
-  }
   svg.fa-times {
     color: white;
     width: 2em;
@@ -148,7 +138,7 @@ const ResponsiveNavbar = styled.div<any>`
       color: ${props => props.theme.colors.white};
     }
     svg {
-      transition: color ${tommyCupTheme.variables.transitionTime}s ease;
+      transition: color ${feedbackTheme.variables.transitionTime}s ease;
     }
     &.active,
     &:hover {
@@ -158,19 +148,6 @@ const ResponsiveNavbar = styled.div<any>`
         color: ${props => props.theme.colors.white};
       }
     }
-  }
-  #hexa {
-  animation: ${scaleUp} 1s forwards;
-    pointer-events: none;
-    opacity: 0;
-    position: fixed;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    z-index: 0;
-    top: 0;
-    bottom: 0;
-    height: 100%;
   }
   ul {
     list-style: none;
@@ -239,7 +216,6 @@ const Nav: React.FC<any> = props => {
 			</NavBar>
 			<ResponsiveNavbar sidebartoggled={state.sidebartoggled} sidebaropen={state.sidebaropen}>
 				<div>
-					<Hexa />
 					<div
 						style={{
 							display: "flex",
@@ -247,13 +223,12 @@ const Nav: React.FC<any> = props => {
 							alignItems: "center",
 						}}
 					>
-						<Plant />
-						<h1>Zelos</h1>
+						<h1>Feedback</h1>
 						<LinkButton
 							style={{
 								padding: "1em",
 								width: "4em",
-								color: tommyCupTheme.colors.bg2,
+								color: feedbackTheme.colors.bg2,
 							}}
 						>
 							<StyledMenuIcon
@@ -282,34 +257,14 @@ const Nav: React.FC<any> = props => {
 								</StyledNavLink>
 							</>
 						)}
-						<StyledNavLink
-							as={NavLink}
-							onClick={() =>
-								dispatch({ type: "TOGGLE_THEME", data: undefined })
-							}
-							exact
-							activeClassName="active bg-white-trans"
-							to="/pages/about"
-						>
-							<Lowvision />
-							Change theme
-						</StyledNavLink>
-						<StyledNavLink
-							as={NavLink}
-							onClick={() => dispatch({ type: "TOGGLE_MENU", data: false })}
-							exact
-							activeClassName="active bg-white-trans"
-							to="/pages/licences"
-						>
-							<Cogs />
-							Settings
-						</StyledNavLink>
-						<LinkButton onClick={logout}>
-							<MenuItem>
-								<BackIcon />
+						{Auth.loggedIn() && (
+							<LinkButton onClick={logout}>
+								<MenuItem>
+									<BackIcon />
 								Logout
 							</MenuItem>
-						</LinkButton>
+							</LinkButton>
+						)}
 					</MenuArea>
 				</div>
 			</ResponsiveNavbar>

@@ -1,8 +1,8 @@
 import styled, {
   createGlobalStyle,
 } from "styled-components/macro";
-import { tommyCupTheme } from "./Theme";
-const spacing = tommyCupTheme.variables.spacing;
+import { feedbackTheme } from "./Theme";
+const spacing = feedbackTheme.variables.spacing;
 export const GlobalStyle: any = createGlobalStyle`
   *, ::after, ::before {
     box-sizing: border-box;
@@ -58,7 +58,7 @@ export const Input = styled.input<any>`
   &:disabled ~ label {
     opacity: 0.5;
   }
-  color: ${props => props.theme.colors.fg};
+  color: ${props => props.theme.colors.grey};
   font-size: 1em;
 
   background-color: ${props => (props.color ? props.color : `transparent`)};
@@ -250,7 +250,7 @@ export const MwContainer: any = styled.div`
   padding: ${spacing}em;
   width: 100%;
   flex-grow: 1;
-  max-width: ${tommyCupTheme.variables.container}px;
+  max-width: ${feedbackTheme.variables.container}px;
   flex-flow: column;
 `;
 export const Label = styled.label``;
@@ -305,4 +305,4 @@ export const ValidationWarning = styled.ul`
     font-size: smaller;
   }
 `;
-export { tommyCupTheme };
+export { feedbackTheme };
