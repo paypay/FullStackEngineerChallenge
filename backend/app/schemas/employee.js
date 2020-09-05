@@ -21,29 +21,17 @@ module.exports.employeeTypeDefs = gql`
         createdAt: String,
         verifiedAt: String,
     }
-    type Review {
-        id: String,
-        score: Float,
-        participants: Employee,
-        createdAt: String!
-    }
-    input ReviewData {
-        date: String,
-    }
     type LoginSuccess {
         jwtToken: String
     }
-    type Response {
-        success: Boolean
-    }
 `;
 
-module.exports.employeeRsolvers = {
+module.exports.employeeResolvers = {
     Query: {
-        employees: () => Employee.find({}).populate('items').exec({}),
-        update: () => Employee.find(),
+        employees: () => Employee.find({}).exec({}),
     },
     Mutation: {
+        //TODO scope in auth schema
         login: async (_, payload, context) => {
             return AuthController.signin({ body: { email: payload.email, password: payload.password } }, context)
         },

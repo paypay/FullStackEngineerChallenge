@@ -9,8 +9,12 @@ const path = require("path");
 const { createWriteStream, unlink } = require('fs')
 const {
   employeeTypeDefs,
-  employeeRsolvers
+  employeeResolvers
 } = require("./app/schemas/employee");
+const {
+  reviewTypeDefs,
+  reviewResolvers
+} = require("./app/schemas/review");
 
 const initialTypeDefs = gql`
   type Query {
@@ -26,11 +30,13 @@ const initialResolvers = {
 };
 const typeDefs = [
   initialTypeDefs,
-  employeeTypeDefs
+  employeeTypeDefs,
+  reviewTypeDefs
 ]
 const resolvers = [
   initialResolvers,
-  employeeRsolvers,
+  employeeResolvers,
+  reviewResolvers
 ]
 const uuidv4 = require("uuid/v4");
 const UPLOAD_DIR = './uploads'
