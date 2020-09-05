@@ -10,15 +10,15 @@ const dbConfig = require("./helpers/db-config");
   await dbConfig.open();
 })();
 
-const User = require("./app/users/User");
+const Employee = require("./app/employees/Employee");
 
 const {
-  adminUser,
+  adminEmployee,
 } = require("./seeddata");
 
 async function deleteData() {
   console.log("😢 Goodbye Data...");
-  await User.deleteMany();
+  await Employee.deleteMany();
   console.log("Data Deleted. To load sample data, run\n\n\t npm run seeds\n\n");
   process.exit();
 }
@@ -40,9 +40,9 @@ async function seedRandomNtoN(arrayOfRecords, relationship, model) {
 
 async function loadData() {
   try {
-    await User.create(adminUser);
+    await Employee.create(adminEmployee);
     console.log(`You can now login as: `);
-    console.log(`Email: ${adminUser.email} Password: password`);
+    console.log(`Email: ${adminEmployee.email} Password: password`);
 
     console.log("👍 Done!\n\n Successfully loaded sample data");
     process.exit();

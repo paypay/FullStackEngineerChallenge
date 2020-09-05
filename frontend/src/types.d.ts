@@ -15,7 +15,7 @@ interface IContextProps {
 }
 
 export interface StateInterface {
-  user: { name: string, email: string } | undefined,
+  employee: { name: string, email: string } | undefined,
   form: {
     email: string,
     password: string,

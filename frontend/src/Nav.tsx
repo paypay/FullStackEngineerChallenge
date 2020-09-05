@@ -2,10 +2,8 @@ import React, { useContext, useEffect } from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { ReactComponent as BackIcon } from "./assets/arrow_icon.svg";
 import { ReactComponent as MenuIcon } from "./assets/bars-solid.svg";
-import { ReactComponent as Cogs } from "./assets/cogs-solid.svg";
 import { ReactComponent as Mug } from "./assets/mug-hot-solid.svg";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
-import { ReactComponent as Lowvision } from "./assets/low-vision-solid.svg";
 import { AppContext } from "./AppProvider";
 import AuthService from "./AuthService";
 import {
@@ -20,11 +18,6 @@ import {
 	feedbackTheme,
 } from "./styledComponents";
 import styled, { keyframes } from "styled-components/macro";
-import * as H from "history";
-
-interface SidebarProps {
-	location: { pathname: H.Pathname };
-}
 
 const Sidebar = styled.div`
   color: #fff;
@@ -74,17 +67,7 @@ const NavBar: any = styled.div`
   }
   width: 100%;
 `;
-const scaleUp = keyframes`
-  0% {
-    transform: scale(.1);
-    opacity: 1;
-  }
-  100% {
-    pointer-events: none;
-    opacity: 0;
-    transform: scale(3);
-} 
-`
+
 const menu = keyframes`
   0% {
     transform: scale(.9);
@@ -165,7 +148,7 @@ const Nav: React.FC<any> = props => {
 	}, []);
 	const logout = () => {
 		Auth.logOut();
-		dispatch({ type: "SET_USER", data: {} });
+		dispatch({ type: "SET_EMPLOYEE", data: {} });
 		dispatch({ type: "TOGGLE_MENU", data: false });
 		dispatch({
 			type: "TOGGLE_TOAST",

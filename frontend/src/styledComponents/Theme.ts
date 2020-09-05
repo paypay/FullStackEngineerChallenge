@@ -29,7 +29,7 @@ const feedbackTheme: IDefaultTheme = {
 		bg1: "#fafafa",
 		bg2: "#e4e4e4",
 		secondary: "#27ae60",
-		grey: "#555",
+		grey: "#555555",
 	},
 	variables: {
 		breakpoint0: `576px`,

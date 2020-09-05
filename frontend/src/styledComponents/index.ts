@@ -212,37 +212,6 @@ export const FormControl = styled.div`
   ${Input}, .StripeElement {
     padding: ${spacing * 2}em ${spacing}em;
   }
-  .StripeElement {
-    border-bottom: 1px solid
-      ${(props: any) => props.theme.colors.main}!important;
-    ~ label {
-      ${floatingLabel}
-    }
-    &:focus ~ label,
-    &.StripeElement--invalid {
-      border-color: ${(props: any) => props.theme.colors.danger}!important;
-    }
-    &.StripeElement--complete {
-      border-color: ${(props: any) => props.theme.colors.success}!important;
-    }
-      } 
-    }
-    &.StripeElement--focus,
-    &.StripeElement--invalid,
-    &.StripeElement--complete {
-      ~ label {
-        ${floatingLabel({ active: true })}
-      }
-    }
-  }
-  .StripeElement ~ label,
-  input ~ label {
-    pointer-events: none;
-    left: ${spacing}em;
-    top: 3px;
-    transition: 0.2s ease all;
-    position: absolute;
-  }
 `;
 export const MwContainer: any = styled.div`
   margin: 0 auto 1em auto;
@@ -303,6 +272,24 @@ export const ValidationWarning = styled.ul`
   li {
     color: white;
     font-size: smaller;
+  }
+`;
+export const Table = styled.table`
+  text-align: left;
+  width: 100%;
+  tr td,
+  tr th {
+    padding: 0.5em 1em;
+    border-bottom: 1px solid ${(props: any) => props.theme.colors.gray};
+  }
+  tr td:first-child,
+  tr th:first-child,
+  tr td:last-child,
+  tr th:last-child {
+    padding: 0.5em 0;
+  }
+  tr.active td {
+    background-color: #eee;
   }
 `;
 export { feedbackTheme };

@@ -3,8 +3,8 @@ import { StateInterface } from "./types";
 
 export const reducer = (state, action) => {
   switch (action.type) {
-    case "SET_USER":
-      return { ...state, user: action.data };
+    case "SET_EMPLOYEE":
+      return { ...state, employee: action.data };
     case "TOGGLE_TOAST":
       return {
         ...state,
@@ -32,7 +32,7 @@ export const reducer = (state, action) => {
 const tempTheme: any = localStorage.getItem("active_theme");
 const initialTheme = !!tempTheme ? JSON.parse(tempTheme) : feedbackTheme;
 export const initialState: StateInterface = {
-  user: undefined,
+  employee: undefined,
   popup: { open: false },
   modal: { open: false },
   sidebaropen: false,

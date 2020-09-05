@@ -1,7 +1,7 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
-// User Schema
-var UserSchema = mongoose.Schema({
+// Employee Schema
+const EmployeeSchema = mongoose.Schema({
   email: {
     type: String,
     index: true
@@ -31,23 +31,23 @@ var UserSchema = mongoose.Schema({
   }
 });
 
-var User = (module.exports = mongoose.model("User", UserSchema));
+const Employee = (module.exports = mongoose.model("Employee", EmployeeSchema));
 
-module.exports.createUser = (newUser, callback) => {
+module.exports.createEmployee = (newEmployee, callback) => {
   bcrypt.genSalt(10, (err, salt) => {
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
-      newUser.password = hash;
-      newUser.save(callback);
+    bcrypt.hash(newEmployee.password, salt, (err, hash) => {
+      newEmployee.password = hash;
+      newEmployee.save(callback);
     });
   });
 };
-module.exports.getUserByEmail = (email, callback) => {
-  var query = { email: email };
-  User.findOne(query, callback);
+module.exports.getEmployeeByEmail = (email, callback) => {
+  const query = { email: email };
+  Employee.findOne(query, callback);
 };
 
-module.exports.getUserById = function(id, callback) {
-  User.findById(id, callback);
+module.exports.getEmployeeById = function(id, callback) {
+  Employee.findById(id, callback);
 };
 
 module.exports.comparePassword = (candidatePassword, hash, callback) => {

@@ -1,15 +1,15 @@
 require("dotenv").config({ path: "./.env" });
-const User = require("./app/users/User");
+const Employee = require("./app/employees/Employee");
 const dbConfig = require("./helpers/db-config");
 const port = process.env.PORT || 8080;
-const { adminUser } = require("./seeddata");
+const { defaultEmployees } = require("./seeddata");
 const { ApolloServer, gql } = require('apollo-server');
 const path = require("path");
 const { createWriteStream, unlink } = require('fs')
 const {
   employeeTypeDefs,
   employeeRsolvers
-} = require("./schemas/employee");
+} = require("./app/schemas/employee");
 
 const initialTypeDefs = gql`
   type Query {
@@ -36,18 +36,14 @@ const UPLOAD_DIR = './uploads'
 
 
 dbConfig.open().then(async () => {
-  const user = await User.findOne({ email: "admin@example.com" });
-  if (!user) {
-    await User.create(adminUser);
+  const employee = await Employee.findOne({ email: "admin@example.com" });
+  if (!employee) {
+    await Employee.create(defaultEmployees);
   }
   try {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
-      uploads: {
-        maxFileSize: 10000000, // 10 MB
-        maxFiles: 20
-      },
       context: ({ req }) => {
         const authorization = req.headers.authorization
         return {

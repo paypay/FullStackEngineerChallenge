@@ -115,8 +115,8 @@ class AuthService {
 
     if (now >= expire - limit) {
       return this.fetch(`${url}/api/refresh_token`).then(response => {
-        if (response.user.token !== undefined) {
-          this.setToken(response.user.token);
+        if (response.employee.token !== undefined) {
+          this.setToken(response.employee.token);
         }
         return Promise.resolve(response);
       });

@@ -1,4 +1,4 @@
-exports.adminUser = [{
+exports.defaultEmployees = [{
   email: "admin@example.com",
   name: "Tommy",
   role: 'admin',
@@ -20,3 +20,11 @@ exports.adminUser = [{
   createdAtAt: new Date(),
   verifiedAt: new Date()
 }];
+
+exports.reviews = [{
+  score: 0.4,
+  participants: [
+
+  ],
+  createdAtAt: new Date(),
+},];

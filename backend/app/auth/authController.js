@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const User = require("../users/User");
+const Employee = require("../employees/Employee");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
 const ro = require("../../helpers/response-object");
@@ -8,13 +8,13 @@ const sendVerificationMail = require("../../helpers/mailer");
 const Boom = require("boom");
 const salt = bcrypt.genSaltSync(saltRounds);
 
-const userObject = user => {
+const employeeObject = employee => {
   const payload = {
-    id: user.id,
-    email: user.email,
-    name: user.name,
-    subscription: user.subscription,
-    role: user.role
+    id: employee.id,
+    email: employee.email,
+    name: employee.name,
+    subscription: employee.subscription,
+    role: employee.role
   };
 
   const token = jwt.sign(payload, process.env.SECRET, { expiresIn: 86400 });
@@ -27,27 +27,27 @@ module.exports.signin = async (req, res) => {
     } else if (!req.body.email) {
       return Boom.badData(`Email missing`);
     } else {
-      const user = await User.findOne({ email: req.body.email });
-      if (!user) {
-        return Boom.notFound(`User not found`);
-      } else if (user) {
-        if (!user.verifiedAt) {
+      const employee = await Employee.findOne({ email: req.body.email });
+      if (!employee) {
+        return Boom.notFound(`Employee not found`);
+      } else if (employee) {
+        if (!employee.verifiedAt) {
           try {
-            const userToken = uuidv4(4);
-            await sendVerificationMail(req, userToken);
-            user.verificationToken = userToken;
-            User.update(user);
+            const employeeToken = uuidv4(4);
+            await sendVerificationMail(req, employeeToken);
+            employee.verificationToken = employeeToken;
+            Employee.update(employee);
 
-            return Boom.forbidden(`User not verified yet, check your emails for a verification link`);
+            return Boom.forbidden(`Employee not verified yet, check your emails for a verification link`);
           } catch (e) {
             console.log("Error in authController.signin", e);
           }
         } else {
-          const hashedPW = bcrypt.compareSync(req.body.password, user.password); // true
+          const hashedPW = bcrypt.compareSync(req.body.password, employee.password); // true
           if (!hashedPW) {
             return Boom.unauthorized("Authentication failed. Wrong password.");
           } else {
-            return userObject(user);
+            return employeeObject(employee);
           }
         }
       }
@@ -57,6 +57,6 @@ module.exports.signin = async (req, res) => {
   }
 };
 module.exports.refreshtoken = (req, res, next) => {
-  const user = req.user;
-  return res.json(ro(201, `Welcome`, userObject(user)));
+  const employee = req.employee;
+  return res.json(ro(201, `Welcome`, employeeObject(employee)));
 };
