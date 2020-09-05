@@ -100,7 +100,7 @@ export const RoundNavIcon = styled(NavIcon)`
   span {
     color: ${props => props.theme.colors.main};
   }
-  `;
+`;
 export const Button: any = styled.button`
     padding: 0.7em 1em;
     margin: 0 0.5em 0.5em 0;
@@ -123,11 +123,15 @@ export const StyledNavLink = styled.a<any>`
   text-decoration: none;
   color: ${(props: any) => props.theme.colors.dark};
   align-items: center;
+  flex-grow: 1;
 `
 export const MenuArea = styled.nav`
   display: flex;
   justify-content: flex-end;
   flex-flow: column;
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
+    flex-flow: row;
+  }
   width: 100%;
   align-items: stretch;
   svg {
@@ -147,7 +151,7 @@ export const MenuItem = styled.span`
   display: block;
 `;
 export const Backdrop = styled.div<any>`
-  background-color: #333333aa;
+  background-color: #333333dd;
   transition: opacity 0.3s ease;
   opacity: ${props => (props.visible ? 1 : 0)};
   pointer-events: ${props => (props.visible ? `all` : `none`)};
@@ -290,6 +294,119 @@ export const Table = styled.table`
   }
   tr.active td {
     background-color: #eee;
+  }
+`;
+export const Sidebar = styled.div`
+  color: #fff;
+  bottom: 0;
+  position: fixed;
+  z-index: 850;
+  width: 100%;
+  max-width: 400px;
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
+	color: ${feedbackTheme.colors.grey};
+	max-width: none;
+	position: relative;
+  }
+  a {
+    text-decoration: none;
+  }
+`;
+export const LeftMenu = styled.div`
+  text-align: center;
+`;
+export const RightMenu = styled.div`
+  text-align: center;
+`;
+export const NavBar: any = styled.div`
+  ${RightMenu}, ${LeftMenu} {
+    pointer-events: all !important;
+  }
+  color: #fff;
+  justify-content: center;
+  display: grid;
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
+	display: none;
+  }
+  align-items: center;
+  grid-template-columns: 1fr auto 1fr;
+  grid-template-rows: 4em;
+  z-index: 12;
+  ${NavIcon} {
+    margin: 0 .5em;
+  }
+  ${RightMenu},
+  ${LeftMenu} {
+    display: flex;
+    align-items: center;
+  }
+  ${RightMenu}{
+    justify-content: flex-end;
+  }
+  ${LeftMenu} {
+    justify-content: flex-start;
+  }
+  width: 100%;
+`;
+export const ResponsiveNavbar = styled.div<any>`
+  pointer-events: ${(props: any) => (!props.sidebaropen ? `none` : `all`)};
+  transition:  transform 0.3s ease, opacity 0.3s ease;
+  opacity: ${props => props.sidebartoggled ? 1 : props.sidebaropen ? '.9' : '0'};
+  position: fixed;
+  @media (min-width: ${feedbackTheme.variables.breakpoint2}) {
+	pointer-events: all;
+	opacity: 1;
+	position: relative;
+	transform: none;
+  } 
+  transform: ${props => props.sidebaropen ? 'scale(1)' : 'scale(0.9)'};
+  z-index: 11;
+  top: ${props => props.theme.variables.spacing}em;
+  left: 0;
+  bottom: ${props => props.theme.variables.spacing}em;
+  right: 0;
+  padding-bottom: 4em;
+  margin: 0;
+  overflow: hidden;
+  align-items: center;
+  flex-flow: column;
+  justify-content: flex-end;
+  height: 100%;
+  font-size: 1.5em;
+  > div {
+    overflow-y: scroll;
+    width: 100%;
+  }
+  svg.fa-times {
+    color: white;
+    width: 2em;
+    height: 2em;
+  }
+  ${MenuItem}, ${StyledNavLink}, svg {
+	color: white;
+	@media (min-width: ${feedbackTheme.variables.breakpoint0}) {
+		color: ${feedbackTheme.colors.grey};
+	}
+    &.active {
+      color: white;
+    }
+    svg {
+      transition: color ${feedbackTheme.variables.transitionTime}s ease;
+    }
+    &.active,
+    &:hover {
+      &,
+      svg {
+        background-color: ${props => props.theme.colors.secondary};
+        color: ${props => props.theme.colors.white};
+      }
+    }
+  }
+  ul {
+    list-style: none;
+    padding: 0;
+    display: inline-flex;
+    flex-flow: column;
   }
 `;
 export { feedbackTheme };

@@ -23,6 +23,7 @@ const App: React.FC<any> = (props) => {
         <GlobalStyle />
         <Router history={history}>
           <Content>
+            <Nav />
             <Switch>
               <Route exact path="/login" component={Login} />
               <Route exact path="/pages/:page" component={StaticPage} />
@@ -30,7 +31,6 @@ const App: React.FC<any> = (props) => {
               <Route exact path="/reviews" component={Reviews} />
               <Redirect to="/" />
             </Switch>
-            <Nav />
           </Content>
         </Router>
       </AppProvider>
