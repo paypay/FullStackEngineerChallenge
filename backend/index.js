@@ -10,11 +10,11 @@ const { createWriteStream, unlink } = require('fs')
 const {
   employeeTypeDefs,
   employeeResolvers
-} = require("./app/schemas/employee");
+} = require("./app/employees/employeeSchema");
 const {
   reviewTypeDefs,
   reviewResolvers
-} = require("./app/schemas/review");
+} = require("./app/reviews/reviewSchema");
 
 const initialTypeDefs = gql`
   type Query {

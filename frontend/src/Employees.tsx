@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import AuthService from './AuthService';
 import { gql } from 'apollo-boost';
 import {
     Table
@@ -14,7 +13,6 @@ import SpinnerButton from './SpinnerButton';
 const GET_EMPLOYEES = gql`
 {
     employees {
-
         id
         email
         name
@@ -25,11 +23,9 @@ const GET_EMPLOYEES = gql`
     }
 }
 `;
-const DESTROY_INVOICE = gql`
-    mutation destroyInvoice($id: String) {
-        destroyInvoice(id: $id) {
-            success
-        }
+const DESTROY_EMPLOYEE = gql`
+    mutation destroyEmployee($id: ID) {
+        destroyEmployee(id: $id )
     }
 `;
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
@@ -41,16 +37,14 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
             console.log('completete', res);
         }
     })
-    const [destroyInvoice] = useMutation(DESTROY_INVOICE, {
-        onCompleted(e) {
-            console.log('completete', e);
-            // setStaleObject()
+    const [destroyEmployee, { loading: mutationLoading }] = useMutation(DESTROY_EMPLOYEE, {
+        onCompleted(result) {
+            dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Employee ${result.destroyEmployee} destroyed` } });
+            console.log('complete', result);
             refetch();
         },
         onError(e) {
             console.log('error', e);
-            // setStaleObject()
-            // refetch();
         },
     });
     return (
@@ -63,38 +57,38 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     <Table>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Email</th>
                                 <th>Name</th>
                                 <th>Role</th>
                                 <th>CreatedAt</th>
-                                <th />
-                                <th />
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {data.employees.map((employee, index) => (
-                                <tr key={employee.id}>
+                                <tr key={index}>
+                                    <td>{employee.id}</td>
                                     <td>{employee.email}</td>
                                     <td>{employee.name}</td>
-                                    <td
-                                        onClick={(e) => {
-                                        }}
-                                    >
-                                        {employee.role}
-                                    </td>
+                                    <td>{employee.role}</td>
+                                    <td>{moment(Number(employee.createdAt)).format("YYYY-MM-DD")}</td>
                                     <td
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
-                                            destroyInvoice({ variables: employee.id });
+                                            destroyEmployee({
+                                                variables: {
+                                                    id: employee.id
+                                                }
+                                            });
                                         }}
                                     >
-                                        <SpinnerButton>
+                                        <SpinnerButton loading={mutationLoading}>
                                             Delete
-									</SpinnerButton>
+                                        </SpinnerButton>
                                     </td>
 
-                                    <td>{moment(employee.createdAt / 1000).format("YYYY.MM.DD")}</td>
                                 </tr>
                             ))}
                         </tbody>

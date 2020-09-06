@@ -71,7 +71,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                             {data.reviews.map((review, index) => (
                                 <tr key={index}>
                                     <td>{review.score}</td>
-                                    <td>{review.employee.email}</td>
+                                    <td>{review.employee && review.employee.email}</td>
                                     <td>{moment(review.createdAt / 100).format("YYYY.MM.DD")}</td>
                                     <td
                                         onClick={(e) => {

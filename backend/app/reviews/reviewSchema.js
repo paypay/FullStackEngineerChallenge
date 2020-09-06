@@ -1,5 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
-const Review = require("../reviews/Review");
+const Review = require("./Review");
 const AuthController = require("../auth/authController");
 const sendVerificationMail = require("../../helpers/mailer");
 
