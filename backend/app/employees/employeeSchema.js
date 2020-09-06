@@ -1,7 +1,5 @@
 const { ApolloServer, gql } = require('apollo-server');
 const Employee = require("./Employee");
-const AuthController = require("../auth/authController");
-const sendVerificationMail = require("../../helpers/mailer");
 
 module.exports.employeeTypeDefs = gql`
     extend type Query {
@@ -10,7 +8,6 @@ module.exports.employeeTypeDefs = gql`
         employee(id: Int): Employee
     }
     extend type Mutation {
-        login(email: String, password: String): LoginSuccess
         destroyEmployee(id: ID): ID
     }
     type Employee {
@@ -22,9 +19,7 @@ module.exports.employeeTypeDefs = gql`
         createdAt: String,
         verifiedAt: String,
     }
-    type LoginSuccess {
-        jwtToken: String
-    }
+
     type Response {
         id: String
     }
@@ -35,10 +30,6 @@ module.exports.employeeResolvers = {
         employees: () => Employee.find({}).exec({}),
     },
     Mutation: {
-        //TODO scope in auth schema
-        login: async (_, payload, context) => {
-            return AuthController.signin({ body: { email: payload.email, password: payload.password } }, context)
-        },
         destroyEmployee: async (_, payload, context) => {
             await Employee.findByIdAndDelete(payload.id)
             return payload.id

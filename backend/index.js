@@ -8,6 +8,10 @@ const { ApolloServer, gql } = require('apollo-server');
 const path = require("path");
 const { createWriteStream, unlink } = require('fs')
 const {
+  authTypeDefs,
+  authResolvers
+} = require("./app/auth/authSchema");
+const {
   employeeTypeDefs,
   employeeResolvers
 } = require("./app/employees/employeeSchema");
@@ -31,11 +35,13 @@ const initialResolvers = {
 const typeDefs = [
   initialTypeDefs,
   employeeTypeDefs,
+  authTypeDefs,
   reviewTypeDefs
 ]
 const resolvers = [
   initialResolvers,
   employeeResolvers,
+  authResolvers,
   reviewResolvers
 ]
 const uuidv4 = require("uuid/v4");
