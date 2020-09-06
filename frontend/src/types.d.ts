@@ -22,6 +22,11 @@ export interface StateInterface {
     firstname: string,
     lastname: string
   },
+  employeeForm: {
+    email: string,
+    name: string,
+    role: "user" | "admin"
+  },
   active_theme: any,
   toast: {
     open: boolean;

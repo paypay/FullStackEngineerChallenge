@@ -20,11 +20,9 @@ const EmployeeSchema = mongoose.Schema({
     type: String,
     default: false
   },
-  subscription: {
-    type: Object
-  },
   createdAt: {
-    type: Date
+    type: Date,
+    default: Date.now()
   },
   verifiedAt: {
     type: Date

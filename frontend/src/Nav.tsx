@@ -63,9 +63,6 @@ const Nav: React.FC<any> = props => {
 				<RightMenu>
 					{props.history.length > 1 && navProps.backIcon && (
 						<RoundNavIcon
-							title=""
-							className="backicon"
-							bg
 							onClick={() => {
 								props.history.goBack();
 							}}

@@ -2,27 +2,19 @@ import React, { useContext } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import {
-    Table
+    Table,
+    Modal,
+    Button,
 } from './styledComponents';
 import { IWelcomWrap } from './types';
 import withAuth from './withAuth';
 import moment from 'moment';
 import { AppContext } from './AppProvider';
+import EmployeeForm from './EmployeeForm';
 import SpinnerButton from './SpinnerButton';
+import { GET_EMPLOYEES } from './queries'
 
-const GET_EMPLOYEES = gql`
-{
-    employees {
-        id
-        email
-        name
-        role
-        password
-        createdAt
-        verifiedAt
-    }
-}
-`;
+
 const DESTROY_EMPLOYEE = gql`
     mutation destroyEmployee($id: ID) {
         destroyEmployee(id: $id )
@@ -30,9 +22,7 @@ const DESTROY_EMPLOYEE = gql`
 `;
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
-    const {
-        loading, error, data, refetch, networkStatus,
-    } = useQuery(GET_EMPLOYEES, {
+    const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
         onCompleted(res) {
             console.log('completete', res);
         }
@@ -47,9 +37,26 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
             console.log('error', e);
         },
     });
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :(</p>;
     return (
         <>
-            <h2>{`Employees`}</h2>
+            <Modal isopen={state.modal.open}>
+                <EmployeeForm refetchEmployees={refetch} />
+            </Modal>
+            <div className="d-flex justify-content-between">
+
+                <h2>{`Employees`}</h2>
+                <Button
+                    onClick={(e) => {
+                        dispatch({
+                            type: 'TOGGLE_MODAL',
+                            data: {}
+                        })
+                    }}>New employee</Button>
+            </div>
+
+
             {!!data
                 && !!data.employees
                 && data.employees.length > 0

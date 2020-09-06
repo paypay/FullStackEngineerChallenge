@@ -92,13 +92,12 @@ export const NavIcon = styled.button<NavIcon>`
   }
   `;
 export const RoundNavIcon = styled(NavIcon)`
-  background: ${(props: any) => props.theme.colors.bg};
+  background: ${(props: any) => props.theme.colors.main};
   border-radius: 50%;
   padding: 9px;
-  box-shadow: 0px 0px 36px #00000059;
   svg,
   span {
-    color: ${props => props.theme.colors.main};
+    color: ${props => props.theme.colors.bg};
   }
 `;
 export const Button: any = styled.button`
@@ -408,5 +407,21 @@ export const ResponsiveNavbar = styled.div<any>`
     display: inline-flex;
     flex-flow: column;
   }
+`;
+export const Modal: any = styled.div`
+  padding: 1rem;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: ${(props: any) => (!props.isopen ? 'scale(0.95) translate(-50%, -50%)' : 'translate(-50%, -50%)')};
+  background-color: white;
+  z-index: 859;
+  transition:  transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: ${(props: any) => (!props.isopen ? 'none' : 'all')};
+  opacity: ${(props: any) => (!props.isopen ? '0' : '1')};
+  border: 1px solid ${feedbackTheme.colors.grey};
+  transform-origin: left top;
+`;
+export const Select = styled.select`
 `;
 export { feedbackTheme };

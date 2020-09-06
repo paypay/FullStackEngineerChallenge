@@ -17,6 +17,12 @@ export const reducer = (state, action) => {
       };
     case "TOGGLE_MENU":
       return { ...state, sidebaropen: action.data };
+    case "TOGGLE_MODAL":
+      return {
+        ...state, modal: {
+          ...state.modal, open: !state.modal.open
+        }
+      };
     case "SET_FORM":
       return {
         ...state,
@@ -34,7 +40,7 @@ const initialTheme = !!tempTheme ? JSON.parse(tempTheme) : feedbackTheme;
 export const initialState: StateInterface = {
   employee: undefined,
   popup: { open: false },
-  modal: { open: false },
+  modal: { open: true },
   sidebaropen: false,
   sidebartoggled: false,
   active_theme: initialTheme || feedbackTheme,
@@ -43,6 +49,11 @@ export const initialState: StateInterface = {
     password: "password",
     firstname: "",
     lastname: "",
+  },
+  employeeForm: {
+    email: `Tester${Date.now()}@example.com`,
+    name: `Tester ${Date.now()}`,
+    role: "user"
   },
   toast: {
     message: "",
