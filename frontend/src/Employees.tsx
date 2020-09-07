@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import {
@@ -22,6 +22,7 @@ const DESTROY_EMPLOYEE = gql`
 `;
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
+    const [updateemployee, setupdateemployee] = useState("")
     const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
         // onCompleted(res) {
         //     console.log('completete', res);
@@ -42,16 +43,21 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     return (
         <>
             <Modal isopen={state.modal.open}>
-                <EmployeeForm refetchEmployees={refetch} />
+                <EmployeeForm updateemployee={updateemployee} setupdateemployee={setupdateemployee} refetchEmployees={refetch} />
             </Modal>
             <div className="d-flex justify-content-between">
 
                 <h2>{`Employees`}</h2>
                 <Button
                     onClick={(e) => {
+                        setupdateemployee("")
                         dispatch({
                             type: 'TOGGLE_MODAL',
-                            data: {}
+                            data: { open: true }
+                        })
+                        dispatch({
+                            type: 'UPDATE_FORM',
+                            data: { form_to_set: 'employeeForm', form_value: { email: "", name: "", role: "" } }
                         })
                     }}>New employee</Button>
             </div>
@@ -80,6 +86,24 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                     <td>{employee.name}</td>
                                     <td>{employee.role}</td>
                                     <td>{moment(Number(employee.createdAt)).format("YYYY-MM-DD")}</td>
+                                    <td>
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                setupdateemployee(employee.id)
+                                                dispatch({
+                                                    type: 'TOGGLE_MODAL',
+                                                    data: { open: true }
+                                                })
+                                                dispatch({
+                                                    type: 'UPDATE_FORM',
+                                                    data: { form_to_set: 'employeeForm', form_value: { email: employee.email, name: employee.name, role: employee.role } }
+                                                })
+                                            }}>
+                                            Edit
+                                        </Button>
+                                    </td>
                                     <td
                                         onClick={(e) => {
                                             e.stopPropagation();

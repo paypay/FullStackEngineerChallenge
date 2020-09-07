@@ -102,7 +102,6 @@ export const ValidatedInputs = React.forwardRef(
 				},
 			});
 		};
-		console.log(filteredItems)
 		return (
 			<>
 				<Input

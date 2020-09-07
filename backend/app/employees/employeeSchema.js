@@ -24,6 +24,7 @@ module.exports.employeeTypeDefs = gql`
         email: String,
         name: String,
         role: String,
+        id: String
     }
     type Response {
         id: String
@@ -36,9 +37,19 @@ module.exports.employeeResolvers = {
     },
     Mutation: {
         addEmployee: async (_, payload, context) => {
-            console.log(payload);
-            const createdEmployee = await Employee.create({ ...payload.employee, password: "password" })
-            return createdEmployee
+            let createdEmployee
+            try {
+                if (payload.employee.id) {
+                    createdEmployee = await Employee.findByIdAndUpdate(payload.employee.id, payload.employee)
+                    return createdEmployee
+                } else {
+                    createdEmployee = await Employee.create({ ...payload.employee, password: "password" })
+                    return createdEmployee
+                }
+            } catch (error) {
+                console.log('error', error);
+                return error
+            }
         },
         destroyEmployee: async (_, payload, context) => {
             await Employee.findByIdAndDelete(payload.id)

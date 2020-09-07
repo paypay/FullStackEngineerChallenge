@@ -20,7 +20,7 @@ export const reducer = (state, action) => {
     case "TOGGLE_MODAL":
       return {
         ...state, modal: {
-          ...state.modal, open: !state.modal.open
+          ...state.modal, open: action.data.open ? action.data.open : !state.modal.open
         }
       };
     case "SET_FORM":
@@ -30,6 +30,11 @@ export const reducer = (state, action) => {
           ...state[action.data.form_to_set],
           [action.data.field]: action.data.value
         },
+      };
+    case "UPDATE_FORM":
+      return {
+        ...state,
+        [action.data.form_to_set]: action.data.form_value
       };
     default:
       throw new Error("Unexpected action");

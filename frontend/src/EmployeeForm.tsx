@@ -19,7 +19,7 @@ const FormHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   h2 {
-      margin-top: 0;
+      margin: 0 2em 0 0;
   }
 `;
 export const EmployeeFormContainer: any = styled.form``;
@@ -60,14 +60,14 @@ const EmployeeForm = props => {
     const submitForm = e => {
         e.stopPropagation();
         e.preventDefault();
-        addEmployee({ variables: { employee: state.employeeForm } });
+        addEmployee({ variables: { employee: { ...state.employeeForm, id: props.updateemployee } } });
     };
     return (
         <>
             <section>
                 <EmployeeFormContainer onSubmit={submitForm}>
                     <FormHeader>
-                        <h2>New Employee</h2>
+                        <h2>{props.updateemployee ? `Update` : `New`} Employee</h2>
                         <RoundNavIcon
                             onClick={(e) => {
                                 e.preventDefault()
@@ -109,7 +109,17 @@ const EmployeeForm = props => {
                     </FormControl>
                     <FormControl>
                         <Label htmlFor="role">Employee role</Label>
-                        <Select id="role" name="role">
+                        <Select
+                            id="role"
+                            name="role"
+                            onChange={e => {
+                                dispatch({
+                                    type: 'SET_FORM',
+                                    data: { form_to_set: 'employeeForm', field: "role", value: e.target.value }
+                                })
+                            }
+                            }
+                        >
                             {["user", "admin"].map(role => (
                                 <option key={role} value={role}>{role}</option>
                             )
