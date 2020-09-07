@@ -1,7 +1,7 @@
 version: '3'
 services:
   paypay_mongo:
-
+    command: --quiet
   paypay_backend:
     restart: always
     build:
