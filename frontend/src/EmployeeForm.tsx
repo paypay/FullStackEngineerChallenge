@@ -36,7 +36,6 @@ const ADD_EMPLOYEE = gql`
 `;
 
 const EmployeeForm = props => {
-    console.log('props', props);
     const { state, dispatch } = useContext(AppContext);
     const clientRef = useRef<HTMLDivElement>(null);
     const [addEmployee] = useMutation(ADD_EMPLOYEE, {

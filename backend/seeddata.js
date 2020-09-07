@@ -34,14 +34,14 @@ exports.defaultEmployees = [{
 }, {
   email: "user@example.com",
   name: "Mathilde",
-  role: false,
+  role: "user",
   password: "$2a$10$.D.ObRTjFkv4X0zyLCOE3ui9FKU1GveILRgvhQMWlIl2q3jbgnNoi",
   createdAt: new Date(Math.floor(Math.random() * Date.now())),
   verifiedAt: new Date(Math.floor(Math.random() * Date.now()))
 }, {
   email: "tester@example.com",
   name: "Tester",
-  role: false,
+  role: "user",
   password: "$2a$10$.D.ObRTjFkv4X0zyLCOE3ui9FKU1GveILRgvhQMWlIl2q3jbgnNoi",
   createdAt: new Date(Math.floor(Math.random() * Date.now())),
   verifiedAt: new Date(Math.floor(Math.random() * Date.now()))

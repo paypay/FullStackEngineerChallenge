@@ -35,13 +35,13 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const {
         loading, error, data, refetch, networkStatus,
     } = useQuery(GET_REVIEWS, {
-        onCompleted(res) {
-            console.log('completete', res);
-        }
+        // onCompleted(res) {
+        //     console.log('completete', res);
+        // }
     })
     const [destroyReview] = useMutation(DESTROY_REVIEW, {
         onCompleted(e) {
-            console.log('completete', e);
+            // console.log('completete', e);
             // setStaleObject()
             refetch();
         },

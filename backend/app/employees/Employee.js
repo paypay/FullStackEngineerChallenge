@@ -14,7 +14,7 @@ const EmployeeSchema = mongoose.Schema({
   },
   role: {
     type: String,
-    default: false
+    default: "user"
   },
   verificationToken: {
     type: String,

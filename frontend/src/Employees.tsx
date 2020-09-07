@@ -23,9 +23,9 @@ const DESTROY_EMPLOYEE = gql`
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
     const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
-        onCompleted(res) {
-            console.log('completete', res);
-        }
+        // onCompleted(res) {
+        //     console.log('completete', res);
+        // }
     })
     const [destroyEmployee, { loading: mutationLoading }] = useMutation(DESTROY_EMPLOYEE, {
         onCompleted(result) {
