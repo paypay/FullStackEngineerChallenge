@@ -2,6 +2,9 @@ const { gql } = require('apollo-server');
 const Feedback = require("./Feedback");
 
 module.exports.feedbackTypeDefs = gql`
+    extend type Query {
+        feedbacks: [Feedback]
+    }
     extend type Mutation {
         addFeedback(feedback: FeedbackData): Feedback
     }
@@ -20,13 +23,15 @@ module.exports.feedbackTypeDefs = gql`
 `;
 
 module.exports.feedbackResolvers = {
+    Query: {
+        feedbacks: async () => await Feedback.find({}).populate('review').populate('employee').exec({}),
+    },
     Mutation: {
         addFeedback: async (_, payload, context) => {
             try {
                 let createdFeedback = await Feedback.create({ ...payload.feedback })
                 console.log('createdFeedback', createdFeedback);
                 createdFeedback = await createdFeedback.populate('review').populate('employee').execPopulate()
-                console.log('createdFeedback', createdFeedback);
                 return createdFeedback
             } catch (error) {
                 console.log('error', error);

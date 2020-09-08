@@ -10,6 +10,7 @@ import moment from 'moment';
 import { AppContext } from './AppProvider';
 import SpinnerButton from './SpinnerButton';
 import ReviewForm from './ReviewForm';
+import { GET_FEEDBACKS } from './queries'
 
 const GET_REVIEWS = gql`
 {
@@ -50,6 +51,9 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
             console.log('error', e);
         },
     });
+    const { loading: feedbacksLoading, error: feedbacksError, data: feedbacksData, refetch: feedbacksRefetch } = useQuery(GET_FEEDBACKS);
+    if (feedbacksLoading) return <p>Loading...</p>;
+    if (feedbacksError) return <p>Error :{JSON.stringify(feedbacksError)}</p>;
     return (
         <>
             <Modal isopen={state.modal.open}>
@@ -57,6 +61,8 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     updatereview={updatereview}
                     setupdatereview={setupdatereview}
                     refetchReviews={refetch}
+                    feedbacksRefetch={feedbacksRefetch}
+                    {...{ feedbacksData }}
                     {...{ inputRef }}
                 />
             </Modal>
@@ -87,6 +93,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                 <th>Score</th>
                                 <th>Employee</th>
                                 <th>CreatedAt</th>
+                                <th>Reviews</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -97,6 +104,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                     <td>{review.score}</td>
                                     <td>{review.employee && review.employee.email}</td>
                                     <td><pre>{moment(Number(review.createdAt)).format("YYYY-MM-DD - hh:mm:ss")}</pre></td>
+                                    <td>{feedbacksData && feedbacksData.feedbacks.filter(feedback => feedback.review && feedback.review.id === review.id).length}</td>
                                     <td className="d-flex">
                                         <Button
                                             onClick={(e) => {

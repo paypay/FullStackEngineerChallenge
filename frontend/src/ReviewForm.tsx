@@ -42,6 +42,7 @@ const ADD_FEEDBACK = gql`
             }
             employee {
                 id
+                name
                 email
             }
             createdAt
@@ -79,9 +80,15 @@ const ReviewForm = props => {
     const [addFeedback, { loading: addFeedbackMutationLoading }] = useMutation(ADD_FEEDBACK, {
         onCompleted(response) {
             console.log('response', response);
-            dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Added review to ${response.addReview.email}` } });
+            dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Added review ${response.addFeedback.id}` } });
+            dispatch({
+                type: 'UPDATE_FORM',
+                data: { form_to_set: 'reviewForm', form_value: { ...state.reviewForm, feedbackText: "" } }
+            })
             props.refetchReviews()
+            props.feedbacksRefetch()
         }, onError(e) {
+            console.log(e);
             dispatch({
                 type: "TOGGLE_TOAST",
                 data: {
@@ -105,7 +112,7 @@ const ReviewForm = props => {
             <section>
                 <ReviewFormContainer onSubmit={submitForm}>
                     <FormHeader>
-                        <h2>{props.updatereview ? `Update ${props.updatereview}` : `New Review`} </h2>
+                        <h2>{props.updatereview && data.employees ? `Update review for ${data.employees.find(e => e.id === state.reviewForm.employee).name}` : `New Review`} </h2>
                         <RoundNavIcon
                             onClick={(e) => {
                                 e.preventDefault()
@@ -136,7 +143,7 @@ const ReviewForm = props => {
                         && data.employees.length > 0
                         && (
                             <FormControl>
-                                <Label htmlFor="role">Review role</Label>
+                                <Label htmlFor="employee">Employee</Label>
                                 <Select
                                     id="employee"
                                     name="employee"
@@ -161,6 +168,15 @@ const ReviewForm = props => {
                         )}
                     {props.updatereview && (
                         <>
+                            {!!props.feedbacksData
+                                && !!props.feedbacksData.feedbacks
+                                && props.feedbacksData.feedbacks.length > 0
+                                && props.feedbacksData.feedbacks.filter(feedback => feedback.review && feedback.review.id === props.updatereview).map(feedback => (
+                                    <div key={feedback.id}>
+                                        {`${feedback.employee.name} says: ${feedback.text}`}
+                                    </div>
+                                ))
+                            }
                             <FormControl>
                                 <ValidatedInputs
                                     form_to_set="reviewForm"
@@ -178,7 +194,7 @@ const ReviewForm = props => {
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     e.preventDefault();
-                                    addFeedback({ variables: { feedback: { text: state.reviewForm.feedbackText, employee: state.reviewForm.employee, review: props.updatereview } } });
+                                    addFeedback({ variables: { feedback: { text: state.reviewForm.feedbackText, employee: state.employee.id, review: props.updatereview } } });
                                 }}>
                                 Add feedback to review
                                 </SpinnerButton>

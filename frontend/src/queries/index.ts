@@ -12,3 +12,21 @@ export const GET_EMPLOYEES = gql`
     }
 }
 `;
+export const GET_FEEDBACKS = gql`
+{
+    feedbacks {
+        id
+        text
+        review {
+            id
+            score
+        }
+        employee {
+            id
+            name
+            email
+        }
+        createdAt
+    }
+}
+`;
