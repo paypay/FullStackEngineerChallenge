@@ -128,4 +128,4 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
         </>
     );
 };
-export default withAuth(EmployeeList);
+export default withAuth(EmployeeList, true);

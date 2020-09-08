@@ -4,7 +4,7 @@ import AuthService from "./AuthService";
 import { AppContext } from "./AppProvider";
 const Auth = AuthService.getInstance();
 
-export default function withAuth(AuthComponent) {
+export default function withAuth(AuthComponent, isAdmin = false) {
   const AuthWrapped = props => {
     const { state, dispatch } = useContext(AppContext);
 
@@ -23,6 +23,9 @@ export default function withAuth(AuthComponent) {
       }
     }, []);
     if (state.employee) {
+      if (Auth.getRole() !== "admin" && isAdmin === true) {
+        props.history.replace("/reviews");
+      }
       return (
         <AuthComponent history={props.history} employee={state.employee} {...props} />
       );

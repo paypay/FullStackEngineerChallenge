@@ -23,7 +23,7 @@ interface Decoded {
   name: string;
   institution_id: string;
   lang: string;
-  roles: [];
+  role: string;
   iat: number;
   exp: number;
 }
@@ -82,13 +82,13 @@ class AuthService {
     localStorage.removeItem("id_token");
   };
 
-  getRole = (): [] | false => {
+  getRole = (): string => {
     const token = this.getToken();
     if (token !== null) {
       const decodedToken = decode<Decoded>(token);
-      return decodedToken.roles;
+      return decodedToken.role;
     } else {
-      return false;
+      return "";
     }
   };
   setToken(token: string) {

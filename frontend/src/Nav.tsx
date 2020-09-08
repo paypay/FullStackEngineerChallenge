@@ -101,18 +101,20 @@ const Nav: React.FC<any> = props => {
 					<MenuArea>
 						{Auth.loggedIn() && (
 							<>
-								<StyledNavLink
-									as={NavLink}
-									onClick={() =>
-										dispatch({ type: "TOGGLE_MENU", data: false })
-									}
-									exact
-									activeClassName="active bg-white-trans"
-									to="/"
-								>
-									<BackIcon style={{ transform: `rotate(180deg)` }} />
+								{Auth.getRole() === "admin" && (
+									<StyledNavLink
+										as={NavLink}
+										onClick={() =>
+											dispatch({ type: "TOGGLE_MENU", data: false })
+										}
+										exact
+										activeClassName="active bg-white-trans"
+										to="/"
+									>
+										<BackIcon style={{ transform: `rotate(180deg)` }} />
 									Employees
-						</StyledNavLink>
+									</StyledNavLink>
+								)}
 								<StyledNavLink
 									as={NavLink}
 									onClick={() =>
