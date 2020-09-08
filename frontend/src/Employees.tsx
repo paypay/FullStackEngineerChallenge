@@ -31,7 +31,7 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const [destroyEmployee, { loading: mutationLoading }] = useMutation(DESTROY_EMPLOYEE, {
         onCompleted(result) {
             dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Employee ${result.destroyEmployee} destroyed` } });
-            console.log('complete', result);
+            // console.log('complete', result);
             refetch();
         },
         onError(e) {
@@ -43,7 +43,11 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     return (
         <>
             <Modal isopen={state.modal.open}>
-                <EmployeeForm updateemployee={updateemployee} setupdateemployee={setupdateemployee} refetchEmployees={refetch} />
+                <EmployeeForm
+                    updateemployee={updateemployee}
+                    setupdateemployee={setupdateemployee}
+                    refetchEmployees={refetch}
+                />
             </Modal>
             <div className="d-flex justify-content-between">
 
@@ -85,7 +89,7 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                     <td>{employee.email}</td>
                                     <td>{employee.name}</td>
                                     <td>{employee.role}</td>
-                                    <td>{moment(Number(employee.createdAt)).format("YYYY-MM-DD")}</td>
+                                    <td><pre>{moment(Number(employee.createdAt)).format("YYYY-MM-DD - hh:mm:ss")}</pre></td>
                                     <td>
                                         <Button
                                             onClick={(e) => {

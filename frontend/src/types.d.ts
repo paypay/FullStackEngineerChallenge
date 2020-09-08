@@ -27,6 +27,10 @@ export interface StateInterface {
     name: string,
     role: "user" | "admin"
   },
+  reviewForm: {
+    score: number,
+    employee: string
+  },
   active_theme: any,
   toast: {
     open: boolean;

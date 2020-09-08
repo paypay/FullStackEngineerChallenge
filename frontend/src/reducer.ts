@@ -60,6 +60,10 @@ export const initialState: StateInterface = {
     name: `Tester ${Date.now()}`,
     role: "user"
   },
+  reviewForm: {
+    score: 0.5,
+    employee: ""
+  },
   toast: {
     message: "",
     open: false,

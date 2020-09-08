@@ -112,6 +112,7 @@ const EmployeeForm = props => {
                         <Select
                             id="role"
                             name="role"
+                            value={state.employeeForm.role}
                             onChange={e => {
                                 dispatch({
                                     type: 'SET_FORM',
@@ -121,7 +122,11 @@ const EmployeeForm = props => {
                             }
                         >
                             {["user", "admin"].map(role => (
-                                <option key={role} value={role}>{role}</option>
+                                <option
+                                    key={role}
+                                    value={role}>
+                                    {role}
+                                </option>
                             )
                             )}
                         </Select>

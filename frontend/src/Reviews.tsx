@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import AuthService from './AuthService';
 import { gql } from 'apollo-boost';
 import {
-    Table
+    Table, Modal, Button
 } from './styledComponents';
 import { IWelcomWrap } from './types';
 import withAuth from './withAuth';
 import moment from 'moment';
 import { AppContext } from './AppProvider';
 import SpinnerButton from './SpinnerButton';
+import ReviewForm from './ReviewForm';
 
 const GET_REVIEWS = gql`
 {
@@ -17,6 +17,7 @@ const GET_REVIEWS = gql`
         id
         score
         employee {
+            id
             email
         }
         createdAt
@@ -24,14 +25,13 @@ const GET_REVIEWS = gql`
 }
 `;
 const DESTROY_REVIEW = gql`
-    mutation destroyReview($id: String) {
-        destroyReview(id: $id) {
-            success
-        }
+    mutation destroyReview($id: ID) {
+        destroyReview(id: $id) 
     }
 `;
 const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
+    const [updatereview, setupdatereview] = useState("")
     const {
         loading, error, data, refetch, networkStatus,
     } = useQuery(GET_REVIEWS, {
@@ -47,13 +47,32 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
         },
         onError(e) {
             console.log('error', e);
-            // setStaleObject()
-            // refetch();
         },
     });
     return (
         <>
-            <h2>{`Reviews`}</h2>
+            <Modal isopen={state.modal.open}>
+                <ReviewForm
+                    updatereview={updatereview}
+                    setupdatereview={setupdatereview}
+                    refetchReviews={refetch}
+                />
+            </Modal>
+            <div className="d-flex justify-content-between">
+                <h2>{`Reviews`}</h2>
+                <Button
+                    onClick={(e) => {
+                        setupdatereview("")
+                        dispatch({
+                            type: 'TOGGLE_MODAL',
+                            data: { open: true }
+                        })
+                        dispatch({
+                            type: 'UPDATE_FORM',
+                            data: { form_to_set: 'reviewForm', form_value: { score: 0.5, employee: "" } }
+                        })
+                    }}>New review</Button>
+            </div>
             {!!data
                 && !!data.reviews
                 && data.reviews.length > 0
@@ -72,17 +91,39 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                 <tr key={index}>
                                     <td>{review.score}</td>
                                     <td>{review.employee && review.employee.email}</td>
-                                    <td>{moment(review.createdAt / 100).format("YYYY.MM.DD")}</td>
+                                    <td><pre>{moment(Number(review.createdAt)).format("YYYY-MM-DD - hh:mm:ss")}</pre></td>
+                                    <td>
+                                        <Button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                setupdatereview(review.id)
+                                                dispatch({
+                                                    type: 'TOGGLE_MODAL',
+                                                    data: { open: true }
+                                                })
+                                                dispatch({
+                                                    type: 'UPDATE_FORM',
+                                                    data: { form_to_set: 'reviewForm', form_value: { score: review.score, employee: review.employee ? review.employee.id : "" } }
+                                                })
+                                            }}>
+                                            Edit
+                                        </Button>
+                                    </td>
                                     <td
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             e.preventDefault();
-                                            destroyReview({ variables: review.id });
+                                            destroyReview({
+                                                variables: {
+                                                    id: review.id
+                                                }
+                                            });
                                         }}
                                     >
                                         <SpinnerButton>
                                             Delete
-									</SpinnerButton>
+                                        </SpinnerButton>
                                     </td>
                                 </tr>
                             ))}

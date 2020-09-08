@@ -101,6 +101,12 @@ export const validationRules = {
       message: `Subproduct Title must be longer than 2 characters`
     }
   ],
+  score: [
+    {
+      rule: value => 0 < value && value < 1,
+      message: `score must be between 0 and 1 and type float`
+    }
+  ],
 };
 
 export const validator = (validationName, value) => {
