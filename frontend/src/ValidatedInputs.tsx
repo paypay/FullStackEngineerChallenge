@@ -114,7 +114,7 @@ export const ValidatedInputs = React.forwardRef(
 					value={defaultValue || state[form_to_set][name]}
 					// onFocus={(e)=> e.target.value = ""}
 					onChange={validateForm}
-				// {...props}
+					{...props}
 				/>
 				<ClientList className={`autocomplete`}>
 					{!!filteredItems &&

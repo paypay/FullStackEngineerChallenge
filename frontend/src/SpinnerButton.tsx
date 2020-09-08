@@ -1,15 +1,15 @@
 import React from "react";
-import { ButtonBlock, SpinnerButtonSpinner, HiddenChildren, } from "./styledComponents"
+import { Button, SpinnerButtonSpinner, HiddenChildren, } from "./styledComponents"
 import { ReactComponent as SpinnerIcon } from "./assets/circle-notch-solid.svg";
 
-const SpinnerButton: React.FunctionComponent<any> = ({ children, spinning, props }) => {
+const SpinnerButton: React.FunctionComponent<any> = ({ children, spinning, onclick, ...props }) => {
   return (
-    <ButtonBlock style={{ position: `relative` }} {...props}>
+    <Button style={{ position: `relative` }} {...props}>
       <SpinnerButtonSpinner spinning={spinning}>
         <SpinnerIcon style={{ color: `inherit` }} />
       </SpinnerButtonSpinner>
       <HiddenChildren spinning={spinning}>{children}</HiddenChildren>
-    </ButtonBlock>
+    </Button>
   );
 }
 export default SpinnerButton

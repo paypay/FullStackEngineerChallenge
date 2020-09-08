@@ -78,7 +78,7 @@ const Login: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
         </Label>
         </FormControl>
         <SpinnerButton
-          loading={loading ? 1 : 0}
+          spinning={loading ? 1 : 0}
         >
           Login
       </SpinnerButton>

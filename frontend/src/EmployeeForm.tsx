@@ -6,7 +6,8 @@ import {
     FormControl,
     Label,
     RoundNavIcon,
-    Select
+    Select,
+    FormHeader
 } from "./styledComponents";
 import { ValidatedInputs, } from "./ValidatedInputs";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
@@ -14,14 +15,7 @@ import SpinnerButton from "./SpinnerButton";
 
 const gql = require("graphql-tag");
 
-const FormHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  h2 {
-      margin: 0 2em 0 0;
-  }
-`;
+
 export const EmployeeFormContainer: any = styled.form``;
 const ADD_EMPLOYEE = gql`
     mutation addEmployee($employee: EmployeeData) {
@@ -37,8 +31,7 @@ const ADD_EMPLOYEE = gql`
 
 const EmployeeForm = props => {
     const { state, dispatch } = useContext(AppContext);
-    const clientRef = useRef<HTMLDivElement>(null);
-    const [addEmployee] = useMutation(ADD_EMPLOYEE, {
+    const [addEmployee, { loading }] = useMutation(ADD_EMPLOYEE, {
         onCompleted(response) {
             dispatch({
                 type: "TOGGLE_MODAL",
@@ -67,7 +60,7 @@ const EmployeeForm = props => {
             <section>
                 <EmployeeFormContainer onSubmit={submitForm}>
                     <FormHeader>
-                        <h2>{props.updateemployee ? `Update` : `New`} Employee</h2>
+                        <h2>{props.updateemployee ? `Update ${props.updateemployee}` : `New Employee`} </h2>
                         <RoundNavIcon
                             onClick={(e) => {
                                 e.preventDefault()
@@ -88,7 +81,7 @@ const EmployeeForm = props => {
                             defaultValue={
                                 state.employeeForm.email ? state.employeeForm.email : ""
                             }
-                            ref={clientRef}
+                            ref={props.inputRef}
                             id="email"
                             type="text"
                             required
@@ -131,7 +124,9 @@ const EmployeeForm = props => {
                             )}
                         </Select>
                     </FormControl>
-                    <SpinnerButton>
+                    <SpinnerButton
+                        spinning={loading}
+                    >
                         Submit
                     </SpinnerButton>
                 </EmployeeFormContainer>

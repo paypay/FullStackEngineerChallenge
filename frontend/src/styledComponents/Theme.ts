@@ -25,10 +25,10 @@ const feedbackTheme: IDefaultTheme = {
 	colors: {
 		backgroundGradient: `linear-gradient(white, #fef8fa)`,
 		bg: "#fff",
-		main: "#11ceb0",
+		main: "#27ae60",
 		bg1: "#fafafa",
 		bg2: "#e4e4e4",
-		secondary: "#27ae60",
+		secondary: "#11ceb0",
 		grey: "#555555",
 	},
 	variables: {

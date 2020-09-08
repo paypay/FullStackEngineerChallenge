@@ -45,7 +45,7 @@ const initialTheme = !!tempTheme ? JSON.parse(tempTheme) : feedbackTheme;
 export const initialState: StateInterface = {
   employee: undefined,
   popup: { open: false },
-  modal: { open: true },
+  modal: { open: false },
   sidebaropen: false,
   sidebartoggled: false,
   active_theme: initialTheme || feedbackTheme,

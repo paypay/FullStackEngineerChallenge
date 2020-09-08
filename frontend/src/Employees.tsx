@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import {
@@ -22,6 +22,7 @@ const DESTROY_EMPLOYEE = gql`
 `;
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
+    const inputRef = useRef<HTMLDivElement>(null);
     const [updateemployee, setupdateemployee] = useState("")
     const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
         // onCompleted(res) {
@@ -47,13 +48,14 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     updateemployee={updateemployee}
                     setupdateemployee={setupdateemployee}
                     refetchEmployees={refetch}
+                    {...{inputRef}}
                 />
             </Modal>
             <div className="d-flex justify-content-between">
-
                 <h2>{`Employees`}</h2>
                 <Button
                     onClick={(e) => {
+                        inputRef.current && inputRef.current.focus();
                         setupdateemployee("")
                         dispatch({
                             type: 'TOGGLE_MODAL',
@@ -90,7 +92,9 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                     <td>{employee.name}</td>
                                     <td>{employee.role}</td>
                                     <td><pre>{moment(Number(employee.createdAt)).format("YYYY-MM-DD - hh:mm:ss")}</pre></td>
-                                    <td>
+                                    <td
+                                        className="d-flex"
+                                    >
                                         <Button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -107,19 +111,18 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                             }}>
                                             Edit
                                         </Button>
-                                    </td>
-                                    <td
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            e.preventDefault();
-                                            destroyEmployee({
-                                                variables: {
-                                                    id: employee.id
-                                                }
-                                            });
-                                        }}
-                                    >
-                                        <SpinnerButton loading={mutationLoading}>
+                                        <SpinnerButton
+                                            spinning={mutationLoading}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                destroyEmployee({
+                                                    variables: {
+                                                        id: employee.id
+                                                    }
+                                                });
+                                            }}
+                                        >
                                             Delete
                                         </SpinnerButton>
                                     </td>

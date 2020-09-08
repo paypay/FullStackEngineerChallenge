@@ -6,7 +6,8 @@ import {
     FormControl,
     Label,
     RoundNavIcon,
-    Select
+    Select,
+    FormHeader
 } from "./styledComponents";
 import { ValidatedInputs, } from "./ValidatedInputs";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
@@ -15,14 +16,6 @@ import { GET_EMPLOYEES } from './queries'
 
 const gql = require("graphql-tag");
 
-const FormHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  h2 {
-      margin: 0 2em 0 0;
-  }
-`;
 export const ReviewFormContainer: any = styled.form``;
 const ADD_REVIEW = gql`
     mutation addReview($review: ReviewData) {
@@ -40,14 +33,13 @@ const ADD_REVIEW = gql`
 
 const ReviewForm = props => {
     const { state, dispatch } = useContext(AppContext);
-    const clientRef = useRef<HTMLDivElement>(null);
     // const selectRef = useRef(null)
     const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
         // onCompleted(res) {
         //     console.log('completete', res);
         // }
     })
-    const [addReview] = useMutation(ADD_REVIEW, {
+    const [addReview, { loading: addMutationLoading }] = useMutation(ADD_REVIEW, {
         onCompleted(response) {
             dispatch({
                 type: "TOGGLE_MODAL",
@@ -77,7 +69,7 @@ const ReviewForm = props => {
             <section>
                 <ReviewFormContainer onSubmit={submitForm}>
                     <FormHeader>
-                        <h2>{props.updatereview ? `Update` : `New`} Review</h2>
+                        <h2>{props.updatereview ? `Update ${props.updatereview}` : `New Review`} </h2>
                         <RoundNavIcon
                             onClick={(e) => {
                                 e.preventDefault()
@@ -95,7 +87,7 @@ const ReviewForm = props => {
                             form_to_set="reviewForm"
                             name="score"
                             validates="score"
-                            ref={clientRef}
+                            ref={props.inputRef}
                             id="score"
                             type="number"
                             value={state.reviewForm.score}
@@ -132,7 +124,9 @@ const ReviewForm = props => {
                                 </Select>
                             </FormControl>
                         )}
-                    <SpinnerButton>
+                    <SpinnerButton
+                        spinning={addMutationLoading}
+                    >
                         Submit
                     </SpinnerButton>
                 </ReviewFormContainer>

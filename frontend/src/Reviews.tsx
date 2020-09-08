@@ -32,6 +32,7 @@ const DESTROY_REVIEW = gql`
 const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
     const [updatereview, setupdatereview] = useState("")
+    const inputRef = useRef<HTMLDivElement>(null);
     const {
         loading, error, data, refetch, networkStatus,
     } = useQuery(GET_REVIEWS, {
@@ -39,7 +40,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
         //     console.log('completete', res);
         // }
     })
-    const [destroyReview] = useMutation(DESTROY_REVIEW, {
+    const [destroyReview, { loading: deleteMutationLoading }] = useMutation(DESTROY_REVIEW, {
         onCompleted(e) {
             // console.log('completete', e);
             // setStaleObject()
@@ -56,6 +57,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     updatereview={updatereview}
                     setupdatereview={setupdatereview}
                     refetchReviews={refetch}
+                    {...{ inputRef }}
                 />
             </Modal>
             <div className="d-flex justify-content-between">
@@ -63,6 +65,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                 <Button
                     onClick={(e) => {
                         setupdatereview("")
+                        inputRef.current && inputRef.current.focus();
                         dispatch({
                             type: 'TOGGLE_MODAL',
                             data: { open: true }
@@ -80,19 +83,21 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     <Table>
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Score</th>
                                 <th>Employee</th>
                                 <th>CreatedAt</th>
-                                <th />
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {data.reviews.map((review, index) => (
                                 <tr key={index}>
+                                    <td>{review.id}</td>
                                     <td>{review.score}</td>
                                     <td>{review.employee && review.employee.email}</td>
                                     <td><pre>{moment(Number(review.createdAt)).format("YYYY-MM-DD - hh:mm:ss")}</pre></td>
-                                    <td>
+                                    <td className="d-flex">
                                         <Button
                                             onClick={(e) => {
                                                 e.stopPropagation();
@@ -109,19 +114,18 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                             }}>
                                             Edit
                                         </Button>
-                                    </td>
-                                    <td
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            e.preventDefault();
-                                            destroyReview({
-                                                variables: {
-                                                    id: review.id
-                                                }
-                                            });
-                                        }}
-                                    >
-                                        <SpinnerButton>
+                                        <SpinnerButton
+                                            spinning={deleteMutationLoading}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                e.preventDefault();
+                                                destroyReview({
+                                                    variables: {
+                                                        id: review.id
+                                                    }
+                                                });
+                                            }}
+                                        >
                                             Delete
                                         </SpinnerButton>
                                     </td>

@@ -101,15 +101,19 @@ export const RoundNavIcon = styled(NavIcon)`
   }
 `;
 export const Button: any = styled.button`
-    padding: 0.7em 1em;
-    margin: 0 0.5em 0.5em 0;
-    font-size: inherit;
-    background-color: ${(props: any) => props.theme.colors.main};
-    color: ${(props: any) => props.theme.colors.bg};
-    border-radius: 0;
-    transition: background-color 0.3s ease;
-    border: 0 none;
-  `;
+  padding: 0.7em 1em;
+  margin: 0 0.5em 0.5em 0;
+  font-size: inherit;
+  background-color: ${(props: any) => props.theme.colors.main};
+  color: white;
+  border-radius: 0;
+  transition: background-color 0.3s ease;
+  border: 0 none;
+  cursor: pointer;
+  &:hover {
+    background-color: ${(props: any) => props.theme.colors.secondary};
+  }
+`;
 export const LinkButton = styled.a`
   border: 0;
   cursor: pointer;
@@ -123,6 +127,9 @@ export const StyledNavLink = styled.a<any>`
   color: ${(props: any) => props.theme.colors.dark};
   align-items: center;
   flex-grow: 1;
+  &:hover {
+    background-color: ${(props: any) => props.theme.colors.secondary};
+  }
 `
 export const MenuArea = styled.nav`
   display: flex;
@@ -389,15 +396,22 @@ export const ResponsiveNavbar = styled.div<any>`
     &.active {
       color: white;
     }
+    &,
     svg {
-      transition: color ${feedbackTheme.variables.transitionTime}s ease;
+      transition: background-color ${feedbackTheme.variables.transitionTime}s ease, color ${feedbackTheme.variables.transitionTime}s ease;
     }
-    &.active,
+    &.active{
+      &,
+      svg {
+        background-color: ${props => props.theme.colors.main};
+        color: ${props => props.theme.colors.white};
+      }
+    }
     &:hover {
       &,
       svg {
-        background-color: ${props => props.theme.colors.secondary};
         color: ${props => props.theme.colors.white};
+        background-color: ${props => props.theme.colors.secondary};
       }
     }
   }
@@ -423,5 +437,14 @@ export const Modal: any = styled.div`
   transform-origin: left top;
 `;
 export const Select = styled.select`
+`;
+export const FormHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  h2 {
+      margin: 0 2em 0 0;
+      white-space: nowrap;
+  }
 `;
 export { feedbackTheme };
