@@ -7,7 +7,8 @@ import {
     Label,
     RoundNavIcon,
     Select,
-    FormHeader
+    FormHeader,
+    Button
 } from "./styledComponents";
 import { ValidatedInputs, } from "./ValidatedInputs";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
@@ -22,6 +23,23 @@ const ADD_REVIEW = gql`
         addReview(review: $review) {
             id
             score
+            employee {
+                id
+                email
+            }
+            createdAt
+        }
+    }
+`;
+const ADD_FEEDBACK = gql`
+    mutation addFeedback($feedback: FeedbackData) {
+        addFeedback(feedback: $feedback) {
+            id
+            text
+            review {
+                id
+                score
+            }
             employee {
                 id
                 email
@@ -46,6 +64,22 @@ const ReviewForm = props => {
                 data: {},
             });
             dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Added ${response.addReview.email} review` } });
+            props.refetchReviews()
+        }, onError(e) {
+            dispatch({
+                type: "TOGGLE_TOAST",
+                data: {
+                    open: true,
+                    type: "danger",
+                    message: JSON.stringify(e),
+                },
+            });
+        }
+    });
+    const [addFeedback, { loading: addFeedbackMutationLoading }] = useMutation(ADD_FEEDBACK, {
+        onCompleted(response) {
+            console.log('response', response);
+            dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Added review to ${response.addReview.email}` } });
             props.refetchReviews()
         }, onError(e) {
             dispatch({
@@ -119,11 +153,35 @@ const ReviewForm = props => {
                                             value={employee.id}>
                                             {employee.email}
                                         </option>
-                                    )
-                                    )}
+                                    ))}
                                 </Select>
                             </FormControl>
                         )}
+                    {props.updatereview && (
+                        <>
+                            <FormControl>
+                                <ValidatedInputs
+                                    form_to_set="reviewForm"
+                                    name="feedbackText"
+                                    validates="text"
+                                    id="feedbackText"
+                                    type="text"
+                                    value={state.reviewForm.feedbackText}
+                                    required
+                                />
+                                <Label htmlFor="feedbackText">feedbackText</Label>
+                            </FormControl>
+                            <SpinnerButton
+                                spinning={addFeedbackMutationLoading}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                    addFeedback({ variables: { feedback: { text: state.reviewForm.feedbackText, employee: state.reviewForm.employee, review: props.updatereview } } });
+                                }}>
+                                Add feedback to review
+                                </SpinnerButton>
+                        </>
+                    )}
                     <SpinnerButton
                         spinning={addMutationLoading}
                     >

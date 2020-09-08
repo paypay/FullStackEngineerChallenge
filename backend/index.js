@@ -19,6 +19,10 @@ const {
   reviewTypeDefs,
   reviewResolvers
 } = require("./app/reviews/reviewSchema");
+const {
+  feedbackTypeDefs,
+  feedbackResolvers
+} = require("./app/feedbacks/feedbackSchema");
 
 const initialTypeDefs = gql`
   type Query {
@@ -36,12 +40,14 @@ const typeDefs = [
   initialTypeDefs,
   employeeTypeDefs,
   authTypeDefs,
+  feedbackTypeDefs,
   reviewTypeDefs
 ]
 const resolvers = [
   initialResolvers,
   employeeResolvers,
   authResolvers,
+  feedbackResolvers,
   reviewResolvers
 ]
 const uuidv4 = require("uuid/v4");

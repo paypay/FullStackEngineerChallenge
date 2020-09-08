@@ -109,7 +109,7 @@ const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                                                 })
                                                 dispatch({
                                                     type: 'UPDATE_FORM',
-                                                    data: { form_to_set: 'reviewForm', form_value: { score: review.score, employee: review.employee ? review.employee.id : "" } }
+                                                    data: { form_to_set: 'reviewForm', form_value: { score: review.score, employee: review.employee ? review.employee.id : "", feedbackText: "" } }
                                                 })
                                             }}>
                                             Edit

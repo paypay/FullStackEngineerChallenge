@@ -62,7 +62,8 @@ export const initialState: StateInterface = {
   },
   reviewForm: {
     score: 0.5,
-    employee: ""
+    employee: "",
+    feedbackText: `Feedback text ${Date.now()}`
   },
   toast: {
     message: "",

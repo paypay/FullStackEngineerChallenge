@@ -29,7 +29,8 @@ export interface StateInterface {
   },
   reviewForm: {
     score: number,
-    employee: string
+    employee: string,
+    feedbackText: string
   },
   active_theme: any,
   toast: {
