@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import {
     Table,
     Modal,
@@ -12,14 +11,8 @@ import moment from 'moment';
 import { AppContext } from './AppProvider';
 import EmployeeForm from './EmployeeForm';
 import SpinnerButton from './SpinnerButton';
-import { GET_EMPLOYEES } from './queries'
+import { GET_EMPLOYEES, DESTROY_EMPLOYEE } from './queries'
 
-
-const DESTROY_EMPLOYEE = gql`
-    mutation destroyEmployee($id: ID) {
-        destroyEmployee(id: $id )
-    }
-`;
 const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
     const inputRef = useRef<HTMLDivElement>(null);
@@ -48,7 +41,7 @@ const EmployeeList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
                     updateemployee={updateemployee}
                     setupdateemployee={setupdateemployee}
                     refetchEmployees={refetch}
-                    {...{inputRef}}
+                    {...{ inputRef }}
                 />
             </Modal>
             <div className="d-flex justify-content-between">

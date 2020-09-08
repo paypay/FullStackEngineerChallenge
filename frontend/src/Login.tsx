@@ -1,5 +1,4 @@
 import { useMutation } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import React, { useContext } from "react";
 import { AppContext } from "./AppProvider";
 import AuthService from "./AuthService";
@@ -8,15 +7,9 @@ import AuthMetaLinks from "./AuthMetaLinks";
 import { FormControl, Label, Form, MwContainer } from "./styledComponents"
 import { ValidatedInputs } from "./ValidatedInputs";
 import { IWelcomWrap } from "./types";
+import { LOGIN } from './queries'
 const Auth = AuthService.getInstance();
 
-const LOGIN = gql`
-  mutation login($email: String, $password: String) {
-    login(email: $email, password: $password) {
-      jwtToken
-    }
-	}
-`;
 const Login: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
   const { state, dispatch } = useContext(AppContext);
   const [handleForm, { loading }] = useMutation(LOGIN, {

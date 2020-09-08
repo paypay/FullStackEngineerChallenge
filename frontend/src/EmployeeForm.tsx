@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/react-hooks";
+import { useMutation } from "@apollo/react-hooks";
 import React, { useContext, useRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { AppContext } from "./AppProvider";
@@ -12,22 +12,9 @@ import {
 import { ValidatedInputs, } from "./ValidatedInputs";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
 import SpinnerButton from "./SpinnerButton";
-
-const gql = require("graphql-tag");
-
+import { ADD_EMPLOYEE } from './queries'
 
 export const EmployeeFormContainer: any = styled.form``;
-const ADD_EMPLOYEE = gql`
-    mutation addEmployee($employee: EmployeeData) {
-        addEmployee(employee: $employee) {
-            id
-            email
-            name
-            role
-            createdAt
-        }
-    }
-`;
 
 const EmployeeForm = props => {
     const { state, dispatch } = useContext(AppContext);

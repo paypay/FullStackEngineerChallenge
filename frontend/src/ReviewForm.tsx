@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@apollo/react-hooks";
-import React, { useContext, useRef, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { AppContext } from "./AppProvider";
 import {
@@ -13,42 +13,8 @@ import {
 import { ValidatedInputs, } from "./ValidatedInputs";
 import { ReactComponent as CloseIcon } from "./assets/times-solid.svg";
 import SpinnerButton from "./SpinnerButton";
-import { GET_EMPLOYEES } from './queries'
-
-const gql = require("graphql-tag");
-
+import { GET_EMPLOYEES, ADD_REVIEW, ADD_FEEDBACK } from './queries'
 export const ReviewFormContainer: any = styled.form``;
-const ADD_REVIEW = gql`
-    mutation addReview($review: ReviewData) {
-        addReview(review: $review) {
-            id
-            score
-            employee {
-                id
-                email
-            }
-            createdAt
-        }
-    }
-`;
-const ADD_FEEDBACK = gql`
-    mutation addFeedback($feedback: FeedbackData) {
-        addFeedback(feedback: $feedback) {
-            id
-            text
-            review {
-                id
-                score
-            }
-            employee {
-                id
-                name
-                email
-            }
-            createdAt
-        }
-    }
-`;
 
 const ReviewForm = props => {
     const { state, dispatch } = useContext(AppContext);
@@ -79,7 +45,6 @@ const ReviewForm = props => {
     });
     const [addFeedback, { loading: addFeedbackMutationLoading }] = useMutation(ADD_FEEDBACK, {
         onCompleted(response) {
-            console.log('response', response);
             dispatch({ type: "TOGGLE_TOAST", data: { open: true, type: `success`, message: `Added review ${response.addFeedback.id}` } });
             dispatch({
                 type: 'UPDATE_FORM',

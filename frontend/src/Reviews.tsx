@@ -1,6 +1,5 @@
 import React, { useContext, useState, useRef } from 'react';
 import { useMutation, useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import {
     Table, Modal, Button
 } from './styledComponents';
@@ -10,26 +9,8 @@ import moment from 'moment';
 import { AppContext } from './AppProvider';
 import SpinnerButton from './SpinnerButton';
 import ReviewForm from './ReviewForm';
-import { GET_FEEDBACKS } from './queries'
+import { GET_FEEDBACKS, GET_REVIEWS, DESTROY_REVIEW } from './queries'
 
-const GET_REVIEWS = gql`
-{
-    reviews {
-        id
-        score
-        employee {
-            id
-            email
-        }
-        createdAt
-    }
-}
-`;
-const DESTROY_REVIEW = gql`
-    mutation destroyReview($id: ID) {
-        destroyReview(id: $id) 
-    }
-`;
 const ReviewList: React.FC<IWelcomWrap> = (props: IWelcomWrap) => {
     const { state, dispatch } = useContext(AppContext);
     const [updatereview, setupdatereview] = useState("")
