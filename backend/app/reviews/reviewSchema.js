@@ -1,7 +1,5 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 const Review = require("./Review");
-const AuthController = require("../auth/authController");
-const sendVerificationMail = require("../../helpers/mailer");
 
 module.exports.reviewTypeDefs = gql`
     extend type Query {

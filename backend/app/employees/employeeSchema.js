@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 const Employee = require("./Employee");
 
 module.exports.employeeTypeDefs = gql`

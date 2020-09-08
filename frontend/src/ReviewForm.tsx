@@ -98,6 +98,8 @@ const ReviewForm = props => {
         state.reviewForm['score'] = Number(state.reviewForm['score'])
         addReview({ variables: { review: { ...state.reviewForm, id: props.updatereview } } });
     };
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error :{JSON.stringify(error)}</p>;
     return (
         <>
             <section>

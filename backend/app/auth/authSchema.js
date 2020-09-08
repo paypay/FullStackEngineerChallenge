@@ -1,4 +1,4 @@
-const { ApolloServer, gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 const AuthController = require("../auth/authController");
 
 module.exports.authTypeDefs = gql`
