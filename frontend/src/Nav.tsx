@@ -99,30 +99,34 @@ const Nav: React.FC<any> = props => {
 						</LinkButton>
 					</div>
 					<MenuArea>
-						<StyledNavLink
-							as={NavLink}
-							onClick={() =>
-								dispatch({ type: "TOGGLE_MENU", data: false })
-							}
-							exact
-							activeClassName="active bg-white-trans"
-							to="/"
-						>
-							<BackIcon style={{ transform: `rotate(180deg)` }} />
+						{Auth.loggedIn() && (
+							<>
+								<StyledNavLink
+									as={NavLink}
+									onClick={() =>
+										dispatch({ type: "TOGGLE_MENU", data: false })
+									}
+									exact
+									activeClassName="active bg-white-trans"
+									to="/"
+								>
+									<BackIcon style={{ transform: `rotate(180deg)` }} />
 									Employees
 						</StyledNavLink>
-						<StyledNavLink
-							as={NavLink}
-							onClick={() =>
-								dispatch({ type: "TOGGLE_MENU", data: false })
-							}
-							exact
-							activeClassName="active bg-white-trans"
-							to="/reviews"
-						>
-							<BackIcon style={{ transform: `rotate(180deg)` }} />
+								<StyledNavLink
+									as={NavLink}
+									onClick={() =>
+										dispatch({ type: "TOGGLE_MENU", data: false })
+									}
+									exact
+									activeClassName="active bg-white-trans"
+									to="/reviews"
+								>
+									<BackIcon style={{ transform: `rotate(180deg)` }} />
 									Reviews
 						</StyledNavLink>
+							</>
+						)}
 						{!Auth.loggedIn() && (
 							<>
 								<StyledNavLink
