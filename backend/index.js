@@ -1,9 +1,10 @@
 require("dotenv").config({ path: "./.env" });
 const Employee = require("./app/employees/Employee");
 const Review = require("./app/reviews/Review");
+const Feedback = require("./app/feedbacks/Feedback");
 const dbConfig = require("./helpers/db-config");
 const port = process.env.PORT || 8080;
-const { defaultEmployees, seedRandomNtoN, seedRandomNtoOne, defaultReviews } = require("./seeddata");
+const { defaultEmployees, defaultFeedbacks, seedRandomNtoN, seedRandomNtoOne, defaultReviews } = require("./seeddata");
 const { ApolloServer, gql } = require('apollo-server');
 const path = require("path");
 const { createWriteStream, unlink } = require('fs')
@@ -56,13 +57,26 @@ const UPLOAD_DIR = './uploads'
 dbConfig.open().then(async () => {
   await Employee.deleteMany();
   await Review.deleteMany();
+  await Feedback.deleteMany();
   const createdEmployees = await Employee.create(defaultEmployees);
   var associatedReviews = await seedRandomNtoOne(
     defaultReviews,
     createdEmployees,
     Employee
   );
-  await Review.insertMany(associatedReviews)
+  const createdReviews = await Review.insertMany(associatedReviews)
+
+  var associatedFeedbacks = await seedRandomNtoOne(
+    defaultFeedbacks,
+    createdEmployees,
+    Employee
+  );
+  associatedFeedbacks = await seedRandomNtoOne(
+    associatedFeedbacks,
+    createdReviews,
+    Review
+  );
+  await Feedback.insertMany(associatedFeedbacks)
   try {
     const server = new ApolloServer({
       typeDefs,

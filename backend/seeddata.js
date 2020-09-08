@@ -83,3 +83,30 @@ exports.defaultReviews = [{
   createdAt: new Date(Math.floor(Math.random() * Date.now())),
 },
 ];
+exports.defaultFeedbacks = [
+  {
+    text: "Sometimes team-chaos, but always reliable in the end",
+    employee: undefined,
+    review: undefined,
+    createdAt: new Date(Math.floor(Math.random() * Date.now())),
+  },
+  {
+    text: "Good communicator",
+    employee: undefined,
+    review: undefined,
+    createdAt: new Date(Math.floor(Math.random() * Date.now())),
+  },
+  {
+    text: "Sees always the bigger scope",
+    employee: undefined,
+    review: undefined,
+    createdAt: new Date(Math.floor(Math.random() * Date.now())),
+  },
+  {
+    text: "Never reads her mails",
+    employee: undefined,
+    review: undefined,
+    createdAt: new Date(Math.floor(Math.random() * Date.now())),
+  },
+
+];
