@@ -18,7 +18,6 @@ export const ReviewFormContainer: any = styled.form``;
 
 const ReviewForm = props => {
     const { state, dispatch } = useContext(AppContext);
-    // const selectRef = useRef(null)
     const { loading, error, data, refetch, } = useQuery(GET_EMPLOYEES, {
         // onCompleted(res) {
         //     console.log('completete', res);

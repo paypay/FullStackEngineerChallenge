@@ -2,12 +2,14 @@ const bcrypt = require("bcrypt");
 const Employee = require("../employees/Employee");
 const saltRounds = 10;
 const jwt = require("jsonwebtoken");
+// TODO create a unified response bottleneck. Unveils full power if app grows and response differs from request to request
 const ro = require("../../helpers/response-object");
 const uuidv4 = require("uuid/v4");
 const sendVerificationMail = require("../../helpers/mailer");
 const Boom = require("boom");
 const salt = bcrypt.genSaltSync(saltRounds);
 
+// TODO create a unified response bottleneck. Unveils full power if app grows and response differs from request to request
 const employeeObject = employee => {
   const payload = {
     id: employee.id,
@@ -56,6 +58,7 @@ module.exports.signin = async (req, res) => {
     console.log(error);
   }
 };
+// TODO currently unused - later purpose for polling interval if token expired
 module.exports.refreshtoken = (req, res, next) => {
   const employee = req.employee;
   return res.json(ro(201, `Welcome`, employeeObject(employee)));

@@ -1,3 +1,4 @@
+// TODO HOC for loading spinner
 import React from "react";
 import { Button, SpinnerButtonSpinner, HiddenChildren, } from "./styledComponents"
 import { ReactComponent as SpinnerIcon } from "./assets/circle-notch-solid.svg";

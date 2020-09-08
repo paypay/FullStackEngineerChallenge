@@ -14,9 +14,7 @@ export const Content = styled.section`
   background-color: white;
   height: 100%;
 `;
-const App: React.FC<any> = (props) => {
-  useEffect(() => {
-  }, []);
+const App: React.FC<any> = () => {
   return (
     <AppContainer>
       <AppProvider>

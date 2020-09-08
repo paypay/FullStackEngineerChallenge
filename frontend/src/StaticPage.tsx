@@ -1,3 +1,4 @@
+// TODO HOC for display static content
 import React from "react";
 import { withRouter, RouteComponentProps } from "react-router";
 import AuthMetaLinks from "./AuthMetaLinks";

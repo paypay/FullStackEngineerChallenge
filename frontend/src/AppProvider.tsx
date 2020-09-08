@@ -9,6 +9,7 @@ const Container = styled.div<any>`
   flex-flow: column;
 `
 export const AppContext = React.createContext({} as IContextProps);
+// TODO HOC for global state/reducer pattern
 export const AppProvider = ({ children }) => {
   const [originalState, dispatch] = useReducer(reducer, initialState);
   const navRef = useRef(null);

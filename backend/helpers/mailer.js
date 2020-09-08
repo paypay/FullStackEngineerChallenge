@@ -1,3 +1,4 @@
+// TODO currently unused - later for register/password reset
 require("dotenv").config({
   path: "./.env"
 });

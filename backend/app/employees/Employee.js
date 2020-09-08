@@ -31,6 +31,7 @@ const EmployeeSchema = mongoose.Schema({
 
 const Employee = (module.exports = mongoose.model("Employee", EmployeeSchema));
 
+// TODO currently still unused - later keep model-logic on adequate level (not in controller/view etc.)
 module.exports.createEmployee = (newEmployee, callback) => {
   bcrypt.genSalt(10, (err, salt) => {
     bcrypt.hash(newEmployee.password, salt, (err, hash) => {
@@ -39,15 +40,18 @@ module.exports.createEmployee = (newEmployee, callback) => {
     });
   });
 };
+// TODO currently still unused - later keep model-logic on adequate level (not in controller/view etc.)
 module.exports.getEmployeeByEmail = (email, callback) => {
   const query = { email: email };
   Employee.findOne(query, callback);
 };
 
+// TODO currently still unused - later keep model-logic on adequate level (not in controller/view etc.)
 module.exports.getEmployeeById = function(id, callback) {
   Employee.findById(id, callback);
 };
 
+// TODO currently still unused - later keep model-logic on adequate level (not in controller/view etc.)
 module.exports.comparePassword = (candidatePassword, hash, callback) => {
   bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
     if (err) throw err;

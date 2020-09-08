@@ -1,3 +1,4 @@
+// TODO HOC notification bar for displaying toast-messages
 import React, { useState, useContext, useEffect } from "react";
 import {  RotatingSpinnerIcon, GhostButton } from "./styledComponents"
 import { AppContext } from "./AppProvider";

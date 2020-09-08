@@ -1,4 +1,5 @@
-import { adminTheme, feedbackTheme } from "./styledComponents/Theme";
+// TODO frontend state managemnt like redux but just with native react concepts
+import { feedbackTheme } from "./styledComponents/Theme";
 import { StateInterface } from "./types";
 
 export const reducer = (state, action) => {

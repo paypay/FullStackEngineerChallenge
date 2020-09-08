@@ -6,8 +6,6 @@ const dbConfig = require("./helpers/db-config");
 const port = process.env.PORT || 8080;
 const { defaultEmployees, defaultFeedbacks, seedRandomNtoN, seedRandomNtoOne, defaultReviews } = require("./seeddata");
 const { ApolloServer, gql } = require('apollo-server');
-const path = require("path");
-const { createWriteStream, unlink } = require('fs')
 const {
   authTypeDefs,
   authResolvers
@@ -51,21 +49,20 @@ const resolvers = [
   feedbackResolvers,
   reviewResolvers
 ]
-const uuidv4 = require("uuid/v4");
-const UPLOAD_DIR = './uploads'
-
 dbConfig.open().then(async () => {
+  // TODO clear database
   await Employee.deleteMany();
   await Review.deleteMany();
   await Feedback.deleteMany();
+  // TODO fill database with example data on server start
   const createdEmployees = await Employee.create(defaultEmployees);
+  // TODO create associations to see the app with real interlinked IDs among records/models
   var associatedReviews = await seedRandomNtoOne(
     defaultReviews,
     createdEmployees,
     Employee
   );
   const createdReviews = await Review.insertMany(associatedReviews)
-
   var associatedFeedbacks = await seedRandomNtoOne(
     defaultFeedbacks,
     createdEmployees,

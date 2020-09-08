@@ -1,3 +1,4 @@
+// TODO frontend auth logic bundled in one class. Currently a lot of methods unused. Keep them for later use/inspiration
 import decode from "jwt-decode";
 import { url } from "./url";
 
@@ -144,6 +145,7 @@ class AuthService {
       );
     });
   };
+  // TODO fetch abstraction to maintain authorization Bearer token for EVERY request made in logged in state. Currently basicall unused through apollo client/server implementation
   fetch(passedUrl, options: any = {}, offline = false) {
     let endpoint = `${url}${passedUrl}`;
     // if (offline) {

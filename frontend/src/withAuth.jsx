@@ -1,3 +1,4 @@
+// TODO HOC for keeps certain components blocked from specific roles. Server returns a bearer token that contains the role. Currently the server is still responding with full data and dont respect the role specified in mongodb
 import React, { useEffect, useContext } from "react";
 import { withRouter } from "react-router-dom";
 import AuthService from "./AuthService";
