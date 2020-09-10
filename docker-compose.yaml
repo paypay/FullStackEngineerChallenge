@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  server:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./server
+    volumes:
+      - ./app/node_modules
+      - ./server/controllers:/app/controllers
+      - ./server/middleware:/app/middleware
+      - ./server/models:/app/models
+      - ./server/routes:/app/routes
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      DB_CONNECTION_STRING:
+      SECRET_KEY: asdf;lkj1234~!
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_DATABASE: paybaymax
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: paybaymax123
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mong-init.js:ro
+  adminer:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8082:8081
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: paybaymax123
+    depends_on:
+      - mongo
