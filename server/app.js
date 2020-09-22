@@ -18,6 +18,12 @@ app.disable('x-powered-by');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(auth.authParser);
+app.use((req, res, next) => {
+  // Allows any origin for convenient, should only allow legitimate frontend origin in production
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  return next();
+});
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/login', require('./routes/login'));
