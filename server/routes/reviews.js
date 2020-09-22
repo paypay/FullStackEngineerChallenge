@@ -38,7 +38,7 @@ router.patch('/:id', auth.isAdmin, (req, res) => {
       { login: id },
     ],
   }, (err, review) => {
-    if (err) return res.sendStatus(500);
+    if (err || !review) return res.sendStatus(500);
     if (title) review.title = title;
     if (starts) review.starts = new Date(starts);
     if (ends) review.ends = new Date(ends);
