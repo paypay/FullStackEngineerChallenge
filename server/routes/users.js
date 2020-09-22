@@ -4,7 +4,8 @@ const User = require('../models/User');
 const auth = require('../middleware/auth');
 
 router.get('/', (req, res) => {
-  User.find().limit(Number(req.query.limit) || 20).exec((err, docs) => {
+  // Only display appropriate data, should not output fields such as password (even if hashed)
+  User.find().limit(Number(req.query.limit) || 20).select('login displayName').exec((err, docs) => {
     if (err) return res.sendStatus(500);
     return res.json(docs);
   });
