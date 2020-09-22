@@ -23,7 +23,7 @@ router.post('/', auth.isAdmin, (req, res) => {
     questions: questions.map((x) => ObjectId(x)),
   }).save((err) => {
     if (err) return res.sendStatus(500);
-    return res.sendStatus(200);
+    return res.json({ result: 'ok' });
   });
 });
 
@@ -46,7 +46,7 @@ router.patch('/:id', auth.isAdmin, (req, res) => {
     if (questions && Array.isArray(questions)) review.questions = questions.map((x) => ObjectId(x));
     return review.save((error) => {
       if (error) return res.sendStatus(500);
-      return res.sendStatus(200);
+      return res.json({ result: 'ok' });
     });
   });
 });

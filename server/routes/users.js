@@ -23,7 +23,7 @@ router.post('/', auth.isAdmin, (req, res) => {
     isAdmin,
   }).save((err) => {
     if (err) return res.sendStatus(500);
-    return res.sendStatus(200);
+    return res.json({ result: 'ok' });
   });
 });
 
@@ -42,7 +42,7 @@ router.patch('/:id', auth.isAdmin, (req, res) => {
     isAdmin,
   }, (err) => {
     if (err) return res.sendStatus(500);
-    return res.sendStatus(200);
+    return res.json({ result: 'ok' });
   });
 });
 
@@ -55,7 +55,7 @@ router.delete('/:id', auth.isAdmin, (req, res) => {
     ],
   }, (err) => {
     if (err) return res.sendStatus(500);
-    return res.sendStatus(200);
+    return res.json({ result: 'ok' });
   });
 });
 
