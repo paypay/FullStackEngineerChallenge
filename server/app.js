@@ -21,6 +21,9 @@ app.use(auth.authParser);
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.post('/login', require('./routes/login'));
+app.use('/feedbacks', auth.isLoggedIn, require('./routes/feedbacks'));
+app.use('/questions', auth.isLoggedIn, require('./routes/questions'));
+app.use('/reviews', auth.isLoggedIn, require('./routes/reviews'));
 app.use('/users', auth.isLoggedIn, require('./routes/users'));
 
 const listener = app.listen(config.port, () => {
