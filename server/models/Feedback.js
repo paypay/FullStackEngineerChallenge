@@ -1,5 +1,10 @@
 const { model, Schema } = require('mongoose');
 
+/*
+  When an admin creates a Feedback with empty data,
+  it means that a reviewee is assigned to a reviewer.
+*/
+
 const schema = new Schema({
   review: { type: Schema.Types.ObjectId, ref: 'Review' },
   reviewer: { type: Schema.Types.ObjectId, ref: 'User' },

@@ -27,6 +27,7 @@ router.post('/', auth.isAdmin, (req, res) => {
 });
 
 router.patch('/:id', auth.isAdmin, (req, res) => {
+  // TODO: Allow user change own password
   const { id } = req.params;
   const { displayName, password, isAdmin } = req.body;
   User.findOneAndUpdate({

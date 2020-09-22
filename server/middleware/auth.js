@@ -1,6 +1,12 @@
 const jwt = require('jsonwebtoken');
 const { jwtSecret } = require('../config');
 
+/*
+  Whether using JWT or Cookies/session depends.
+  JWT makes it easier to seperate frontend and API,
+  as well as allowing API servers to scale more easily.
+*/
+
 const authParser = (req, res, next) => {
   req.user = {};
   if (!req.headers.authorization) return next();

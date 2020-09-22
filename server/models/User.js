@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+/*
+  A User is either an admin or an employee.
+*/
+
 const schema = new mongoose.Schema({
   login: {
     type: String,
@@ -15,6 +19,13 @@ const schema = new mongoose.Schema({
   timestamps: true,
 });
 
+/*
+  Although it's common to rely on an identity provider to do SSO.
+  If processing and storing user password is necessary,
+  passwords should be hashed and salted properly.
+  Bcrypt is consider a good choice.
+*/
+
 schema.pre('save', function (next) {
   const user = this;
   if (!user.isModified('password')) return next();
@@ -28,6 +39,11 @@ schema.pre('save', function (next) {
     });
   });
 });
+
+/*
+  Depending on acutal hash implementation,
+  we should make sure it handles timing attacks.
+*/
 
 schema.methods.comparePassword = function (candidate, cb) {
   bcrypt.compare(candidate, this.password, (err, matches) => {
