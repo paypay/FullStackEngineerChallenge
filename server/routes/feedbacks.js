@@ -11,6 +11,28 @@ router.get('/', (req, res) => {
   });
 });
 
+router.get('/from-me', (req, res) => {
+  Feedback.find({
+    reviewer: ObjectId(req.user.id),
+  }).limit(Number(req.query.limit) || 20).exec((err, docs) => {
+    if (err) return res.sendStatus(500);
+    return res.json(docs);
+  });
+});
+
+router.get('/to-me', (req, res) => {
+  /*
+    TODO: Should only allow ended Review being displayed.
+          Can user see reviewers name?
+ */
+  Feedback.find({
+    reviewee: ObjectId(req.user.id),
+  }).limit(Number(req.query.limit) || 20).exec((err, docs) => {
+    if (err) return res.sendStatus(500);
+    return res.json(docs);
+  });
+});
+
 // Used when an admin User assigns employee to review another employee
 router.post('/', auth.isAdmin, (req, res) => {
   const {
