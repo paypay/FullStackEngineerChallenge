@@ -11,6 +11,8 @@ module.exports = (req, res) => {
       if (error) return res.sendStatus(500);
       if (!matches) return res.sendStatus(403);
       const token = jwt.sign({
+        // eslint-disable-next-line no-underscore-dangle
+        id: user._id,
         login: user.login,
         isAdmin: user.isAdmin,
       }, config.jwtSecret, { expiresIn: '4h' });
