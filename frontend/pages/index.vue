@@ -32,10 +32,8 @@
 import { isLoggedIn, logout } from '~/utils/api'
 
 export default {
-  data () {
-    return {
-      isLoggedIn: isLoggedIn()
-    }
+  computed: {
+    isLoggedIn: () => isLoggedIn()
   },
   methods: {
     logout

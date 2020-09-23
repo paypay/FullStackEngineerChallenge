@@ -58,7 +58,7 @@ export default {
         }]
         const loggedInItems = [
           { icon: 'mdi-apps', title: 'Welcome', to: '/' },
-          { icon: 'mdi-comment-quote', title: 'Feedback', to: '/feedback' }
+          { icon: 'mdi-comment-quote', title: 'Feedback', to: '/feedbacks' }
         ]
         const adminItems = [
           { icon: 'mdi-account', title: 'Users', to: '/users' },
