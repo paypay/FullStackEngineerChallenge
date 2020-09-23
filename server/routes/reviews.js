@@ -53,7 +53,7 @@ router.patch('/:id', auth.isAdmin, (req, res) => {
 
 router.get('/:id', (req, res) => {
   const { id } = req.params;
-  Review.findOne({ id: ObjectId(id) }, (err, result) => {
+  Review.findOne({ _id: ObjectId(id) }, (err, result) => {
     if (err) return res.sendStatus(500);
     if (!result) return res.sendStatus(404);
     return res.json(result);

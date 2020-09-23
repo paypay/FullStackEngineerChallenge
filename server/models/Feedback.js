@@ -9,6 +9,7 @@ const schema = new Schema({
   review: { type: Schema.Types.ObjectId, ref: 'Review' },
   reviewer: { type: Schema.Types.ObjectId, ref: 'User' },
   reviewee: { type: Schema.Types.ObjectId, ref: 'User' },
+  text: '',
   data: [{
     question: { type: Schema.Types.ObjectId, ref: 'Question' },
     body: Object,

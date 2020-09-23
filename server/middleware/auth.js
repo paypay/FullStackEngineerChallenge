@@ -13,10 +13,13 @@ const authParser = (req, res, next) => {
   const matches = req.headers.authorization.match(/^Bearer (.+)/);
   if (!matches) return next();
   const [, token] = matches;
-  const decoded = jwt.verify(token, jwtSecret);
-  req.user.login = decoded.login;
-  req.user.isAdmin = decoded.isAdmin;
-  return next();
+  jwt.verify(token, jwtSecret, {}, (err, decoded) => {
+    if (err) return res.sendStatus(403);
+    req.user.login = decoded.login;
+    req.user.isAdmin = decoded.isAdmin;
+    req.user.id = decoded.id;
+    return next();
+  });
 };
 
 const isLoggedIn = (req, res, next) => {
