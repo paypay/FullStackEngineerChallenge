@@ -53,17 +53,16 @@ export default new Router({
     {
       path: '/employee',
       component: Layout,
-      redirect: '/employee/tree',
       meta: {
         title: 'Employee',
         icon: 'example'
       },
       children: [
         {
-          path: 'table',
+          path: 'list',
           component: () => import('@/views/employee/index.vue'),
           meta: {
-            title: 'Employee Manager',
+            title: 'Employee',
             icon: 'table'
           }
         }
