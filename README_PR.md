@@ -1,3 +1,18 @@
+# quick start
+1. server
+- db file: /employee-server/db.sql
+- api base url: http://localhost:8090
+- swagger api: http://localhost:8090
+
+2. client
+- `yarn` or `npm install`
+- `yarn dev`
+- default url: http://localhost:8080
+
+# quick see
+1. [swagger](http://106.15.188.160:8090/)
+2. [admin](https://epic-heyrovsky-7f38e4.netlify.app/)
+
 # language and framework
 1. server
 - java 11
@@ -14,7 +29,7 @@
 - vue-admin-template-ts
 
 # feature
-- api
+- api(restful)
 ![](/screenshots/api.jpg)
 - user login (mock api)
 ![](/screenshots/login.jpg)
