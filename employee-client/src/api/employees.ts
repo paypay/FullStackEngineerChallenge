@@ -18,7 +18,7 @@ export const updateEmployee = (id:number, params: any) =>
   request({
     url: `/employee/${id}`,
     method: 'post',
-    params
+    data: params
   })
 
 export const deleteEmployee = (id: number) =>
@@ -27,7 +27,26 @@ export const deleteEmployee = (id: number) =>
     method: 'delete'
   })
 
+export const commentEmployee = (id:number, params: any) =>
+  request({
+    url: `/employee/comment/${id}`,
+    method: 'PUT',
+    data: params
+  })
+
+export const findEmployeeComments = (id:number) =>
+  request({
+    url: `/employee/comment/${id}`,
+    method: 'GET'
+  })
+
 export const defaultEmployeeData = {
   id: 0,
   name: ''
+}
+
+export const defaultCommentData = {
+  star: 5,
+  content: '',
+  commentBy: ''
 }

@@ -2,7 +2,7 @@
   <div class="app-container">
     <div class="filter-container">
       <el-input
-        v-model="listQuery.title"
+        v-model="listQuery.name"
         style="width: 200px;margin-right:10px"
         class="filter-item"
         @keyup.enter.native="handleFilter"
@@ -19,7 +19,7 @@
       <el-button
         class="filter-item"
         style="margin-left: 10px;"
-        type="primary"
+        type="success"
         icon="el-icon-edit"
         @click="handleCreate"
       >
@@ -28,7 +28,7 @@
       <el-button
         :loading="downloadLoading"
         class="filter-item"
-        type="primary"
+        type="warning"
         icon="el-icon-download"
         @click="handleDownload"
       >
@@ -45,13 +45,11 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      @sort-change="sortChange"
     >
       <el-table-column
         label="id"
         prop="id"
         align="center"
-        width="400px"
       >
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
@@ -63,28 +61,39 @@
         align="center"
       >
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span class="link" @click="handleUpdate(row)">{{ row.name }}</span>
         </template>
       </el-table-column>
+
+       <el-table-column
+        label="comment count"
+        prop="commentCount"
+        align="center"
+      >
+        <template slot-scope="{row}">
+          <span>{{row.commentCount}}</span>
+        </template>
+      </el-table-column>
+
+      <!-- operation -->
       <el-table-column
         align="center"
         width="230"
         label="operation"
         class-name="fixed-width"
       >
-        <template slot-scope="{row, $index}">
+        <template slot-scope="{row}">
           <el-button
             type="primary"
             size="mini"
-            @click="handleUpdate(row)"
+            @click="handleComment(row)"
           >
-            Edit
+            Comment
           </el-button>
           <el-button
-            v-if="row.status!=='deleted'"
             size="mini"
             type="danger"
-            @click="handleDelete(row, $index)"
+            @click="handleDelete(row)"
           >
             Delete
           </el-button>
@@ -97,9 +106,10 @@
       :total="total"
       :page.sync="listQuery.page"
       :limit.sync="listQuery.limit"
-      @pagination="getList"
+      @pagination="changePage"
     />
 
+    <!-- employee dialog -->
     <el-dialog
       :title="textMap[dialogStatus]"
       :visible.sync="dialogFormVisible"
@@ -109,71 +119,86 @@
         :rules="rules"
         :model="tempEmployeeData"
         label-position="left"
-        label-width="100px"
-        style="width: 400px; margin-left:50px;"
+        label-width="400px"
+        style="width:600px; margin-left:50px;"
       >
-        <el-form-item
 
-          prop="type"
-        >
-          <el-select
-            v-model="tempEmployeeData.type"
-            class="filter-item"
-            placeholder="Please select"
-          >
-            <el-option
-              v-for="item in calendarTypeOptions"
-              :key="item.key"
-              :label="item.displayName"
-              :value="item.key"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item
-          prop="timestamp"
-        >
-          <el-date-picker
-            v-model="tempEmployeeData.timestamp"
-            type="datetime"
-            placeholder="Please pick a date"
+      <!-- id -->
+        <el-form-item v-if="dialogStatus==='update'" label-width="150px"  label="employee id">
+          <el-input
+            v-model="tempEmployeeData.id"
+            type="input"
+            :disabled="true"
           />
         </el-form-item>
-        <el-form-item
-          prop="title"
-        >
-          <el-input v-model="tempEmployeeData.title" />
+
+        <el-form-item label="employee name" label-width="150px">
+          <el-input
+            v-model="tempEmployeeData.name"
+            type="input"
+            size="medium"
+            placeholder="Please input name"
+          />
         </el-form-item>
-        <el-form-item >
-          <el-select
-            v-model="tempEmployeeData.status"
-            class="filter-item"
-            placeholder="Please select"
-          >
-            <el-option
-              v-for="item in statusOptions"
-              :key="item"
-              :label="item"
-              :value="item"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item >
-          <el-rate
-            v-model="tempEmployeeData.importance"
+
+      </el-form>
+
+       <el-table
+      :key="tableKey"
+      v-loading="listLoading"
+      v-if="dialogStatus==='update'"
+      :data="comments"
+      border
+      fit
+      highlight-current-row
+      style="width: 100%;"
+    >
+      <el-table-column
+        label="id"
+        prop="id"
+        align="center"
+      >
+        <template slot-scope="{row}">
+          <span>{{ row.id }}</span>
+        </template>
+      </el-table-column>
+     <el-table-column
+        label="Content"
+        prop="Content"
+        align="center"
+      >
+        <template slot-scope="{row}">
+          {{ row.content }}
+        </template>
+      </el-table-column>
+
+       <el-table-column
+        label="comment count"
+        prop="commentCount"
+        align="center"
+      >
+        <template slot-scope="{row}">
+         <el-rate
+            v-model="row.star"
             :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
-            :max="3"
+            :max="5"
             style="margin-top:8px;"
           />
-        </el-form-item>
-        <el-form-item >
-          <el-input
-            v-model="tempEmployeeData.abstractContent"
-            :autosize="{minRows: 2, maxRows: 4}"
-            type="textarea"
-            placeholder="Please input"
-          />
-        </el-form-item>
-      </el-form>
+        </template>
+      </el-table-column>
+
+       <el-table-column
+        label="Comment By"
+        prop="Commentby"
+        align="center"
+      >
+        <template slot-scope="{row}">
+          {{ row.commentBy }}
+        </template>
+      </el-table-column>
+
+    </el-table>
+
       <div
         slot="footer"
         class="dialog-footer"
@@ -190,36 +215,65 @@
       </div>
     </el-dialog>
 
-    <!-- <el-dialog
-      :visible.sync="dialogPageviewsVisible"
-      title="Reading statistics"
+     <el-dialog
+      title="Comment Employee"
+      :visible.sync="dialogCommentVisible"
     >
-      <el-table
-        :data="pageviewsData"
-        border
-        fit
-        highlight-current-row
-        style="width: 100%"
+      <el-form
+        ref="dataForm"
+        :rules="rules"
+        :model="tempCommentData"
+        label-position="left"
+        label-width="400px"
+        style="width:400px; margin-left:50px;"
       >
-        <el-table-column
-          prop="key"
-          label="Channel"
-        />
-        <el-table-column
-          prop="pageviews"
-          label="Pageviews"
-        />
-      </el-table>
-      <span
+
+      <el-form-item label-width="150px"  label="Employee Id">
+          <span>{{tempEmployeeData.id}}</span>
+        </el-form-item>
+      <el-form-item label-width="150px" label="Employee Name">
+          <span>{{tempEmployeeData.name}}</span>
+        </el-form-item>
+
+      <!-- comment content -->
+        <el-form-item label-width="150px"  label="Comment">
+          <el-input
+            style="width:600px"
+            v-model="tempCommentData.content"
+            :autosize="{minRows: 5, maxRows: 10}"
+            type="textarea"
+            size="medium"
+            placeholder="Please input comment content"
+          />
+        </el-form-item>
+
+      <!-- score -->
+        <el-form-item label="Rate" label-width="150px">
+          <el-rate
+            v-model="tempCommentData.star"
+            :colors="['#99A9BF', '#F7BA2A', '#FF9900']"
+            :max="5"
+            style="margin-top:8px;"
+          />
+        </el-form-item>
+
+      </el-form>
+      <div
         slot="footer"
         class="dialog-footer"
       >
+        <el-button @click="dialogCommentVisible = false">
+          Cancel
+        </el-button>
         <el-button
           type="primary"
-          @click="dialogPageviewsVisible = false"
-        >Confirm</el-button>
-      </span>
-    </el-dialog> -->
+          @click="commentEmployee"
+        >
+          Comment
+        </el-button>
+      </div>
+    </el-dialog>
+
   </div>
 </template>
 
@@ -227,14 +281,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Form } from 'element-ui'
 import { cloneDeep } from 'lodash'
-import { getEmployees, createEmployee, updateEmployee, defaultEmployeeData } from '@/api/employees'
-import { IEmployee } from '@/api/types'
+import { getEmployees, createEmployee, updateEmployee, defaultEmployeeData, defaultCommentData, commentEmployee, deleteEmployee, findEmployeeComments } from '@/api/employees'
+import { IComment, IEmployee } from '@/api/types'
 import { exportJson2Excel } from '@/utils/excel'
 import { formatJson } from '@/utils'
 import Pagination from '@/components/Pagination/index.vue'
 
 @Component({
-  name: 'ComplexTable',
+  name: 'EmployeeTable',
   components: {
     Pagination
   }
@@ -242,16 +296,17 @@ import Pagination from '@/components/Pagination/index.vue'
 export default class extends Vue {
   private tableKey = 0
   private list: IEmployee[] = []
+  private comments : IComment[] = []
   private total = 0
   private listLoading = true
   private listQuery = {
     page: 1,
-    limit: 20,
-    title: undefined
+    limit: 10,
+    name: undefined
   }
 
-  private showReviewer = false
   private dialogFormVisible = false
+  private dialogCommentVisible = false
   private dialogStatus = ''
   private textMap = {
     update: 'Edit',
@@ -259,15 +314,19 @@ export default class extends Vue {
   }
 
   private rules = {
-    type: [{ required: true, message: 'type is required', trigger: 'change' }],
-    timestamp: [{ required: true, message: 'timestamp is required', trigger: 'change' }],
-    title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+    name: [{ required: true, message: 'name is required', trigger: 'blur' }]
   }
 
   private downloadLoading = false
   private tempEmployeeData = defaultEmployeeData
+  private tempCommentData = defaultCommentData
 
   created() {
+    this.getList()
+  }
+
+  private async changePage(data : any) {
+    this.listQuery.page = data.page
     this.getList()
   }
 
@@ -286,28 +345,38 @@ export default class extends Vue {
     this.getList()
   }
 
-  private sortChange(data: any) {
-    const { prop, order } = data
-    if (prop === 'id') {
-      this.sortByID(order)
-    }
-  }
-
-  private sortByID(order: string) {
-    if (order === 'ascending') {
-      this.listQuery.sort = '+id'
-    } else {
-      this.listQuery.sort = '-id'
-    }
-    this.handleFilter()
-  }
-
   private resetTempEmployeeData() {
     this.tempEmployeeData = cloneDeep(defaultEmployeeData)
   }
 
+  private resetTempCommentData() {
+    this.tempCommentData = cloneDeep(defaultCommentData)
+  }
+
+  private commentEmployee() {
+    (this.$refs.dataForm as Form).validate(async(valid) => {
+      if (valid) {
+        const commentData = this.tempCommentData
+        // FIXME: get current user after real user system ready!
+        commentData.commentBy = 'houko'
+        const { data } = await commentEmployee(this.tempEmployeeData.id, commentData)
+        this.getList()
+        if (data) {
+          this.dialogCommentVisible = false
+          this.$notify({
+            title: 'success',
+            message: 'create succss',
+            type: 'success',
+            duration: 2000
+          })
+        }
+      }
+    })
+  }
+
   private handleCreate() {
     this.resetTempEmployeeData()
+    this.comments = []
     this.dialogStatus = 'create'
     this.dialogFormVisible = true
     this.$nextTick(() => {
@@ -319,10 +388,8 @@ export default class extends Vue {
     (this.$refs.dataForm as Form).validate(async(valid) => {
       if (valid) {
         const employeeData = this.tempEmployeeData
-        employeeData.id = Math.round(Math.random() * 100) + 1024
-        employeeData.name = 'xiaomo'
         const { data } = await createEmployee({ employee: employeeData })
-        this.list.unshift(data.article)
+        this.list.unshift(data)
         this.dialogFormVisible = false
         this.$notify({
           title: 'success',
@@ -334,7 +401,23 @@ export default class extends Vue {
     })
   }
 
-  private handleUpdate(row: any) {
+  private handleComment(row: IEmployee) {
+    this.dialogCommentVisible = true
+    this.tempEmployeeData = Object.assign({}, row)
+    this.tempCommentData = defaultCommentData
+    this.$nextTick(() => {
+      (this.$refs.dataForm as Form).clearValidate()
+    })
+  }
+
+  /**
+   * update
+   */
+  private async handleUpdate(row: IEmployee) {
+    const { data } = await findEmployeeComments(row.id)
+    if (data) {
+      this.comments = data
+    }
     this.tempEmployeeData = Object.assign({}, row)
     this.dialogStatus = 'update'
     this.dialogFormVisible = true
@@ -347,28 +430,32 @@ export default class extends Vue {
     (this.$refs.dataForm as Form).validate(async(valid) => {
       if (valid) {
         const tempData = Object.assign({}, this.tempEmployeeData)
-        const { data } = await updateEmployee(tempData.id, { article: tempData })
-        const index = this.list.findIndex(v => v.id === data.article.id)
-        this.list.splice(index, 1, data.article)
-        this.dialogFormVisible = false
-        this.$notify({
-          title: 'success',
-          message: 'update success',
-          type: 'success',
-          duration: 2000
-        })
+        const { data } = await updateEmployee(tempData.id, tempData)
+        if (data) {
+          this.dialogFormVisible = false
+          this.getList()
+          this.$notify({
+            title: 'success',
+            message: 'update success',
+            type: 'success',
+            duration: 2000
+          })
+        }
       }
     })
   }
 
-  private handleDelete(row: any, index: number) {
-    this.$notify({
-      title: 'Success',
-      message: 'Delete Successfully',
-      type: 'success',
-      duration: 2000
-    })
-    this.list.splice(index, 1)
+  private async handleDelete(row: IEmployee) {
+    const { data } = await deleteEmployee(row.id)
+    if (data) {
+      this.$notify({
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
+        duration: 2000
+      })
+      this.getList()
+    }
   }
 
   private handleDownload() {
@@ -381,3 +468,11 @@ export default class extends Vue {
   }
 }
 </script>
+
+<style scoped>
+  .link {
+    cursor: pointer;
+    color:rgb(24, 66, 236);
+    border-bottom :1px;
+  }
+</style>
