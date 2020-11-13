@@ -1,0 +1,21 @@
+{
+  "name": "Feedback app",
+  "short_name": "Feedback",
+  "description": "A simple employee feedback app",
+  "icons": [
+    {
+      "src": "manifest-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "manifest-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "theme_color": "#22cfb4",
+  "background_color": "#22cfb4"
+}

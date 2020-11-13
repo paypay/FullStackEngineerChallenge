@@ -36,3 +36,27 @@ Design a web application that allows employees to submit feedback toward each ot
 * Assumptions you make given limited requirements
 * Technology and design choices
 * Identify areas of your strengths
+
+## Start application in docker
+* make sure docker daemon is running
+* make sure that the folder-location is mounted in dockers ressources/file-sharing options
+* start all containers with `docker-compose up`
+* stop them with `docker-compose down` or ^+c in the terminal
+* frontend runs on localhost:3000
+* backend  runs on localhost:8080
+
+## Docs
+The code is documented using TODO comment syntax to easily find documentation-objects. Do a matchcase-fulltext search for `TODO` to find all relevant documentation.
+
+## TODOs
+
+### Frontend
+- [ ]  Submit forms with enter
+- [ ]  Unify frontend tables and find HOC abstraction possibilities
+- [ ]  Split reducer and global state in appropriate partial scopes to minimize re-renders (employee reducer, review reducer)
+- [ ]  remove react warnings about unused variables
+
+### Backend
+- [ ]  Improve mongodb table relations, validations, default values and model-concerns
+- [ ]  Security considerations like deeper password-hashing, encryption between docker instances, properly restricted routes for user-roles
+- [ ]  Deployment and scaling considerations

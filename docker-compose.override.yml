@@ -1,0 +1,47 @@
+version: '3'
+services:
+  paypay_mongo:
+    command: --quiet
+  paypay_backend:
+    restart: always
+    build:
+      context: ./backend
+      dockerfile: dev.Dockerfile
+    ports:
+      - 8080:8080
+      # - 9229:9229
+    volumes:
+      - './backend:/home/node'
+      - '/home/node/node_modules'
+
+  paypay_frontend:
+    container_name: paypay_frontend
+    restart: always
+    environment:
+      NODE_ENV: development
+      REACT_APP_BACKENDHOST: http://localhost:8080/api
+    build:
+      context: ./frontend
+      dockerfile: dev.Dockerfile
+    volumes:
+      - './frontend:/home/node'
+      - '/home/node/node_modules'
+    ports:
+      - '3000:3000'
+      - '9229:9229'
+
+  paypay_nginx:
+    container_name: paypay_nginx
+    image: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+      - '35729:35729'
+    volumes:
+      - ./nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    links:
+#      - paypay_frontend
+      - paypay_backend
+volumes:
+  uploads:

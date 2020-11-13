@@ -1,0 +1,29 @@
+{
+  "name": "feedback_backend_api",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon -L -i node_modules -P 2000 index.js",
+    "seed": "node seeds.js"
+  },
+  "keywords": [],
+  "dependencies": {
+    "apollo-datasource-mongodb": "^0.1.0",
+    "apollo-server": "^2.9.3",
+    "bcrypt": "^3.0.4",
+    "boom": "^7.3.0",
+    "dotenv": "^6.2.0",
+    "graphql": "^14.5.7",
+    "graphql-tools": "^4.0.5",
+    "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
+    "mongoose": "^5.6.5",
+    "nodemailer": "^6.4.11",
+    "uuidv4": "^3.0.1"
+  },
+  "author": "Thomas Kuhnert",
+  "license": "ISC"
+}
