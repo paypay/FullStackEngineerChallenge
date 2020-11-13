@@ -6,7 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
-import javax.xml.stream.events.Comment;
 import java.util.List;
 
 @Mapper
@@ -20,4 +19,6 @@ public interface CommentMapper extends BaseMapper<EmployeeComment> {
     @Select("select count(*) from employee_comment where employee_id = #{id}")
     int countCommentByEmployeeId(Long id);
 
+    @Select("select id from employee_comment where employee_id = #{id}")
+    List<Long> selectIdsByEmployeeId(Long id);
 }

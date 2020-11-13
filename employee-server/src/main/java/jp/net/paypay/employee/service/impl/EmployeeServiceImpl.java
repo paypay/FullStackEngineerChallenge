@@ -62,6 +62,11 @@ public class EmployeeServiceImpl implements EmployeeService {
       throw new Exception("employee " + id + " not found");
     }
     int deleted = employeeMapper.deleteById(id);
+
+    // delete the employee comments on employee deleted.  avoid the dirty data
+    List<Long> commentIds = commentMapper.selectIdsByEmployeeId(id);
+    employeeMapper.deleteBatchIds(commentIds);
+
     return Result.result(deleted > 0);
   }
 
