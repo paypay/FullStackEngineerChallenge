@@ -189,7 +189,7 @@
         slot="footer"
         class="dialog-footer"
       >
-       <el-button type="success" style="float:left" @click="handleDownloadComments">
+       <el-button v-if="dialogStatus==='update'" type="warning" style="float:left" @click="handleDownloadComments">
           Export
         </el-button>
         <el-button @click="dialogFormVisible = false">
