@@ -1,20 +1,6 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-input
-        v-model="listQuery.name"
-        style="width: 200px;margin-right:10px"
-        class="filter-item"
-        @keyup.enter.native="handleFilter"
-      />
-       <el-button
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >
-        search
-      </el-button>
       <div style="inline-block;float:right;padding-bottom:10px">
       <el-button
         class="filter-item"
@@ -203,6 +189,9 @@
         slot="footer"
         class="dialog-footer"
       >
+       <el-button type="success" style="float:left" @click="handleDownloadComments">
+          Export
+        </el-button>
         <el-button @click="dialogFormVisible = false">
           Cancel
         </el-button>
@@ -388,23 +377,26 @@ export default class extends Vue {
     (this.$refs.dataForm as Form).validate(async(valid) => {
       if (valid) {
         const employeeData = this.tempEmployeeData
-        const { data } = await createEmployee({ employee: employeeData })
-        this.list.unshift(data)
-        this.dialogFormVisible = false
-        this.$notify({
-          title: 'success',
-          message: 'create succss',
-          type: 'success',
-          duration: 2000
-        })
+        const { data } = await createEmployee(employeeData)
+        if (data) {
+          this.getList()
+          this.dialogFormVisible = false
+          this.$notify({
+            title: 'success',
+            message: 'create employee succss',
+            type: 'success',
+            duration: 2000
+          })
+        }
       }
     })
   }
 
   private handleComment(row: IEmployee) {
-    this.dialogCommentVisible = true
     this.tempEmployeeData = Object.assign({}, row)
-    this.tempCommentData = defaultCommentData
+    this.tempCommentData = Object.assign({}, defaultCommentData)
+    console.log(this.tempCommentData)
+    this.dialogCommentVisible = true
     this.$nextTick(() => {
       (this.$refs.dataForm as Form).clearValidate()
     })
@@ -458,10 +450,23 @@ export default class extends Vue {
     }
   }
 
+  private handleDownloadComments() {
+    if (!this.comments || this.comments.length === 0) {
+      this.$message.error('no data to export,please check')
+      return
+    }
+    this.downloadLoading = true
+    const tHeader = ['id', 'content', 'star']
+    const filterVal = ['id', 'content', 'star']
+    const data = formatJson(filterVal, this.comments)
+    exportJson2Excel(tHeader, data, 'employeeComments')
+    this.downloadLoading = false
+  }
+
   private handleDownload() {
     this.downloadLoading = true
-    const tHeader = ['id', 'name']
-    const filterVal = ['id', 'name']
+    const tHeader = ['id', 'name', 'commentCount']
+    const filterVal = ['id', 'name', 'commentCount']
     const data = formatJson(filterVal, this.list)
     exportJson2Excel(tHeader, data, 'employeeData')
     this.downloadLoading = false

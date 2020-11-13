@@ -1,3 +1,4 @@
+import { IComment, IEmployee } from './types.d'
 import request from '@/utils/request'
 
 export const getEmployees = (params: any) =>
@@ -11,7 +12,7 @@ export const createEmployee = (params: any) =>
   request({
     url: '/employee/',
     method: 'put',
-    params
+    data: params
   })
 
 export const updateEmployee = (id:number, params: any) =>
@@ -40,12 +41,13 @@ export const findEmployeeComments = (id:number) =>
     method: 'GET'
   })
 
-export const defaultEmployeeData = {
+export const defaultEmployeeData :IEmployee = {
   id: 0,
   name: ''
 }
 
-export const defaultCommentData = {
+export const defaultCommentData:IComment = {
+  id: 0,
   star: 5,
   content: '',
   commentBy: ''
