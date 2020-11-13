@@ -4,6 +4,7 @@ const name = 'employee manage system'
 module.exports = {
   publicPath: '/',
   lintOnSave: process.env.NODE_ENV === 'development',
+  outputDir: 'docs',
   pwa: {
     name: name
   },
