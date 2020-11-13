@@ -5,11 +5,14 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import jp.net.paypay.employee.base.Result;
 import jp.net.paypay.employee.entity.Employee;
+import jp.net.paypay.employee.entity.EmployeeComment;
 import jp.net.paypay.employee.service.EmployeeService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequestMapping("/employee")
 @Api(tags = "employ manager")
@@ -23,8 +26,8 @@ public class EmployeeController {
   @ApiOperation(value = "select list with page", httpMethod = "GET")
   @GetMapping("/")
   public Result<IPage<Employee>> listEmployee(
-      @RequestParam(value = "start", defaultValue = "1") int start,
-      @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+      @RequestParam(value = "page", defaultValue = "1") int start,
+      @RequestParam(value = "limit", defaultValue = "10") int pageSize) {
     return employeeService.listEmployee(start, pageSize);
   }
 
@@ -41,9 +44,10 @@ public class EmployeeController {
   }
 
   @ApiOperation(value = "update a employee", httpMethod = "POST")
-  @PostMapping("/")
-  public Result<Boolean> updateEmployee(@RequestBody EmployeeRequest request) throws Exception {
-    return employeeService.updateEmployee(request);
+  @PostMapping("/{id}")
+  public Result<Boolean> updateEmployee(@PathVariable Long id, @RequestBody EmployeeRequest request)
+      throws Exception {
+    return employeeService.updateEmployee(id, request);
   }
 
   @ApiOperation(value = "delete a employee detail", httpMethod = "DELETE")
@@ -52,10 +56,23 @@ public class EmployeeController {
     return employeeService.deleteEmployeeById(id);
   }
 
+  @ApiOperation(value = "comment Employee", httpMethod = "PUT")
+  @PutMapping("/comment/{id}")
+  public Result<Boolean> commentEmployee(
+      @PathVariable Long id, @RequestBody EmployeeComment comment) throws Exception {
+    return employeeService.commentEmployee(id, comment);
+  }
+
+
+  @ApiOperation(value = "GET Employee comment", httpMethod = "GET")
+  @GetMapping("/comment/{id}")
+  public Result<List<EmployeeComment>> findCommentsByEmployeeId(
+          @PathVariable Long id) throws Exception {
+    return employeeService.findCommentsByEmployeeId(id);
+  }
+
   @Data
   public static class EmployeeRequest {
-    private Long id;
-
     private String name;
   }
 }

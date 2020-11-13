@@ -8,11 +8,11 @@ import lombok.EqualsAndHashCode;
 @Data
 public class EmployeeComment extends BaseEntity {
 
-    private Long employeeId;
+  private Long employeeId;
 
-    private String comment;
+  private int star;
 
+  private String content;
 
-
-
+  private String commentBy;
 }
