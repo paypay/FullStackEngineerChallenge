@@ -79,7 +79,7 @@
           <el-button
             size="mini"
             type="danger"
-            @click="handleDelete(row)"
+            @click="confirmDelete(row)"
           >
             Delete
           </el-button>
@@ -434,6 +434,21 @@ export default class extends Vue {
           })
         }
       }
+    })
+  }
+
+  private async confirmDelete(row: IEmployee) {
+    this.$confirm('this operation will delte the data, continue?', 'tips', {
+      confirmButtonText: 'Confirm',
+      cancelButtonText: 'Cancel',
+      type: 'warning'
+    }).then(() => {
+      this.handleDelete(row)
+    }).catch(() => {
+      this.$message({
+        type: 'info',
+        message: 'Canceld!'
+      })
     })
   }
 
