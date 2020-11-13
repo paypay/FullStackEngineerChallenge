@@ -10,8 +10,8 @@
 - default url: http://localhost:8080
 
 # quick see
-1. [swagger](http://106.15.188.160:8090/)
-2. [admin](https://epic-heyrovsky-7f38e4.netlify.app/)
+1. [swagger](https://employee.xiaomo.info/)
+2. [admin](https://houko-employee.netlify.app/)
 
 # language and framework
 1. server
