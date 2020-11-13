@@ -10,8 +10,8 @@
 - default url: http://localhost:8080
 
 # quick see
-1. [swagger](https://employee.xiaomo.info/)
-2. [admin](https://houko-employee.netlify.app/)
+1. [swagger api](https://employee.xiaomo.info/swagger-ui.html#/employ_manager)
+2. [admin online](https://houko-employee.netlify.app/)
 
 # language and framework
 1. server

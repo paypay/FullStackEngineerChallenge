@@ -1,5 +1,9 @@
+
+# about houko's PR
+[README](https://github.com/houko/FullStackEngineerChallenge)
+
 # Full Stack Developer Challenge
-This is an interview challengs. Please feel free to fork. Pull Requests will be ignored.
+This is an interview challenges. Please feel free to fork. Pull Requests will be ignored.
 
 ## Requirements
 Design a web application that allows employees to submit feedback toward each other's performance review.
