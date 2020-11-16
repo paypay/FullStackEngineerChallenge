@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: employee_server
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/employee?autoreconnect=true
+    username: root
+    password: mysql
+    tomcat:
+      max-active: 15
+      max-idle: 10
+      max-wait: 8000
+      validation-query: SELECT 1
+    hikari:
+      connection-test-query: SELECT 1
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+server:
+  port: 8090
+  servlet:
+    session:
+      timeout: 3000
+
+logging:
+  config: classpath:logback.xml
+
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
