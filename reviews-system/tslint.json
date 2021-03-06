@@ -1,0 +1,40 @@
+{
+  "defaultSeverity": "error",
+  "extends": [
+    "tslint:recommended"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "node_modules/**",
+      "src/**/*.json"
+    ]
+  },
+  "rules": {
+    "quotemark": [
+      true,
+      "single"
+    ],
+    "curly": [
+      true,
+      "ignore-same-line"
+    ],
+    "indent": true,
+    "interface-name": false,
+    "arrow-parens": false,
+    "object-literal-sort-keys": false,
+    "class-name": true,
+    "no-var-keyword": true,
+    "no-console": false,
+    "no-bitwise": false,
+    "ordered-imports": false,
+    "trailing-comma": false,
+    "max-line-length": false,
+    "variable-name": [
+      true,
+      "allow-leading-underscore",
+      "allow-pascal-case",
+      "allow-trailing-underscore"
+    ]
+  },
+  "rulesDirectory": []
+}

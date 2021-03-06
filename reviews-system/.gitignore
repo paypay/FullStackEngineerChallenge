@@ -1,0 +1,6 @@
+.vscode
+node_modules/
+npm-debug.log*
+package-lock.json
+yarn.lock
+google-chrome-stable_current_amd64.deb
