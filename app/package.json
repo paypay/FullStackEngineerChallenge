@@ -1,0 +1,21 @@
+{
+  "name": "human-resource",
+  "version": "1.0.0",
+  "description": "Human management app",
+  "main": "index.js",
+  "repository": "https://github.com/IrvingArmenta/FullStackEngineerChallenge",
+  "author": "Irving Armenta <irvingarmentajd@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "back",
+    "front"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"back,front\" \"cd back && yarn dev\" \"cd front && yarn dev\"",
+    "generate": "yarn workspace back run generate"
+  },
+  "devDependencies": {
+    "concurrently": "6.0.2"
+  }
+}
