@@ -21,7 +21,6 @@
     "@fastify-resty/core": "^0.3.0",
     "@fastify-resty/typeorm": "^0.3.0",
     "fastify": "^3.11.0",
-    "fastify-basic-auth": "^1.0.1",
     "fastify-cors": "^5.2.0",
     "fastify-prettier": "^1.1.7",
     "node-fetch": "^2.6.1",
