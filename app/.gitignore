@@ -1,0 +1,14 @@
+# Yarn
+.yarn/*
+!.yarn/cache
+!.yarn/releases
+!.yarn/plugins
+!.yarn/sdks
+!.yarn/versions
+
+# node modules
+/node_modules
+/**/*/node_modules
+
+# next
+.next
