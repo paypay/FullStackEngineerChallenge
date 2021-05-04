@@ -26,6 +26,7 @@
     "isolatedModules": true,
     "alwaysStrict": true,
     "strict": false,
+    "downlevelIteration": true,
     "baseUrl": "src"
   },
   "include": [

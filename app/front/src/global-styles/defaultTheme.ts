@@ -34,8 +34,8 @@ export const defaultTheme: DefaultTheme = {
     }
   },
   fontFamily: {
-    body: `"Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif`,
-    headings: 'Helvetica Neue, Helvetica, arial, sans-serif',
+    body: '"Roboto", Helvetica, sans-serif',
+    headings: '"Press Start 2p", Helvetica, arial, sans-serif',
     serif: 'Times New Roman, Helvetica, arial, serif',
     monospace: 'Terminal, monospace'
   }
