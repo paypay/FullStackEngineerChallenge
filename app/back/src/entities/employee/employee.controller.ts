@@ -7,9 +7,15 @@ import EmployeeService from './employee.service';
 export class EmployeeController {
   constructor(private employeeService: EmployeeService) {}
 
+  // @GET('/with-reviews')
+  // async func(request: FastifyRequest) {
+  //   const employed = await this.employeeRep.find({ relations: ['reviews'] });
+
+  //   console.log(employed);
+  // }
+
   @OnRequest
   async onRequests(request: FastifyRequest) {
-    console.log(request);
     console.log(request.body);
   }
 }

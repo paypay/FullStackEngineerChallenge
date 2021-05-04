@@ -1,25 +1,49 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  JoinTable
+} from 'typeorm';
+import { ReviewEntity } from '../review/review.entity';
+
+export type ReviewType = {
+  content: string;
+  rating: number;
+  id: string;
+};
 
 @Entity()
 export class EmployeeEntity {
   @PrimaryGeneratedColumn('uuid')
-  id?: string;
+  public id?: string;
 
   @Column()
-  name: string;
+  public name: string;
 
   @Column()
-  photoUrl: string;
+  public photoUrl: string;
 
   @Column()
-  rating: number;
+  public password: string;
 
   @Column()
-  description: string;
+  public email: string;
+
+  @Column('int')
+  public rating: number;
 
   @Column()
-  role: 'admin' | 'employee';
+  public department: string;
 
-  @Column()
-  reviews: string;
+  @OneToMany(() => ReviewEntity, (review) => review.owner, {
+    nullable: true
+  })
+  public reviewers: EmployeeEntity[];
+
+  @OneToMany(() => ReviewEntity, (review) => review.employee, {
+    nullable: true
+  })
+  @JoinTable()
+  public reviews: ReviewEntity[];
 }

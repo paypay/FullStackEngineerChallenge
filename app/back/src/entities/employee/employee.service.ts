@@ -14,12 +14,12 @@ export default class EmployeeService {
     return Math.round(Math.random() * (max - min) + min);
   }
 
-  async getRandomPost() {
+  async getRandomEmployee() {
     console.log(this.employeeModel);
-    const postsTotal = await this.employeeModel.total();
-    const posts = await this.employeeModel.find({ $limit: postsTotal });
-    const randomNumb = await this.getRandomNumber(0, postsTotal - 1);
+    const employeeTotal = await this.employeeModel.total();
+    const employees = await this.employeeModel.find({ $limit: employeeTotal });
+    const randomNumb = await this.getRandomNumber(0, employeeTotal - 1);
 
-    return posts[randomNumb];
+    return employees[randomNumb];
   }
 }

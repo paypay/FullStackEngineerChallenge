@@ -5,32 +5,40 @@
   "main": "src/app.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "ts-node src/app.ts",
-    "generate": "ts-node src/app.ts --generate",
-    "start": "node dist/app.js",
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon",
+    "docker": "docker-compose up",
+    "docker:d": "docker-compose up -d",
+    "docker:stop": "docker-compose down",
+    "postgres:delete": "rimraf './postgres-data'",
+    "generate": "ts-node src/app.ts --generate"
   },
   "keywords": [
     "fastify",
     "resty",
-    "api"
+    "api",
+    "postgresql"
   ],
   "author": "Irving Armenta <irvingarmentajd@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "@fastify-resty/core": "^0.3.0",
     "@fastify-resty/typeorm": "^0.3.0",
+    "dotenv": "^8.2.0",
     "fastify": "^3.11.0",
     "fastify-cors": "^5.2.0",
     "fastify-prettier": "^1.1.7",
     "node-fetch": "^2.6.1",
-    "sqlite3": "^5.0.1",
-    "typeorm": "^0.2.31"
+    "nodemon": "^2.0.7",
+    "pg": "^8.6.0",
+    "typeorm": "^0.2.31",
+    "wait-port": "^0.2.9"
   },
   "devDependencies": {
     "@types/faker": "^5.1.6",
     "@types/node": "^15.0.1",
     "@types/node-fetch": "^2.5.10",
+    "@types/pg": "^7.14.11",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
     "eslint": "^7.20.0",
@@ -39,6 +47,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "faker": "^5.3.1",
     "prettier": "^2.2.1",
+    "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.4"
   }
