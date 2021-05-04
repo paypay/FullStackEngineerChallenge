@@ -7,8 +7,10 @@
 !.yarn/versions
 
 # node modules
-/node_modules
-/**/*/node_modules
+node_modules
 
 # next
 .next
+
+# postgres
+postgres-data
