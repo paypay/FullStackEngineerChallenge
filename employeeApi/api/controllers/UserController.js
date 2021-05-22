@@ -6,9 +6,6 @@
  */
 var crypto = require('crypto');
 module.exports = {
-    TestFunction: function (req, res) {
-        res.send('hello');
-    },
     login: function (req, res) {
         var token;
         console.log("Login Controller");
@@ -158,7 +155,6 @@ module.exports = {
                 if(err){
                     return res.status(200).json({status: 2, status_type: 'Failure' ,message: 'Some error occured: '+err});
                 }else{
-                    console.log(result);
                     return res.status(200).json({status: 1, status_type: 'Success' , message: 'Employee deleted!!'});
                 }
             });

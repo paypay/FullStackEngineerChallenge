@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+  primaryKey: 'id',
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -23,11 +23,12 @@ module.exports = {
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
-      id: {type: 'number', autoIncrement: true, required: true },
+      id: {type: 'number', autoIncrement: true},
       userId: {type: 'number', required: true },
       fromUserId: {type: 'number', required: true },
-      comment: {type: 'string', required: true },
-      review: {type: 'string', required: true },
+      comment: {type: 'string'},
+      review: {type: 'string'},
+      status: {type: 'boolean', required: true },
       createdAt: {type: 'number', autoCreatedAt: true },
       updatedAt: {type: 'number', autoCreatedAt: true }
   },
