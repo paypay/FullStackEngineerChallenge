@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-
+  primaryKey: 'id',
   attributes: {
 
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
@@ -22,8 +22,8 @@ module.exports = {
     //  ╔═╗╔═╗╔═╗╔═╗╔═╗╦╔═╗╔╦╗╦╔═╗╔╗╔╔═╗
     //  ╠═╣╚═╗╚═╗║ ║║  ║╠═╣ ║ ║║ ║║║║╚═╗
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
-
-      id: { type: 'number', autoIncrement: true, required: true },
+ 
+      id: { type: 'number', autoIncrement: true},
       username: { type: 'string', required: true },
       displayName: { type: 'string', required: true },
       password: { type: 'string', required: true },
