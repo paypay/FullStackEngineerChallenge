@@ -69,10 +69,10 @@ module.exports = {
     addEmployee: function(req, res){
                 
         console.log("addEmployee");
-        console.log(req.allParams());
-        var username            =   req.param('username');
-        var displayName         =   req.param('displayName');
-        var password            =   req.param('password');
+        console.log(req.body);
+        var username            =   req.body.username;
+        var displayName         =   req.body.displayName;
+        var password            =   req.body.password;
         if( !username){
             
             return res.status(200).json({status: 2, status_type: 'Failure' , message: 'Please pass username'});
@@ -111,14 +111,38 @@ module.exports = {
                                 console.log(err);
                                 return res.status(200).json({status: 2, status_type: 'Failure', message:err});
                             }else{
-                                return res.status(200).json({status: 1, status_type:'Success'});
+                                return res.status(200).json({status: 1, status_type:'Successfully created a employee'});
                             }
                         });
                     }
                 }
             });
         }
+    },
+    updateEmployee: function(req, res) {
+        console.log("updateEmployee");
+        console.log(req.body);
+        var userId            =   req.body.userid;
+        var displayName       =   req.body.displayName;
+        if( !userId){
+            
+            return res.status(200).json({status: 2, status_type: 'Failure' , message: 'Please pass userid'});
+        }else if( !displayName){
+            
+            return res.status(200).json({status: 2, status_type: 'Failure' , message: 'Please pass displayName'});
+        }else {
+            var param   =   {
+                displayName      :   displayName
+            };
+            User.update({id:userId},param).exec(function (err, results) {
+                if(err){
+                    console.log(err);
+                    return res.status(200).json({status: 2, status_type: 'Failure', message: err});
+                }else{
+                    return res.status(200).json({status: 1, status_type: 'Successfully updated'});
+                }
+            });
+        } 
     }
-
 };
 
