@@ -143,6 +143,26 @@ module.exports = {
                 }
             });
         } 
+    },
+    deleteEmployee: function(req, res){
+
+        console.log("Delete Employee");
+        var userId     =   req.body.userid;
+        if(!userId){    
+                return res.status(200).json({status:2, status_type: 'Failure', message: 'Please Pass userid'});
+        }else{
+            var param   =   {
+                id :   userId,
+            };
+            User.destroy(param).exec(function (err, result) {
+                if(err){
+                    return res.status(200).json({status: 2, status_type: 'Failure' ,message: 'Some error occured: '+err});
+                }else{
+                    console.log(result);
+                    return res.status(200).json({status: 1, status_type: 'Success' , message: 'Employee deleted!!'});
+                }
+            });
+        }
     }
 };
 
