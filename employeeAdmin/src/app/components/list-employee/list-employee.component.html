@@ -3,7 +3,7 @@
     <div class="card">
         <div class="card-block margin-all">
             <h4 class="card-title">List Employees</h4>
-            <table>
+            <table border="1">
                 <thead>
                     <tr>
                         <th scope="col">Display Name</th>
@@ -11,15 +11,21 @@
                         <th scope="col">Gender</th>
                         <th scope="col">Department</th>
                         <th scope="col">Address</th>
+                        <th scope="col" colspan="4" width=150>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let employee of employeeList">
                         <td data-label="Display Name">{{employee.displayName}}</td>
                         <td data-label="Age">{{employee.age}}</td>
-                        <td data-label="Gender">{{employee.gender}}</td>
-                        <td data-label="Department">{{employee.department}}</td>
-                        <td data-label="Address">{{employee.address}}</td>
+                        <td data-label="Gender">{{employee.gender| titlecase }}</td>
+                        <td data-label="Department">{{employee.department| titlecase }}</td>
+                        <td data-label="Address">{{employee.address| titlecase }}</td>                        
+
+                        <td data-label="Actions"><a routerLink="/" ><i class="fa fa-edit"></i></a></td>
+                        <td data-label="Actions"><a routerLink="/" ><i class="fa fa-trash"></i></a></td>
+                        <td data-label="Actions"><a routerLink="/" ><i class="fa fa-bar-chart"></i></a></td>
+                        <td data-label="Actions"><a routerLink="/" ><i class="fa fa-users"></i></a></td>
                     </tr>
                 </tbody>
             </table>
