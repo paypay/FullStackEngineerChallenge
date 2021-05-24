@@ -1,0 +1,28 @@
+<app-sidebar></app-sidebar>
+<div id="content">
+    <div class="card">
+        <div class="card-block">
+            <h4 class="card-title margin-all">List Employees</h4>
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Display Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employeeList">
+                        <td data-label="Display Name">{{employee.displayName}}</td>
+                        <td data-label="Age">{{employee.age}}</td>
+                        <td data-label="Gender">{{employee.gender}}</td>
+                        <td data-label="Department">{{employee.department}}</td>
+                        <td data-label="Address">{{employee.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

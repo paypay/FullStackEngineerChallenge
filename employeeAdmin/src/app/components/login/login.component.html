@@ -1,0 +1,20 @@
+<div class="wrapper">
+    <form class="form-signin" #LoginForm="ngForm" (ngSubmit)="LoginForm.form.valid&& onSubmit(LoginForm)">       
+      <h2 class="form-signin-heading">Please login</h2>
+      <input type="text" class="form-control" name="username" [(ngModel)]="username"
+        #nameVar="ngModel" required placeholder="Username" autofocus />
+        <div class="text-danger" *ngIf="LoginForm.submitted && nameVar.errors" >    
+            <p *ngIf="nameVar.errors.required">  Name Is Required.</p>    
+        </div> 
+      <input type="password" class="form-control" name="password" [(ngModel)]="password" 
+        #passVar="ngModel" required placeholder="Password" />   
+        <div class="text-danger" *ngIf="LoginForm.submitted && passVar.errors" >    
+            <p *ngIf="passVar.errors.required">  Password Is Required.</p>    
+        </div>  
+        <div class="text-danger" *ngIf="serverErrors" >    
+          <p *ngIf="serverErrors">{{serverErrors}}</p>    
+      </div>   
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
+    </form>
+  
+  </div>
