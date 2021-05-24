@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms'; 
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { NgxStarRatingModule } from 'ngx-star-rating';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ListEmployeeComponent } from './components/list-employee/list-employee.component';
+import { ListReviewsComponent } from './components/list-reviews/list-reviews.component';
 
 
 @NgModule({
@@ -20,14 +22,15 @@ import { ListEmployeeComponent } from './components/list-employee/list-employee.
     LoginComponent,
     DashboardComponent,
     SidebarComponent,
-    ListEmployeeComponent
+    ListEmployeeComponent,
+    ListReviewsComponent
   ],
   imports: [
     FormsModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule
+    NgbModule, NgxStarRatingModule
   ],
   providers: [
     ApiService

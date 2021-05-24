@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
        
       },
       err => 
-        console.error(err),
-      () => console.log('done loading foods')
+        console.error(err)
     );
   } 
 }

@@ -17,13 +17,16 @@ export class ListEmployeeComponent implements OnInit {
     this.getEmployees();
   }
   getEmployees(): void {
-    this.serverErrors = ''; 
+    this.serverErrors = '';
     this._apiService.getEmployees().subscribe(
-      data => { 
+      data => {
         console.log(data);
         if (data && data['data']) {
-          this.employeeList  = data['data'];
+          this.employeeList = data['data'];
         }
-      });
+      },
+      err =>
+        console.error(err)
+    );
   }
 }

@@ -113,7 +113,7 @@ module.exports = {
         if (id) {
             conQuery    =   "where r.userid= "+id;
         }
-        var query = `SELECT r.userid, u.username, u.displayName as userdisplay, 
+        var query = `SELECT r.userid, u.username, u.displayName as userdisplay, ur.department,
                 r.fromUserId, ur.username as fromname, ur.displayName as fromdisplay, 
                 r.comment, r.review, r.status from
                 review r 

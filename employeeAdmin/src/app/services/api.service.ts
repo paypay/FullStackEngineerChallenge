@@ -18,4 +18,7 @@ export class ApiService {
   getEmployees() {
     return this.http.get('http://localhost:1337/user/getEmployees');
   }
+  getReviewList() {
+    return this.http.get('http://localhost:1337/review/listReview');
+  }
 }
