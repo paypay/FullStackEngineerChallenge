@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxStarRatingModule } from 'ngx-star-rating';
+import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,10 +31,13 @@ import { ListReviewsComponent } from './components/list-reviews/list-reviews.com
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    NgbModule, NgxStarRatingModule
+    NgbModule, 
+    NgxStarRatingModule, 
+    ModalModule.forRoot()
   ],
   providers: [
-    ApiService
+    ApiService,
+    BsModalService
   ],
   bootstrap: [AppComponent]
 })

@@ -70,6 +70,10 @@ module.exports = {
         var username            =   req.body.username;
         var displayName         =   req.body.displayName;
         var password            =   req.body.password;
+        var age                 =   req.body.age;
+        var gender              =   req.body.gender;
+        var department          =   req.body.department;
+        var address             =   req.body.address;
         if( !username){
             
             return res.status(200).json({status: 2, status_type: 'Failure' , message: 'Please pass username'});
@@ -100,6 +104,10 @@ module.exports = {
                             username            :   username,
                             password            :   encryptPass,
                             displayName         :   displayName,
+                            age                 :   age,
+                            gender              :   gender,
+                            department          :   department,
+                            address             :   address,
                             userType            :   'user'
                         }
                         console.log(param);

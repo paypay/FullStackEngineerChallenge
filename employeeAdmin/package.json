@@ -27,6 +27,8 @@
     "bootstrap": "^5.0.1",
     "bourbon": "^7.0.0",
     "font-awesome": "^4.7.0",
+    "ngx-bootstrap": "^6.2.0",
+    "ngx-modal-dialog": "^4.0.0",
     "ngx-star-rating": "^2.0.2",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",

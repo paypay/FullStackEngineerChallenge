@@ -20,5 +20,8 @@ export class ApiService {
   }
   getReviewList() {
     return this.http.get('http://localhost:1337/review/listReview');
+  } 
+  addEmployee(params) {
+    return this.http.post('http://localhost:1337/user/addEmployee', params);
   }
 }
