@@ -2,7 +2,8 @@
 <div id="content">
     <div class="card">
         <div class="card-block margin-all">
-            <h4 class="card-title">Performance Reviews</h4>
+            <h4 class="card-title float-left">Performance Reviews</h4>
+ 
             <table>
                 <thead>
                     <tr>
@@ -26,7 +27,7 @@
                         <td data-label="Status">{{review.status? 'Completed': 'Not participated'}}</td>
                     </tr>
                 </tbody>
-                <tbody *ngIf="!reviewList">
+                <tbody *ngIf="!reviewList || reviewList.length<=0">
                     <tr>
                         <td colspan="5" data-label="Display Name"> No data found</td>
                     </tr>

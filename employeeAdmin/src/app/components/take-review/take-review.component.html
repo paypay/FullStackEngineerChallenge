@@ -1,0 +1,87 @@
+<app-sidebar></app-sidebar>
+<div id="content">
+    <div class="card">
+        <div class="card-block margin-all">
+            <h4 class="card-title float-left">Take Reviews</h4>
+ 
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="reviewList && reviewList.length>0">
+                    <tr *ngFor="let review of reviewList">
+                        <td data-label="Name">{{review.userdisplay}}</td>
+                        <td data-label="Department">{{review.department| titlecase }}</td>
+                        <td data-label="Rating">  
+                            <ngx-star-rating [(ngModel)]="review.review" [id]="'rating'" [disabled]="true"></ngx-star-rating>
+                        </td>
+                        <td data-label="Comment">{{review.status ? review.comment: 'Not participated'}}</td>
+                        <td data-label="Status">{{review.status? 'Completed': 'Not participated'}}</td>
+                        <td data-label="Actions"><a *ngIf="!review.status" (click)="reviewModal(artemplate, review)"><i class="fa fa-id-badge"></i></a></td>
+
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!reviewList || reviewList.length<=0">
+                    <tr>
+                        <td colspan="5" data-label="Display Name"> No data found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<ng-template #artemplate>
+    <form #ReviewerForm="ngForm" (ngSubmit)="ReviewerForm.form.valid && reviewSubmit(ReviewerForm,rating)">
+
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Performance Review</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    Please provide a feedback for the performance appraisal of {{displayName}}.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <ngx-star-rating [(ngModel)]="rating" name="rating" [id]="rating" [disabled]="false"></ngx-star-rating>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    Comment
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <textarea  name="comment" [(ngModel)]="comment"  #comVar="ngModel" required></textarea>
+                   
+                    <div class="text-danger" *ngIf="ReviewerForm.submitted && comVar.errors">
+                        <p *ngIf="comVar.errors.required"> Comment Is Required.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-danger" *ngIf="serverErrors">
+                <p *ngIf="serverErrors">{{serverErrors}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+        </div>
+    </form>
+</ng-template>

@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { NgxStarRatingModule } from 'ngx-star-rating';
 import { ModalModule, BsModalService } from 'ngx-bootstrap/modal';
+import { LocalStorageModule } from 'angular-2-local-storage';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,7 +18,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { ListEmployeeComponent } from './components/list-employee/list-employee.component';
 import { ListReviewsComponent } from './components/list-reviews/list-reviews.component';
-
+import { AuthGuard } from './authguard';
+import { AuthGuardLog } from './authguardLogin';
+import { TakeReviewComponent } from './components/take-review/take-review.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,8 @@ import { ListReviewsComponent } from './components/list-reviews/list-reviews.com
     DashboardComponent,
     SidebarComponent,
     ListEmployeeComponent,
-    ListReviewsComponent
+    ListReviewsComponent,
+    TakeReviewComponent
   ],
   imports: [
     FormsModule,
@@ -33,11 +39,17 @@ import { ListReviewsComponent } from './components/list-reviews/list-reviews.com
     HttpClientModule,
     NgbModule, 
     NgxStarRatingModule, 
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    LocalStorageModule.forRoot({
+      storageType: 'localStorage'
+    }),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(), 
   ],
   providers: [
     ApiService,
-    BsModalService
+    BsModalService,
+    AuthGuard, AuthGuardLog
   ],
   bootstrap: [AppComponent]
 })

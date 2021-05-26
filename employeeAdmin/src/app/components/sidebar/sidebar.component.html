@@ -1,20 +1,26 @@
     <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
   
-      <a class="navbar-brand margin-left-1rem" href="#">Employee App</a>
+      <a class="navbar-brand margin-left-1rem" >Employee App</a>
+      <a class="navbar-brand float-right color-red" (click)="logoff()"><i class="fa fa-power-off fa-fw"></i></a>
       <div class="sidebar" role="navigation">
         <div class="sidebar-nav">
           <ul class="nav flex-column" id="side-menu">
   
-            <li class="nav-item">
-              <a routerLink="/dashboard" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+            <li class="nav-item" *ngIf="loginType==='user'">
+              <a routerLink="/dashboard" ><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="loginType==='admin'">
               <a routerLink="/list-employee"><i class="fa fa-edit fa-fw"></i> List Employees</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item" *ngIf="loginType==='admin'">
               <a routerLink="/list-reviews"><i class="fa fa-area-chart fa-fw"></i> Performance Reviews</a>
             </li>
-          
+            <li class="nav-item" *ngIf="loginType==='user'">
+              <a routerLink="/list-reviews"><i class="fa fa-area-chart fa-fw"></i> My Reviews</a>
+            </li>
+            <li class="nav-item" *ngIf="loginType==='user'">
+              <a routerLink="/take-review"><i class="fa fa-bar-chart fa-fw"></i> Take Review</a>
+            </li>
           </ul>
         </div>
       </div>
