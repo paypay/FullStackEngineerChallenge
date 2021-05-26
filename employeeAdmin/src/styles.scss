@@ -1,0 +1,120 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+
+@import '~bootstrap/scss/bootstrap';
+body {
+    background-color: rgb(248, 248, 248);
+  }
+.margin-all{ margin: 0.5rem 0.5rem; }
+.margin-left-1rem { margin-left: 1rem }
+#content {
+  min-height: 385px;
+  position: inherit;
+  margin: 0 0 0 250px;
+  padding: 5px;
+  border-left: 1px solid #e7e7e7;
+  background-color: #fff; 
+  .card {
+    margin-bottom: 5px;
+  }
+}
+
+
+table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+label.star {
+  padding: 2px !important;
+  font-size: 16px !important;
+}
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+.margin-bot-10{
+  margin-bottom: 10px;
+}
+.margin-all-5{
+  margin: 5px;
+}

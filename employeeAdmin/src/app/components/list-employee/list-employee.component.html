@@ -1,0 +1,276 @@
+<app-sidebar></app-sidebar>
+<div id="content">
+    <div class="card">
+        <div class="card-block margin-all">
+            <h4 class="card-title float-left">List Employees</h4>
+            <button type="button" class="btn btn-primary float-right margin-bot-10" (click)="openModal(template)"><i
+                    class="fa fa-user-plus fa-fw"></i> Add Employee</button>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th scope="col">Display Name</th>
+                        <th scope="col">Age</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Address</th>
+                        <th scope="col" colspan="4" width=150>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let employee of employeeList">
+                        <td data-label="Display Name">{{employee.displayName}}</td>
+                        <td data-label="Age">{{employee.age}}</td>
+                        <td data-label="Gender">{{employee.gender| titlecase }}</td>
+                        <td data-label="Department">{{employee.department| titlecase }}</td>
+                        <td data-label="Address">{{employee.address| titlecase }}</td>
+
+                        <td data-label="Actions">
+                            <a (click)="openModal(template, employee)">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td data-label="Actions"><a (click)="confirmModal(dtemplate, employee)"><i class="fa fa-trash"></i></a></td>
+                        <td data-label="Actions"><a (click)="openModal(rtemplate, employee, employeeList)"><i class="fa fa-users"></i></a></td>
+                        <td data-label="Actions"><a (click)="reviewModal(artemplate, employee)"><i class="fa fa-id-badge"></i></a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+    <form #EmployeeForm="ngForm" (ngSubmit)="EmployeeForm.form.valid && onSubmit(EmployeeForm)">
+
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">{{!empAction?'Add':'Edit'}} Employee</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    Display Name
+                </div>
+                <div class="col-sm-6 ">
+                    <input type="text" class="form-control margin-all-5" name="displayName" [(ngModel)]="displayName"
+                        #nameVar="ngModel" required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && nameVar.errors">
+                        <p *ngIf="nameVar.errors.required"> Display Name Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    User Name
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control margin-all-5" name="username" [(ngModel)]="username"
+                        #unameVar="ngModel" [disabled]="empAction" required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && unameVar.errors">
+                        <p *ngIf="unameVar.errors.required"> Username Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!empAction">
+                <div class="col-sm-6">
+                    Password
+                </div>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control margin-all-5" name="password" [(ngModel)]="password"
+                        #passVar="ngModel" required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && passVar.errors">
+                        <p *ngIf="passVar.errors.required"> Password Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="!empAction">
+                <div class="col-sm-6">
+                    Confirm Password
+                </div>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control margin-all-5" name="copassword" [(ngModel)]="copassword"
+                        #cpassVar="ngModel" required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && cpassVar.errors">
+                        <p *ngIf="cpassVar.errors.required"> Co-password Is Required.</p>
+                    </div>
+                    <div class="text-danger" *ngIf="cpassVar !== passVar">
+                        <p *ngIf="EmployeeForm.submitted && (cpassVar !== passVar)"> Password mismatch.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    Age
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control margin-all-5" name="age" [(ngModel)]="age" #ageVar="ngModel"
+                        required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && ageVar.errors">
+                        <p *ngIf="ageVar.errors.required"> Age Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    Gender
+                </div>
+                <div class="col-sm-6">
+                    <input type="radio" name="gender" value="male" [(ngModel)]="gender" #genVar="ngModel" required> Male
+                    <input type="radio" name="gender" value="female" [(ngModel)]="gender" #genVar="ngModel" required>
+                    Female
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && genVar.errors">
+                        <p *ngIf="genVar.errors.required"> Gender Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    Department
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control margin-all-5" name="department" [(ngModel)]="department"
+                        #depVar="ngModel" required>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && depVar.errors">
+                        <p *ngIf="depVar.errors.required"> Department Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    Address
+                </div>
+                <div class="col-sm-6">
+                    <textarea class="form-control margin-all-5" name="address" [(ngModel)]="address" #addVar="ngModel"
+                        required>
+
+                </textarea>
+                    <div class="text-danger" *ngIf="EmployeeForm.submitted && addVar.errors">
+                        <p *ngIf="addVar.errors.required"> Address Is Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-danger" *ngIf="serverErrors">
+                <p *ngIf="serverErrors">{{serverErrors}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden" *ngIf="empAction" name="id" [(ngModel)]="id">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #rtemplate>
+    <form #ReviewForm="ngForm" (ngSubmit)="ReviewForm.form.valid && assignSubmit(ReviewForm)">
+
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Assign Reviewer</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    Name
+                </div>
+                <div class="col-sm-6 ">
+                    <input type="text" class="form-control margin-all-5" name="displayName" [(ngModel)]="displayName"
+                        #nameVar="ngModel" required disabled>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    Reviewer Name
+                </div>
+                <div class="col-sm-6">
+                    <select class="form-control margin-all-5" name="reviewer" [(ngModel)]="reviewer" #revVar="ngModel"
+                        required>
+                        <option value="null" [selected]="true">Select</option>
+                        <option *ngFor="let emp of empList" [value]="emp.id">{{emp.displayName}}</option>
+                    </select>
+                    <div class="text-danger" *ngIf="ReviewForm.submitted && revVar.errors">
+                        <p *ngIf="revVar.errors.required"> Reviewer Is Required.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-danger" *ngIf="serverErrors">
+                <p *ngIf="serverErrors">{{serverErrors}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden"  name="id" [(ngModel)]="id">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+        </div>
+    </form>
+</ng-template>
+<ng-template #dtemplate>
+    <div class="modal-header">
+        <h4 class="modal-title pull-left">Delete Employee</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">×</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        Do you want to delete {{displayName}}?
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-lg btn-primary btn-block"(click)="delete(id)">Delete</button>
+        <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+    </div>
+</ng-template>
+<ng-template #artemplate>
+    <form #ReviewerForm="ngForm" (ngSubmit)="ReviewerForm.form.valid && reviewSubmit(ReviewerForm,rating)">
+
+        <div class="modal-header">
+            <h4 class="modal-title pull-left">Performance Review</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12">
+                    Please provide a feedback for the performance appraisal of {{displayName}}.
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4"></div>
+                <div class="col-sm-4">
+                    <ngx-star-rating [(ngModel)]="rating" name="rating" [id]="'rating'"
+                    [disabled]="false"></ngx-star-rating>
+                </div>
+                <div class="col-sm-4">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    Comment
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <textarea  name="comment" [(ngModel)]="comment"  #comVar="ngModel" required></textarea>
+                   
+                    <div class="text-danger" *ngIf="ReviewerForm.submitted && comVar.errors">
+                        <p *ngIf="comVar.errors.required"> Comment Is Required.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-danger" *ngIf="serverErrors">
+                <p *ngIf="serverErrors">{{serverErrors}}</p>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="hidden"  name="id" [(ngModel)]="id">
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            <button type="button" class="btn btn-default" (click)="modalRef.hide()">Close</button>
+        </div>
+    </form>
+</ng-template>

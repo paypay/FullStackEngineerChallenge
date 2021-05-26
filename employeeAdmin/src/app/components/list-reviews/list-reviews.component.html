@@ -1,0 +1,38 @@
+<app-sidebar></app-sidebar>
+<div id="content">
+    <div class="card">
+        <div class="card-block margin-all">
+            <h4 class="card-title float-left">Performance Reviews</h4>
+ 
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Reviewer Name</th>
+                        <th scope="col">Rating</th>
+                        <th scope="col">Comment</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="reviewList && reviewList.length>0">
+                    <tr *ngFor="let review of reviewList">
+                        <td data-label="Name">{{review.userdisplay}}</td>
+                        <td data-label="Department">{{review.department| titlecase }}</td>
+                        <td data-label="Reviewer Name">{{review.fromdisplay| titlecase }}</td>
+                        <td data-label="Rating">  
+                            <ngx-star-rating [(ngModel)]="review.review" [id]="'rating'" [disabled]="true"></ngx-star-rating>
+                        </td>
+                        <td data-label="Comment">{{review.status ? review.comment: 'Not participated'}}</td>
+                        <td data-label="Status">{{review.status? 'Completed': 'Not participated'}}</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="!reviewList || reviewList.length<=0">
+                    <tr>
+                        <td colspan="5" data-label="Display Name"> No data found</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
