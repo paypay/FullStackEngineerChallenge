@@ -10,12 +10,11 @@ module.exports = {
 
         console.log("addReview");
         console.log(req.body);
-        var userId = req.body.userId;
-        var fromUserId = req.body.fromUserId;
+        var userId = req.body.id;
+        var fromUserId = req.body.fromId;
         var comment = req.body.comment;
         var review = req.body.review;
         if (!userId) {
-
             return res.status(200).json({ status: 2, status_type: 'Failure', message: 'Please pass userId' });
         } else if (!fromUserId) {
 
@@ -112,6 +111,38 @@ module.exports = {
         var conQuery    =   "";
         if (id) {
             conQuery    =   "where r.userid= "+id;
+        }
+        var query = `SELECT r.userid, u.username, u.displayName as userdisplay, ur.department,
+                r.fromUserId, ur.username as fromname, ur.displayName as fromdisplay, 
+                r.comment, r.review, r.status from
+                review r 
+                LEFT JOIN user u 
+                ON r.userid= u.id
+                LEFT JOIN user ur 
+                ON r.fromUserId= ur.id `+conQuery;
+        Review.getDatastore().sendNativeQuery(query, function (err, results) {
+            if (err) {
+
+                return res.status(200).json({ status: 2, status_type: 'Failure', message: 'Some error in selecting user', error_details: err });
+            } else {
+                var jsonResult = results.rows;
+                if (jsonResult.length) {
+                    return res.status(200).json({ status: 1, status_type: 'Success', data: jsonResult });
+                } else {
+                    return res.status(200).json({ status: 1, status_type: 'Success', data: [] });
+
+                }
+            }
+        });
+
+    },
+    listForReview: function (req, res) {
+
+        console.log("Get listForReview");
+        var id = req.param('id');
+        var conQuery    =   "";
+        if (id) {
+            conQuery    =   "where r.fromUserId= "+id;
         }
         var query = `SELECT r.userid, u.username, u.displayName as userdisplay, ur.department,
                 r.fromUserId, ur.username as fromname, ur.displayName as fromdisplay, 

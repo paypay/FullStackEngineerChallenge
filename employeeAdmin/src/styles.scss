@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
+
 @import '~bootstrap/scss/bootstrap';
 body {
     background-color: rgb(248, 248, 248);
@@ -104,4 +105,16 @@ table th {
 label.star {
   padding: 2px !important;
   font-size: 16px !important;
+}
+.float-left{
+  float: left;
+}
+.float-right{
+  float: right;
+}
+.margin-bot-10{
+  margin-bottom: 10px;
+}
+.margin-all-5{
+  margin: 5px;
 }
