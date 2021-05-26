@@ -1,0 +1,48 @@
+Used Technologies
+----------------------
+Client : Angular v10
+Server: NodeJS, Framework: SailsJS
+SQL: MySQL
+
+Installation:
+Client: /employeeAdmin
+Server: /employeeApi
+DB: /DB
+
+1. Install nodejs, sails js, angular cli, mysql
+2. Import the sql file from the /DB folder and enable msql.
+3. Navigate to /employeeApi 
+4. type 'npm install' to install dependencies
+5. run the server with 'sails lift'
+Server will run with default port 1337
+6. Navigate to /employeeAdmin
+7. type 'npm install' to install dependencies
+8. run the server with 'ng serve'
+Client will run with the default port 4200
+RUN 'localhost:4200' to run the application now.
+
+Login:
+
+For Admin,
+username: admin
+password: 12345
+
+For Employee
+username: vishnu
+password: 12345
+
+Assumptions made:
+
+Login as admin
+1. view/add/edit/delete employee.
+2. view list of reviews for employees.
+3. assign reviewer to a employee.
+4. review a employee with star rating.
+
+Login as employee
+1. view his profile.
+2. view list of reviews admin and reviewers made.
+3. view list of employees who need to reviewed by him/her.
+4. review a employee with star rating.
+
+note: Implemented authguard, toast notifications, modals, bootstrap.
