@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\source\\repos\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj": {}
+    "C:\\Users\\Admin\\source\\repos\\2021\\FullStackEngineerChallenge\\Backend\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\source\\repos\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj": {
+    "C:\\Users\\Admin\\source\\repos\\2021\\FullStackEngineerChallenge\\Backend\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\source\\repos\\2021\\FullStackEngineerChallenge\\Backend\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj",
         "projectName": "AppraisalSystemBackend",
-        "projectPath": "C:\\Users\\Admin\\source\\repos\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj",
+        "projectPath": "C:\\Users\\Admin\\source\\repos\\2021\\FullStackEngineerChallenge\\Backend\\AppraisalSystemBackend\\AppraisalSystemBackend.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\source\\repos\\AppraisalSystemBackend\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\source\\repos\\2021\\FullStackEngineerChallenge\\Backend\\AppraisalSystemBackend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
