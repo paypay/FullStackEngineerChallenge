@@ -7,7 +7,7 @@
 * Frontend folder - Angular code
 * Backend folder Asp.net c# code
 * Database folder- SQL Scripts with data 
-* Scren grabs are present inside folderfor ref
+* Screen grabs are present inside folderfor ref
 
 
 # Full Stack Developer Challenge
