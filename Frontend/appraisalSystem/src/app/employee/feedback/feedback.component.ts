@@ -21,7 +21,6 @@ export class FeedbackComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribe.push(this.empService.selectedEmp.subscribe(data => {
-      console.log('daata', data);
       if(data && data.length > 0){
         this.fetchFeedback(data[0]['id']);
         this.selectedEmployeeName = data[0]['assignedName'];
@@ -42,7 +41,6 @@ export class FeedbackComponent implements OnInit, OnDestroy {
    */
   fetchFeedback(id) {
     this.subscribe.push(this.empService.fetchFeedback(id).subscribe(data => {
-      console.log('feedback data ', data);
       this.feedbackData = data;
       this.feedbackDescription = data['description'];  
     }, error => {

@@ -36,32 +36,43 @@ export class ViewEmployeeDetailsComponent implements OnInit, OnDestroy {
       }
     }))
     this.subscribe.push(this.adminService.EmployeeList.subscribe(data => {
-      console.log('data in list', data)
       this.employeeListData = data;
       this.employeeList = data;
-      // this.setEmployeeList();
     }))
   }
 
+  /**
+   * Hook to destroy subscptions
+   */
   ngOnDestroy() {
     this.subscribe.map(s => s.unsubscribe);
   }
 
+  /**
+   * Function to close right panel
+   */
   closePanel() {
-    console.log('closePanel called')
     this._sn.panelClose$.next(false);
   }
 
+  /**
+   * Function to fetch employee additional details
+   * @param id 
+   */
   fetchData(id) {
     this.subscribe.push(this.adminService.getEmployeeAdditionalData(id).subscribe(data => {
-      console.log('data', data)
       this.employeeAdditionalData = data;
       const temp = this.employeeListData;
       this.employeeList = temp;
       this.setEmployeeList();
+    }, error => {
+      this.openSnackBar("Something went wrong!!");
     }))
   }
 
+  /**
+   * Function to update employee basic details name email
+   */
   updateBasic() {
     const obj = {
       name: this.empBasicDetails.name,
@@ -76,12 +87,14 @@ export class ViewEmployeeDetailsComponent implements OnInit, OnDestroy {
     }, error => {
       this.openSnackBar("Something went wrong!!");
     })
-    
+
   }
 
+  /**
+   * Function to delete exiting assigned employee for feedback
+   * @param id emp id
+   */
   deleteAssigned(id) {
-    console.log('called deleteAssigned', id)
-
     this.adminService.deleteAssignedFeedback(id).subscribe(data => {
       this.openSnackBar("Assigned feedback deleted succssfully!!");
       this.fetchData(this.empBasicDetails['id']);
@@ -93,31 +106,30 @@ export class ViewEmployeeDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * Funtion to set employee list for assign new employee on edit employee screen
+   */
   setEmployeeList() {
-
-    console.log('this.employeeListData', this.employeeListData)
-    console.log('this.employeeList', this.employeeList)
     const employeeList = this.employeeListData;
     this.employeeList = employeeList;
     const employeeData = this.employeeAdditionalData.assignedData;
-   
 
-   
+
     for (let i = 0; i < employeeData.length; i++) {
-      console.log(employeeData[i])
       const ind = _.findIndex(employeeList, function (item) { return item.id == employeeData[i]['assignedId'] });
-      console.log('ind', ind)
-      if(ind > -1){
+      if (ind > -1) {
         this.employeeList.splice(ind, 1);
       }
-      
+
     }
-    console.log('this.employeeList', this.employeeList)
-    
+
   }
 
+  /**
+   * Function to assign new employee for feedback
+   * @param id emp id
+   */
   assignNew(id) {
-    console.log('id', id)
 
     const obj = {
       employeeId: this.empBasicDetails.id,
@@ -133,6 +145,10 @@ export class ViewEmployeeDetailsComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * Function to update feedback content
+   * @param id feedback id
+   */
   updateContent(id) {
     const obj = {
       id: id,

@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSidenav, MatSidenavContainer } from '@angular/material/sidenav';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { SidenavRightPanelContentService } from '../../common/services/side-nav-panel.service';
 import { AdminService } from '../admin.service';
 import { map, takeUntil, tap } from "rxjs/operators";
@@ -23,8 +23,8 @@ export class LandingComponent implements OnInit, AfterViewInit {
   private _rightSideNav: MatSidenav;
   _rightSideComponent$;
   _destroy$ = new Subject<void>();
-
   
+  subscribe: Subscription[] = [];
   @ViewChild(MatSidenavContainer) _snc: MatSidenavContainer;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -38,15 +38,12 @@ export class LandingComponent implements OnInit, AfterViewInit {
       tap((_) => _ ? this._rightSideNav.open() : null),
       takeUntil(this._destroy$)
     );
-    this._sn.panelClose$.subscribe(data => {
-      console.log('data', data)
+    this.subscribe.push(this._sn.panelClose$.subscribe(data => {
       this.fetchData();
       if(data== false && this._rightSideNav){
         this._rightSideNav.close();
-      //  this.fetchData();
-       //  this.adminService.EmployeeBasicDetails.next([]);
       }
-    })
+    }));
   
   }
 
@@ -56,16 +53,22 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this._rightSideNav = this._snc.end as MatSidenav;
   }
   
+  /**
+   * Hook to destroy subscptions
+   */
+   ngOnDestroy() {
+    this.subscribe.map(s => s.unsubscribe);
+  }
+
   fetchData() {
-    this.adminService.fetchEmployee().subscribe(data => {
-      console.log('emp data', data);
+    this.subscribe.push(this.adminService.fetchEmployee().subscribe(data => {
       this.dataSource['data'] = data;
       this.adminService.EmployeeList.next(data);
-    })
+    }, error => {
+      this.openSnackBar("Something went wrong!!");
+    }))
   }
-  _loadComponent1() {
-    this._sn.setComponentPortal(ViewEmployeeDetailsComponent);
-  }
+
 
   /**
    * Function to open panel for creating new employee
@@ -74,10 +77,12 @@ export class LandingComponent implements OnInit, AfterViewInit {
     this._sn.setComponentPortal(AddNewEmployeeComponent);
   }
 
+  /**
+   * Function to view employee additional data
+   * @param id emp id
+   */
   ViewEmployeeData(id) {
-    console.log('id', id);
     const empData = this.dataSource.data.filter(item => item.id == id);
-    console.log('empData', empData)
     this.adminService.EmployeeBasicDetails.next(empData);
     this._sn.setComponentPortal(ViewEmployeeDetailsComponent);
   }
@@ -87,11 +92,11 @@ export class LandingComponent implements OnInit, AfterViewInit {
    * @param id employee id
    */
   deleteEmployee(id){
-    this.adminService.deleteEmployee(id).subscribe(data => {
+    this.subscribe.push(this.adminService.deleteEmployee(id).subscribe(data => {
       this.openSnackBar("Employee Deleted Successfully!!");
     }, error => {
       this.openSnackBar("Something went wrong!!");
-    })
+    }))
   }
 
   /**

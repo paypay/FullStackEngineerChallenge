@@ -26,7 +26,7 @@
               <img src="../../assets/Images/user.png" *ngIf="!user?.isAdmin" />
               <!-- <a class="nav-link text-dark">{{user?.name}}</a> -->
             </li>
-            <li class="nav-item" >
+            <li class="nav-item" *ngIf="user?.name !=='User'">
               <a class="nav-link text-dark" (click)="logout()">Logout</a>
             </li>
           </ul>
