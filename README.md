@@ -1,3 +1,14 @@
+# Read MD file is present inside each folder for more info
+
+# First run db scripts inside database folder > backend application > frontend application.
+
+# Solution
+* Folder Structure
+* Frontend folder - Angular code
+* Backend folder Asp.net c# code
+* Database folder- SQL Scripts with data 
+
+
 # Full Stack Developer Challenge
 This is an interview challengs. Please feel free to fork. Pull Requests will be ignored.
 
@@ -37,9 +48,4 @@ Design a web application that allows employees to submit feedback toward each ot
 * Technology and design choices
 * Identify areas of your strengths
 
-#Solution
-* Folder Structure
-* Frontend folder - Angular code
-* Backend folder Asp.net c# code
-* Database folder- SQL Scripts with data 
-# Read MD file is present inside each folder for more info
+
