@@ -1,12 +1,13 @@
 # Read MD file is present inside each folder for more info
 
-# First run db scripts inside database folder > backend application > frontend application.
+# First run db scripts inside database folder > backend application > frontend application. 
 
 # Solution
 * Folder Structure
 * Frontend folder - Angular code
 * Backend folder Asp.net c# code
 * Database folder- SQL Scripts with data 
+* Scren grabs are present inside folderfor ref
 
 
 # Full Stack Developer Challenge
