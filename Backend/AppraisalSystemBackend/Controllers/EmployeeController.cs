@@ -13,20 +13,23 @@ namespace AppraisalSystemBackend.Controllers
     {
         DataAccessLayer da = new DataAccessLayer();
 
-
+        #region Method for fetching assigned feedback for employee
         [HttpGet]
         [Route("api/Employee/ViewFeedback/{Id}")]
         public List<AssignedFeedbacks> GetEmployee(int Id)
         {
             return da.ViewAssignedFeedback(Convert.ToInt32(Id));
         }
+        #endregion
 
+        #region Method for fetching feedback based on emp id
         [HttpGet]
         [Route("api/Employee/GetFeedback/{Id}")]
         public Feedback GetEmployeeFeedback(int Id)
         {
             return da.GetEmployeeFeedback(Convert.ToInt32(Id));
         }
+        #endregion
 
         #region Method for updating feedback
         [HttpPut]

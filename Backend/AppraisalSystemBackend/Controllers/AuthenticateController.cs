@@ -12,11 +12,13 @@ namespace AppraisalSystemBackend.Controllers
     {
         DataAccessLayer da = new DataAccessLayer();
 
+        #region Route for login
         [HttpPost]
         [Route("api/Employee/Authenticate")]
         public EmployeeBasic Authenticate([FromBody] AuthenticationDto LoginData)
         {
           return da.Login(LoginData);
         }
+        #endregion
     }
 }

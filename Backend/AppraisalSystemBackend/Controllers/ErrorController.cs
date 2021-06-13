@@ -11,6 +11,7 @@ namespace AppraisalSystemBackend.Controllers
 {
     public class ErrorController : ControllerBase
     {
+        #region Routes for handling hiding stack information on localhost
         [HttpGet]
         [Route("/error-local-development")]
         public IActionResult ErrorLocalDevelopment(
@@ -31,5 +32,7 @@ namespace AppraisalSystemBackend.Controllers
         [HttpGet]
         [Route("/error")]
         public IActionResult Error() => Problem();
+
+        #endregion
     }
 }
