@@ -36,3 +36,10 @@ Design a web application that allows employees to submit feedback toward each ot
 * Assumptions you make given limited requirements
 * Technology and design choices
 * Identify areas of your strengths
+
+##Solution
+* Folder Structure
+* Frontend folder - Angular code
+* Backend folder Asp.net c# code
+* Database folder- SQL Scripts with data 
+# Read MD file is present inside each folder for more info
