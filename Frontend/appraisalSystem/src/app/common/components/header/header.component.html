@@ -11,20 +11,13 @@
           [ngClass]="{ show: isExpanded }"
         >
           <ul class="navbar-nav flex-grow">
-            <!--<li
-      class="nav-item"
-      [routerLinkActive]="['link-active']"
-      [routerLinkActiveOptions]="{ exact: true }"
-    >
-      <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-    </li>-->
+           
             <li class="nav-item" >
               <a class="nav-link text-dark" >{{'Welcome '+ user?.name}}</a>
             </li>
             <li class="nav-item" *ngIf="user">
               <img src="../../assets/Images/admin.png" *ngIf="user?.isAdmin" />
               <img src="../../assets/Images/user.png" *ngIf="!user?.isAdmin" />
-              <!-- <a class="nav-link text-dark">{{user?.name}}</a> -->
             </li>
             <li class="nav-item" *ngIf="user?.name !=='User'">
               <a class="nav-link text-dark" (click)="logout()">Logout</a>
