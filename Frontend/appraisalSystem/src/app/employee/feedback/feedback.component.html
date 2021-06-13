@@ -1,0 +1,34 @@
+<mat-card class="wrapper mt-2">
+    <mat-card-header>
+        <mat-card-title>Feedback </mat-card-title>
+        <div class="close-wrap d-flex">
+
+            <span class="close-icon">
+                <mat-icon (click)="closeNav()" class="close-icon">close</mat-icon>
+            </span>
+        </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div class="feedback-container">
+            <div class="feedback-wrap d-flex">
+                <div class="feedback-data">
+                    <label>Employee Id</label>
+                    <p>{{selectedId}}</p>
+                </div>
+                <div class="feedback-data">
+                    <label>Employee Name</label>
+                    <p>{{selectedEmployeeName}}</p>
+                </div>
+
+            </div>
+            <div class="feedback-text" *ngIf="feedbackData">
+                <mat-form-field class="w-100">
+                    <mat-label>Feedback</mat-label>
+                    <textarea matInput name="f-desc" [(ngModel)]="feedbackDescription"></textarea>
+                </mat-form-field>
+                <button class="btn btn-primary update-feedback-btn" (click)="UpdateFeedback()">Update</button>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

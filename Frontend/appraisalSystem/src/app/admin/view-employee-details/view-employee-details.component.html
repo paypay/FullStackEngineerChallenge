@@ -1,0 +1,144 @@
+<mat-card class="wrapper mt-2" >
+    <mat-card-header>
+        <mat-card-title>Employee Details</mat-card-title>
+        <span class="close-icon">
+            <mat-icon (click)="closePanel()" class="close-icon">close</mat-icon>
+        </span>
+
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content *ngIf="empBasicDetails?.id">
+        <div class="form-wrapper mt-4">
+            <form #f="ngForm">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Employee Id</mat-label>
+                            <input matInput readonly #input name="empId" [(ngModel)]="empBasicDetails.id">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Name of Employee</mat-label>
+                            <input matInput name="empName" [(ngModel)]="empBasicDetails.name">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field appearance="fill" class="w-100">
+                            <mat-label>Email Id</mat-label>
+                            <input matInput placeholder="pat@example.com" name="email"
+                                [(ngModel)]="empBasicDetails.email" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-form-field floatLabel="always">
+                            <mat-label>Is User Admin</mat-label>
+                            <mat-slide-toggle name="adminToggle" [(ngModel)]="empBasicDetails.isAdmin">
+                            </mat-slide-toggle>
+                            <textarea matInput hidden></textarea>
+                        </mat-form-field>
+                        <button class="btn btn-primary update-feedback-btn"(click)="updateBasic()" >Update</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <mat-accordion>
+                    <mat-expansion-panel  [expanded]="true" (opened)="assignedpanel = true" (closed)="assignedpanel = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                Assigned Feedbacks
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider></mat-divider>
+                        <div class="assigned-panel-data">
+                            <mat-list>
+                                <mat-list-item *ngFor="let emp of employeeAdditionalData.assignedData;let ind = index">
+                                    <!-- <mat-icon matListIcon>folder</mat-icon> -->
+                                    <div class="center-vertically">
+                                        <span class="list-text">{{emp.assignedName + ' - '}}</span> <span
+                                            class="sub-text">{{' (Emp No: ' + emp.assignedId + ')'}}</span>
+                                        <span class="icon-wrap">
+                                            <mat-icon *ngIf="employeeAdditionalData.assignedData.length > 1" matListIcon
+                                                class="delete-icon" title="Delete Assigned Employee"
+                                                (click)="deleteAssigned(emp.id)">delete</mat-icon>
+                                        </span>
+
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                            <mat-divider></mat-divider>
+                            <mat-expansion-panel class="mt-4" (opened)="addNew = true" (closed)="addNew = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        Assign More Employee
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <mat-divider></mat-divider>
+                                <div class="inner-panel-content">
+                                    <mat-list>
+                                        <mat-list-item *ngFor="let item of employeeList;let innerInd = index">
+                                            <div class="center-vertically">
+                                                <span class="list-text">{{item.name + ' - '}}</span> <span
+                                                    class="sub-text">{{' (Emp No: ' + item.id + ')'}}</span>
+                                                <span class="icon-wrap">
+                                                    <mat-icon *ngIf="employeeList.length > 1" matListIcon
+                                                        class="delete-icon" title="Add Assigned Employee"
+                                                        (click)="assignNew(item.id)">add</mat-icon>
+                                                </span>
+                                            </div>
+                                        </mat-list-item>
+                                    </mat-list>
+                                </div>
+                            </mat-expansion-panel>
+                        </div>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+            <div class="row mt-4 feedback-panel">
+                <div class="col-12">
+                    <mat-accordion>
+                        <mat-expansion-panel (opened)="assignedpanel = true" (closed)="assignedpanel = false">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    Feedbacks
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <mat-divider></mat-divider>
+                            <div class="assigned-panel-data fb-panel">
+                                <mat-list>
+                                    <mat-list-item class="mt-4"
+                                        *ngFor="let emp of employeeAdditionalData.respondentData;let ind = index">
+                                        <div class="feedback-container">
+                                            <div class="feedback-wrap d-flex">
+                                                <div class="feedback-data">
+                                                    <label>Employee Id</label>
+                                                    <p>{{emp.respondentId}}</p>
+                                                </div>
+                                                <div class="feedback-data">
+                                                    <label>Employee Name</label>
+                                                    <p>{{emp.respondentName}}</p>
+                                                </div>
+
+                                            </div>
+                                            <div class="feedback-text">
+                                                <mat-form-field class="w-100">
+                                                    <mat-label>Feedback</mat-label>
+                                                    <textarea matInput name="f-desc"
+                                                        [(ngModel)]="emp.respondentDescription"></textarea>
+                                                </mat-form-field>
+                                               <button class="btn btn-primary update-feedback-btn"(click)="updateContent(emp.id)" >Update</button>
+                                            </div>
+                                        </div>
+                                        <mat-divider></mat-divider>
+                                    </mat-list-item>
+                                </mat-list>
+                                <mat-divider></mat-divider>
+
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

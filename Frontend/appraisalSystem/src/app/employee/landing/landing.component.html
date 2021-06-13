@@ -1,0 +1,54 @@
+<mat-sidenav-container class="example-container">
+
+    <mat-sidenav #rightSideNav="matSidenav" mode="over" disableClose="true" [fixedInViewport]="true" position="end">
+        <div class="container">
+            <ng-template [cdkPortalOutlet]="rightSideComponent$ | async"></ng-template>
+        </div>
+    </mat-sidenav>
+    <div class="d-flex p-4">
+        <div class="head-col1">
+            <h3>Employee Details</h3>
+        </div>
+       
+    </div>
+    <div *ngIf="dataSource.data">
+
+        <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+            <!-- empId Column -->
+            <ng-container matColumnDef="empId" >
+                <mat-header-cell *matHeaderCellDef class="col-2 col-head"> Emp Id. </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-2"> {{element.assignedId}} </mat-cell>
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="col-8 col-head"> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-8"> {{element.assignedName}} </mat-cell>
+            </ng-container>
+
+          
+            
+            <!-- Action Column -->
+            <ng-container matColumnDef="action" >
+                <mat-header-cell *matHeaderCellDef class="col-2 action-col col-head"> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-2 action-col">
+                    <i class="fa fa-edit" (click)="ViewEmployeeData(element.id)"></i>
+                    <mat-icon matListIcon
+                        class="delete-icon" title="Delete Assigned Employee"
+                        >view</mat-icon>
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row">
+            </mat-row>
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+    </div>
+   
+</mat-sidenav-container>

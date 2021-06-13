@@ -1,0 +1,40 @@
+.close-wrap{
+    flex: 1;
+    justify-content: flex-end;
+}
+.selected{
+    color: blue;
+}
+.center-vertically{
+    display:flex;
+    align-items: center;
+    flex: 1;
+    
+    .sub-text{
+        margin-left: 10px;
+    }
+    .list-text,
+    .sub-text{
+        font-size: 14px;
+    }
+    .icon-wrap{
+        display: inline-flex;
+        flex: 1;
+        justify-content: flex-end;
+    }
+
+    .delete-icon{
+        cursor: pointer;
+        font-size: 16px;
+        width: 14px;
+        height: 16px;
+
+    }
+   
+}
+.text-center{
+    .btn{
+        flex: 0 1 20%;
+        margin: 0 20px;
+    }
+}

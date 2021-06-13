@@ -1,0 +1,31 @@
+.feedback-container{
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-top: 50px !important;
+
+    .feedback-wrap{
+        display: flex!important;
+        flex: 1;
+    }
+    .feedback-text {
+        display: flex;
+        flex: 1;
+    }
+    .feedback-data{
+        flex: 1;
+    }
+}
+.close-wrap{
+    flex: 1;
+}
+.close-icon{
+    display: inline-flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+.update-feedback-btn{
+    height: 35px;
+    font-size: 12px;
+    margin-left: 20px;
+}

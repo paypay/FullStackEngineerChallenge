@@ -1,0 +1,60 @@
+<mat-sidenav-container class="example-container">
+
+    <mat-sidenav #rightSideNav="matSidenav" mode="over" disableClose="true" [fixedInViewport]="true" position="end">
+        <div class="container">
+            <ng-template [cdkPortalOutlet]="_rightSideComponent$ | async"></ng-template>
+        </div>
+    </mat-sidenav>
+    <div class="d-flex p-4">
+        <div class="head-col1">
+            <h3>Admin View - Employee Details</h3>
+        </div>
+        <div class="head-col2">
+            <button class="btn btn-link border" (click)="addNewEmployee()"><i class="fa fa-user-plus"></i> New Employee</button>
+        </div>
+    </div>
+    <div *ngIf="dataSource.data">
+
+        <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+            <!-- empId Column -->
+            <ng-container matColumnDef="empId" >
+                <mat-header-cell *matHeaderCellDef class="col-2 col-head"> Emp Id. </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-2"> {{element.id}} </mat-cell>
+            </ng-container>
+
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="col-3 col-head"> Name </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-3"> {{element.name}} </mat-cell>
+            </ng-container>
+
+             <!-- Email Column -->
+             <ng-container matColumnDef="email" >
+                <mat-header-cell *matHeaderCellDef mat-sort-header class="col-5 col-head"> Email </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-5"> {{element.email}} </mat-cell>
+            </ng-container>
+
+            
+            <!-- Action Column -->
+            <ng-container matColumnDef="action" >
+                <mat-header-cell *matHeaderCellDef class="col-2 action-col col-head"> Actions </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="col-2 action-col">
+                    <i class="fa fa-edit" title="View Employee Details" (click)="ViewEmployeeData(element.id)"></i>
+                    <i class="fa fa-trash align-icon" title="Delete Employee" (click)="deleteEmployee(element.id)"></i>
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row">
+            </mat-row>
+
+        </mat-table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+
+
+    </div>
+   
+</mat-sidenav-container>
