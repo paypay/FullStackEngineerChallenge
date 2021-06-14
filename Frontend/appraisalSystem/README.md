@@ -21,22 +21,22 @@ Clone the project repo, install node modules using npm install. Once done build 
 * Some common modules/components are present inside common folder. 
 
 ## Login Page
-* Once both backend and frontend app is started user will land on login page, which is ask user for emp id for login. 
-* If everything is followed as per user will be able to logged in using id starting from 101 - 110
-* If you want to logged in as admin use 101 and if as employee use 102.
+* Once both backend and frontend app is up user will land onto login page, which ask user for emp id for login. 
+* If everything is followed as per docs user will be able to log in using id starting from 101 - 110
+* If you want to log in as admin use 101 and if as employee use 102.
 * Current in datascript only 101 is admin.
-* Simple mechanism is used in app for login where we just stored user object inside localstorage once we recived data from api.
-* This module used below api
+* Simple mechanism is used in app for login where we just stored user object inside localstorage once we recived data from login api.
+* This module uses below api
 * api/Employee/Authenticate
 
-## User needs to click logout link in header section to and then log in using other emp id like 102 to view employee page.
+## User needs to click logout link in header section and then log in using other emp id like 102 to view employee page and viceversa since data is stored in localstorage.
 
 ## Admin Landing 
 * Once user logged in as admin he would be able to see list of employees in table (only employees). 
 * If he wants to view additional info about them he needs to click on edit icon.
-* Post that right panel gets open which populates the info for employee such as list of employees he has been assigned as well as list of resipondents employee whom would be giving feedback for that perticular employee.
+* Post that right panel gets open which populates the info for employee such as list of employees he has been assigned as well as list of feedback for that perticular employee.
 * He can add new employee using new employee link
-* Admin can change basic info about employee such as Name/ Email also he can assign more people to him for feedback, beside this can view/update feedback this employee recived.
+* Admin can change basic info about employee such as Name/ Email also he can assign more people to him for feedback, beside this can view/update feedback which employee recived.
 * He can delete perticular feedback if he wants.
 * * This module used below api
 * api/WebMaster/GetEmployee
@@ -53,7 +53,7 @@ Clone the project repo, install node modules using npm install. Once done build 
 ## Employee Landing
 * Once user logged in using emp id like 102, he would be navigated to employee landing page on which he would be able to see list of assigned employee for feedback.
 * He can click on edit icon and provide his feed back. 
-* Once he save it he will be redirected to landing page again 
+* Once he saves it he will be redirected to landing page again 
 * This module uses below api 
 * api/Employee/ViewFeedback/{Id}
 * api/Employee/GetFeedback/{Id}
