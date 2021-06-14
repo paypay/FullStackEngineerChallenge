@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 # Run the schema scripts for sql before running frontend/backend app
 
-##Make sure you start backend code before running frontend
+## Make sure you start backend code before running frontend
 
 
 ## Development server
@@ -14,7 +14,7 @@ Clone the project repo, install node modules using npm install. Once done build 
 ## Details/Assumption
 ##Project Artirecture
 
-* Project used material design as well as bootstrap for styling
+* Project uses material design as well as bootstrap for styling
 * For authentication simple mechanism is used for now where we pass emp id to backend and it returns the user obj if available else throws exception Invalid Employee Id
 * Project is divided into two sections admin as well as employee both have differentfeature module which are lazy loaded.
 * Both module have their own routing file
