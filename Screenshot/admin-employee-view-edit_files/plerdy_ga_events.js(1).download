@@ -1,0 +1,9 @@
+function plerdy_send_gaEvents(target){if(target){var Classes=target.classList;var id=target.getAttribute('id');var do_send=true;var url=getPageUrl();plerdy_ga_events.forEach(function(item){if(do_send){if(item.selector.indexOf('#')>-1){if(item.selector.replace('#','')==id){try{logEvent('Plerdy',url,item.name);}catch(err){}
+do_send=false;}}
+if(item.selector.indexOf('.')>-1){var c_n=object.getAllElementProperty(target,'classList').reverse().join(' > ');if(c_n.indexOf(item.selector.replace('.',''))>-1){try{logEvent('Plerdy',url,item.name);}catch(err){}
+do_send=false;}}}});}}
+function logEvent(category,action,label,value){var sending=true;if(typeof ga==='function'){var command='';var commandPage='';if(typeof google_tag_manager!=='undefined'){try{command=ga.getAll()[0].get('name')+'.';var sending=true;}catch(err){sending=false;}}
+command+='send';try{ga(command,'event',{'eventCategory':category,'eventAction':action,'eventLabel':label,'eventValue':typeof value==='undefined'?1:value});var sending=true;}catch(err){sending=false;}
+try{gtag('send','event',{'eventCategory':category,'eventAction':action,'eventLabel':label,'eventValue':typeof value==='undefined'?1:value});sending=true;}catch(err){sending=false;console.log('gtag() not defined 2');}}else{sending=false;}
+if(!sending){try{var url=getPageUrl();_gaq.push(['_trackEvent','Plerdy',label,url]);}catch(err){try{gtag('send','event',{'eventCategory':category,'eventAction':action,'eventLabel':label,'eventValue':typeof value==='undefined'?1:value});}catch(err){}
+sending=false;}}}

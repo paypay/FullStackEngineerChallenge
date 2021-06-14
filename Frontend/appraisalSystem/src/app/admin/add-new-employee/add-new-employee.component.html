@@ -1,0 +1,148 @@
+<mat-card class="wrapper mt-2 add-emp">
+    <mat-card-header>
+        <mat-card-title>Add New Employee</mat-card-title>
+        <div class="close-wrap d-flex">
+
+            <span class="close-icon">
+                <mat-icon (click)="closeNav()" class="close-icon">close</mat-icon>
+            </span>
+        </div>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+        <div class="content-section pt-4">
+            <form [formGroup]="registerForm"  class="form">
+                <div class="form-row row">
+                    <!-- <div class="form-group col-6"> -->
+                        <!-- <mat-form-field class="form-element">
+                            <input matInput placeholder="Employee Id" formControlName="empId">
+                            <mat-error *ngIf="!f.empId.valid && f.empId.touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field> -->
+
+                        <!-- <label>Employee Id</label>
+                        <input matInput type="text" formControlName="empId" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.empId.errors }" />
+                        <div *ngIf="submitted && f.empId.errors" class="invalid-feedback">
+                            <div *ngIf="f.empId.errors.required">Please enter valid Employee Id</div>
+                        </div> -->
+                        <!-- <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+                            <option value=""></option>
+                            <option value="Mr">Mr</option>
+                            <option value="Mrs">Mrs</option>
+                            <option value="Miss">Miss</option>
+                            <option value="Ms">Ms</option>
+                        </select>
+                        <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                            <div *ngIf="f.title.errors.required">Title is required</div>
+                        </div> -->
+                    <!-- </div> -->
+                    <div class="form-group col-6">
+                        <mat-form-field class="form-element">
+                            <input matInput placeholder="Name" formControlName="name">
+                            <mat-error *ngIf="!f.name.valid && f.name.touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="form-group col-6">
+                        <mat-form-field class="form-element">
+                            <input matInput placeholder="Emailaddress" formControlName="email">
+                            <mat-error *ngIf="!f.email.valid && f.email.touched">
+                                {{ getErrorEmail() }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="form-group col-6">
+                        <mat-form-field class="form-element">
+                            <input matInput placeholder="Password" type="password" formControlName="password">
+                            <mat-hint>Choose a password in format Password-EmpId</mat-hint>
+                            <mat-error *ngIf="!f.password.valid && f.password.touched">
+                                {{ getErrorPassword() }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div> -->
+                </div>
+                
+            </form>
+            <div class="col-12 mt-4">
+                <mat-accordion>
+                    <mat-expansion-panel [expanded]="true" (opened)="assignedpanel = true"
+                        (closed)="assignedpanel = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <p class="mb-0">Assign Feedback </p>
+                                <p class="small ml-3 mb-0"> (Atleast one needs to be selected) </p>
+                            </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <mat-divider></mat-divider>
+                        <div class="inner-panel-content">
+                            <mat-list>
+                                <mat-list-item *ngFor="let item of employeeListData;let innerInd = index">
+                                    <div class="center-vertically">
+                                        <span class="list-text" [ngClass]="{'selected': item.selected}">{{item.name + '
+                                            - '}}</span>
+                                        <span [ngClass]="{'selected': item.selected}" class="sub-text">{{'
+                                            (Emp No: ' + item.id + ')'}}</span>
+                                        <span class="icon-wrap">
+                                            <mat-icon [ngClass]="{'selected': item.selected}"
+                                                *ngIf="employeeListData.length > 1 && !item.selected" matListIcon
+                                                class="assign-icon" title="Assign Employee"
+                                                (click)="updatedSelected(item)">add
+                                            </mat-icon>
+                                            <mat-icon *ngIf="employeeListData.length > 1 && item.selected" matListIcon
+                                                class="assign-icon" title="Remove Employee"
+                                                (click)="updatedSelected(item)">remove
+                                            </mat-icon>
+                                        </span>
+                                    </div>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                        <!-- <div class="assigned-panel-data fb-panel">
+                            <mat-list>
+                                <mat-list-item class="mt-4"
+                                    *ngFor="let emp of employeeAdditionalData.respondentData;let ind = index">
+                                    <div class="feedback-container">
+                                        <div class="feedback-wrap d-flex">
+                                            <div class="feedback-data">
+                                                <label>Employee Id</label>
+                                                <p>{{emp.respondentId}}</p>
+                                            </div>
+                                            <div class="feedback-data">
+                                                <label>Employee Name</label>
+                                                <p>{{emp.respondentName}}</p>
+                                            </div>
+
+                                        </div>
+                                        <div class="feedback-text">
+                                            <mat-form-field class="w-100">
+                                                <mat-label>Feedback</mat-label>
+                                                <textarea matInput name="f-desc"
+                                                    [(ngModel)]="emp.respondentDescription"></textarea>
+                                            </mat-form-field>
+                                           <button class="btn btn-primary update-feedback-btn">Update</button>
+                                        </div>
+                                    </div>
+                                    <mat-divider></mat-divider>
+                                </mat-list-item>
+                            </mat-list>
+                            <mat-divider></mat-divider>
+
+                        </div> -->
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+
+        </div>
+        
+    </mat-card-content>
+    <mat-card-footer>
+        <div class="text-center d-flex mb-4">
+            <button class="btn btn-primary mr-4" type="submit" (click)="onSubmit()" [disabled]="registerForm.invalid || !atleastOneSelected" >Register</button>
+            <button class="btn btn-secondary" type="reset" (click)="onReset()">Cancel</button>
+        </div>
+    </mat-card-footer>
+
+</mat-card>

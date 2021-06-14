@@ -1,0 +1,30 @@
+<header>
+    <nav
+      class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
+    >
+      <div class="container">
+       <h1> Appraisal System</h1>
+        
+          
+        <div
+          class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
+          [ngClass]="{ show: isExpanded }"
+        >
+          <ul class="navbar-nav flex-grow">
+           
+            <li class="nav-item" >
+              <a class="nav-link text-dark" >{{'Welcome '+ user?.name}}</a>
+            </li>
+            <li class="nav-item" *ngIf="user">
+              <img src="../../assets/Images/admin.png" *ngIf="user?.isAdmin" />
+              <img src="../../assets/Images/user.png" *ngIf="!user?.isAdmin" />
+            </li>
+            <li class="nav-item" *ngIf="user?.name !=='User'">
+              <a class="nav-link text-dark" (click)="logout()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  

@@ -1,0 +1,1 @@
+window.plerdy_seo_rules=["\/wp-admin\/","\/*wc-ajax*","*?filter_*","*?product_cat=*","*\/wp-json\/*","*\/feed\/","*.html","*\/tag\/*","*.pdf","\/wp-admin\/*","\/admin\/*","\/auth\/*","*\/page\/*","*\/about-us","*\/contact-form"]
