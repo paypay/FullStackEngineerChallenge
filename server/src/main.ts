@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import * as helmet from 'helmet';
 import {
   SwaggerModule,
   DocumentBuilder,
@@ -11,6 +12,8 @@ const port = process.env.PORT;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(helmet());
+  app.enableCors();
   const config = new DocumentBuilder()
     .setTitle('Employee Performance Review')
     .setDescription(
